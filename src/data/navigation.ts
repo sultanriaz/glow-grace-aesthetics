@@ -27,7 +27,8 @@ export const mainNavItems: NavItem[] = [
   { label: 'Bridal', href: '/services/bridal-glow-packages/' },
   { label: 'FAQ', href: '/faq/' },
   { label: 'Blog', href: '/blog/' },
-  { label: 'Contact', href: '/contact/' }
+  { label: 'Contact', href: '/contact/' },
+  { label: 'Developer', href: '/developer/' }
 ];
 
 export const footerQuickLinks: Array<{ label: string; href: string }> = [

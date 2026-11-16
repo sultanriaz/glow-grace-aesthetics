@@ -248,7 +248,7 @@ const { currentPath = Astro.url.pathname } = Astro.props;
     display: flex;
     align-items: center;
     list-style: none;
-    gap: 2rem;
+    gap: clamp(0.65rem, 1.35vw, 1.625rem);
   }
 
   .nav-item {
@@ -260,7 +260,7 @@ const { currentPath = Astro.url.pathname } = Astro.props;
     align-items: center;
     gap: 0.35rem;
     font-family: var(--font-sans);
-    font-size: 1rem;
+    font-size: 0.9375rem;
     font-weight: 500;
     color: var(--ink-700);
     text-decoration: none;

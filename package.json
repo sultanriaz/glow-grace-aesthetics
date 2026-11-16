@@ -35,21 +35,21 @@
     "@astrojs/sitemap": "^3.2.1",
     "@fontsource/cormorant-garamond": "^5.1.1",
     "@fontsource/jost": "^5.1.1",
+    "@resvg/resvg-js": "^2.6.2",
     "@vercel/analytics": "^2.0.1",
     "astro": "^5.4.2",
     "png-to-ico": "^2.1.8",
+    "satori": "^0.63.2",
     "sharp": "^0.33.5",
     "typescript": "^5.7.3"
   },
   "devDependencies": {
     "@axe-core/playwright": "^4.14.0",
     "@playwright/test": "^1.65.1",
-    "@resvg/resvg-js": "^2.6.2",
     "@types/qrcode": "^1.5.6",
     "axe-core": "^4.14.0",
     "puppeteer-core": "^25.17.0",
     "qrcode": "^1.5.4",
-    "satori": "^0.63.2",
     "vitest": "^5.1.0"
   }
 }

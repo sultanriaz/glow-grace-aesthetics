@@ -66,8 +66,8 @@
   --space-32: 128px;
 
   --container-max: 1200px;
-  --container-padding: clamp(1rem, 4vw, 2rem);
-  --section-padding-y: clamp(64px, 9vw, 120px);
+  --container-padding: clamp(1rem, 3.5vw, 2rem);
+  --section-padding-y: clamp(48px, 7vw, 104px);
 
   /* Radii */
   --radius-sm: 8px;
@@ -90,5 +90,5 @@
   --touch-target-min: 44px;
 
   /* Sticky bar height offset for mobile */
-  --sticky-bar-height: 72px;
+  --sticky-bar-height: 60px;
 }

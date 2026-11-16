@@ -98,6 +98,28 @@ const customLogo = logoEntries.length > 0 ? logoEntries[0].default : null;
     white-space: nowrap;
   }
 
+  @media (max-width: 480px) {
+    .brand-lockup {
+      gap: 0.5rem;
+    }
+    .wordmark {
+      font-size: 1.25rem;
+    }
+    .tagline {
+      font-size: 0.5rem;
+      letter-spacing: 0.08em;
+    }
+  }
+
+  @media (max-width: 360px) {
+    .wordmark {
+      font-size: 1.15rem;
+    }
+    .tagline {
+      display: none;
+    }
+  }
+
   /* Size variations */
   .size-sm .wordmark {
     font-size: 1.25rem;

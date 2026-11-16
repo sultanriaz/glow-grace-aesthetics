@@ -88,18 +88,20 @@ const { currentPath = Astro.url.pathname } = Astro.props;
 
     <!-- Header Actions -->
     <div class="header-actions">
-      <Button
-        href={getClinicBookingWhatsAppLink()}
-        target="_blank"
-        variant="primary"
-        size="sm"
-        icon="whatsapp"
-        class="header-cta-btn"
-        data-track-event="whatsapp_click"
-        data-track-placement="header"
-      >
-        Book Now
-      </Button>
+      <div class="header-cta-wrapper">
+        <Button
+          href={getClinicBookingWhatsAppLink()}
+          target="_blank"
+          variant="primary"
+          size="sm"
+          icon="whatsapp"
+          class="header-cta-btn"
+          data-track-event="whatsapp_click"
+          data-track-placement="header"
+        >
+          Book Now
+        </Button>
+      </div>
 
       <!-- Mobile Hamburger Button -->
       <button
@@ -110,7 +112,7 @@ const { currentPath = Astro.url.pathname } = Astro.props;
         aria-expanded="false"
         aria-controls="mobile-nav-drawer"
       >
-        <Icon name="menu" size={26} />
+        <Icon name="menu" size={24} />
       </button>
     </div>
   </div>
@@ -223,14 +225,24 @@ const { currentPath = Astro.url.pathname } = Astro.props;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    min-height: 72px;
-    padding-top: 0.5rem;
-    padding-bottom: 0.5rem;
+    min-height: 60px;
+    padding-top: 0.35rem;
+    padding-bottom: 0.35rem;
+  }
+
+  @media (min-width: 1024px) {
+    .header-container {
+      min-height: 72px;
+      padding-top: 0.5rem;
+      padding-bottom: 0.5rem;
+    }
   }
 
   .header-brand {
     display: flex;
     align-items: center;
+    flex-shrink: 1;
+    min-width: 0;
   }
 
   /* Desktop Nav */
@@ -396,22 +408,41 @@ const { currentPath = Astro.url.pathname } = Astro.props;
     display: flex;
     align-items: center;
     gap: 0.75rem;
+    flex-shrink: 0;
   }
 
-  .header-cta-btn {
+  .header-cta-wrapper {
     display: none;
   }
 
-  @media (min-width: 640px) {
-    .header-cta-btn {
+  @media (min-width: 1024px) {
+    .header-cta-wrapper {
       display: inline-flex;
     }
   }
 
   .mobile-menu-btn {
     display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
     color: var(--green-900);
+    background-color: var(--white);
+    border: 1px solid var(--sand-300);
     border-radius: var(--radius-sm);
+    box-shadow: 0 1px 3px rgba(3, 66, 47, 0.08);
+    transition: background-color var(--transition-fast), border-color var(--transition-fast), transform var(--transition-fast);
+  }
+
+  .mobile-menu-btn:hover,
+  .mobile-menu-btn:focus-visible {
+    background-color: var(--green-50);
+    border-color: var(--green-700);
+  }
+
+  .mobile-menu-btn:active {
+    transform: scale(0.95);
   }
 
   @media (min-width: 1024px) {

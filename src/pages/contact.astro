@@ -1,0 +1,394 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import SectionHeading from '../components/SectionHeading.astro';
+import Breadcrumbs from '../components/Breadcrumbs.astro';
+import Icon from '../components/Icon.astro';
+import Button from '../components/Button.astro';
+import HoursTable from '../components/HoursTable.astro';
+import MapFacade from '../components/MapFacade.astro';
+import CtaBand from '../components/CtaBand.astro';
+import { clinic } from '../data/clinic';
+import { getClinicBookingWhatsAppLink, getClinicTelLink } from '../utils/whatsapp';
+import { getMapDirectionsUrl } from '../utils/maps';
+
+const pageTitle = `Contact & Location | ${clinic.name} DG Khan`;
+const pageDescription = `Contact Glow & Grace Aesthetics in Dera Ghazi Khan. WhatsApp appointments, call direct, clinic location at YCDO Ghazi National Hospital, and opening hours.`;
+
+const breadcrumbs = [
+  { label: 'Contact & Location' }
+];
+---
+
+<BaseLayout
+  title={pageTitle}
+  description={pageDescription}
+  jsonLdType="contact"
+>
+  <!-- Page Header -->
+  <section class="contact-header-section section">
+    <div class="container">
+      <Breadcrumbs items={breadcrumbs} />
+      <div class="header-inner">
+        <span class="eyebrow">GET IN TOUCH</span>
+        <h1 class="page-title">Contact & Clinic Location</h1>
+        <p class="lead-text">
+          We welcome your inquiries and appointment requests. Reach out to our medical front desk via WhatsApp or phone, or visit our facility on Multan Road.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact Cards Grid (4 Cards) -->
+  <section class="section contact-cards-section" aria-label="Contact Channels">
+    <div class="container">
+      <div class="contact-cards-grid">
+        <!-- 1. WhatsApp Card (Primary) -->
+        <div class="contact-channel-card card-base is-primary-channel fade-up-item">
+          <div class="channel-icon-wrap" aria-hidden="true">
+            <Icon name="whatsapp" size={26} />
+          </div>
+          <span class="channel-badge">PRIMARY CHANNEL</span>
+          <h2 class="channel-title">WhatsApp Booking</h2>
+          <p class="channel-desc">
+            Direct chat with our clinic reception. Inquire about services, doctor schedules, or book your consultation.
+          </p>
+          <div class="channel-action">
+            <Button
+              href={getClinicBookingWhatsAppLink()}
+              target="_blank"
+              variant="secondary"
+              size="md"
+              icon="whatsapp"
+              class="w-full"
+            >
+              Chat on WhatsApp
+            </Button>
+          </div>
+        </div>
+
+        <!-- 2. Phone Call Card -->
+        <div class="contact-channel-card card-base fade-up-item">
+          <div class="channel-icon-wrap" aria-hidden="true">
+            <Icon name="phone" size={26} />
+          </div>
+          <h2 class="channel-title">Direct Call</h2>
+          <p class="channel-desc">
+            Speak directly with our front desk during clinical operating hours for urgent queries.
+          </p>
+          <p class="channel-value">{clinic.phone.display}</p>
+          <div class="channel-action">
+            <Button
+              href={getClinicTelLink()}
+              variant="secondary"
+              size="md"
+              icon="phone"
+              class="w-full"
+            >
+              Call {clinic.phone.display}
+            </Button>
+          </div>
+        </div>
+
+        <!-- 3. Location Card -->
+        <div class="contact-channel-card card-base fade-up-item">
+          <div class="channel-icon-wrap" aria-hidden="true">
+            <Icon name="map-pin" size={26} />
+          </div>
+          <h2 class="channel-title">Clinic Address</h2>
+          <p class="channel-desc">
+            Conveniently situated within the hospital complex on Multan Road.
+          </p>
+          <p class="channel-value">{clinic.address.line1}</p>
+          <p class="channel-subvalue">{clinic.address.line2}, {clinic.address.cityFull}</p>
+          <div class="channel-action">
+            <Button
+              href={getMapDirectionsUrl()}
+              target="_blank"
+              variant="secondary"
+              size="md"
+              icon="navigation"
+              class="w-full"
+            >
+              Get Directions
+            </Button>
+          </div>
+        </div>
+
+        <!-- 4. Hours Card -->
+        <div class="contact-channel-card card-base fade-up-item">
+          <div class="channel-icon-wrap" aria-hidden="true">
+            <Icon name="clock" size={26} />
+          </div>
+          <h2 class="channel-title">Operating Days</h2>
+          <p class="channel-desc">
+            Serving patients six days a week with extended evening consultation hours.
+          </p>
+          <p class="channel-value">Mon – Sat: 10 AM – 10 PM</p>
+          <p class="channel-subvalue">Sunday: Closed</p>
+          <div class="channel-action">
+            <a href="#schedule-details" class="hours-jump-link">
+              View Complete Schedule &rarr;
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Interactive Map & Hours Section -->
+  <section class="section map-hours-section" id="schedule-details" aria-label="Map & Hours">
+    <div class="container">
+      <SectionHeading
+        eyebrow="FINDING OUR CLINIC"
+        title="Schedule & Directions"
+        description="Plan your visit to Glow & Grace Aesthetics at YCDO Ghazi National Hospital."
+      />
+
+      <div class="map-hours-grid">
+        <!-- Live Hours Table -->
+        <div class="hours-table-wrap fade-up-item">
+          <HoursTable />
+
+          <!-- How to Find Us Text Block -->
+          <div class="directions-guidance-card card-base">
+            <h3 class="guidance-title">How to Find Us</h3>
+            <p class="guidance-text">
+              Our clinic is located inside <strong>{clinic.address.line1}</strong>, situated <strong>{clinic.address.line2}</strong> in <strong>{clinic.address.cityFull}</strong>.
+            </p>
+            <p class="guidance-text">
+              If arriving via Multan Road, look for the landmark Samina Chowk intersection. Enter the main hospital gate, where clinic signage directs you smoothly to our dedicated aesthetics wing.
+            </p>
+            <div class="guidance-links">
+              <a href={getMapDirectionsUrl()} target="_blank" rel="noopener noreferrer" class="link-bold">
+                Get Driving Directions on Google Maps &rarr;
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Map Facade -->
+        <div class="map-wrap fade-up-item">
+          <MapFacade />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Final CTA Band -->
+  <CtaBand />
+</BaseLayout>
+
+<style>
+  .contact-header-section {
+    padding-top: clamp(32px, 5vw, 64px);
+    padding-bottom: clamp(32px, 5vw, 48px);
+    background-color: var(--green-50);
+    border-bottom: 1px solid var(--sand-100);
+  }
+
+  .header-inner {
+    max-width: 800px;
+  }
+
+  .page-title {
+    font-size: var(--text-h1);
+    color: var(--green-900);
+    margin-top: 0.5rem;
+    margin-bottom: 1.25rem;
+    line-height: 1.15;
+  }
+
+  .lead-text {
+    font-size: clamp(1.125rem, 0.4vw + 1rem, 1.25rem);
+    color: var(--ink-700);
+    line-height: 1.6;
+    margin: 0;
+  }
+
+  /* Contact Channels Grid */
+  .contact-cards-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+
+  @media (min-width: 640px) {
+    .contact-cards-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .contact-cards-grid {
+      grid-template-columns: repeat(4, 1fr);
+    }
+  }
+
+  .contact-channel-card {
+    padding: clamp(1.5rem, 3vw, 2rem);
+    display: flex;
+    flex-direction: column;
+    border-radius: var(--radius-lg);
+    background-color: var(--white);
+    border: 1px solid var(--sand-100);
+    position: relative;
+  }
+
+  .channel-icon-wrap {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 48px;
+    height: 48px;
+    border-radius: var(--radius-sm);
+    background-color: var(--green-50);
+    color: var(--green-700);
+    margin-bottom: 1.25rem;
+  }
+
+  .channel-badge {
+    position: absolute;
+    top: 1.5rem;
+    right: 1.5rem;
+    font-size: 0.6875rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    padding: 0.2rem 0.5rem;
+    border-radius: var(--radius-full);
+    background-color: var(--green-100);
+    color: var(--green-900);
+  }
+
+  .channel-title {
+    font-size: 1.35rem;
+    color: var(--green-900);
+    margin-bottom: 0.5rem;
+  }
+
+  .channel-desc {
+    font-size: 0.875rem;
+    color: var(--ink-500);
+    line-height: 1.5;
+    margin-bottom: 1rem;
+    flex: 1;
+  }
+
+  .channel-value {
+    font-size: 1.0625rem;
+    font-weight: 600;
+    color: var(--green-900);
+    margin-bottom: 0.2rem;
+  }
+
+  .channel-subvalue {
+    font-size: 0.8125rem;
+    color: var(--ink-500);
+    margin-bottom: 1.25rem;
+  }
+
+  .channel-action {
+    margin-top: auto;
+  }
+
+  /* Primary WhatsApp Card special tint */
+  .is-primary-channel {
+    border-color: var(--green-500);
+    background: linear-gradient(180deg, #FFFFFF 0%, #EAF4EF 100%);
+  }
+
+  .is-primary-channel .channel-icon-wrap {
+    background-color: var(--green-900);
+    color: var(--white);
+  }
+
+  .is-primary-channel .channel-action :global(.btn) {
+    background-color: var(--green-900);
+    color: var(--white);
+    border-color: var(--green-900);
+  }
+
+  .is-primary-channel .channel-action :global(.btn:hover) {
+    background-color: #022F22;
+  }
+
+  .hours-jump-link {
+    display: inline-block;
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--green-700);
+    text-decoration: none;
+    padding: 0.5rem 0;
+  }
+
+  .hours-jump-link:hover {
+    color: var(--green-900);
+    text-decoration: underline;
+  }
+
+  /* Map & Hours Grid */
+  .map-hours-section {
+    background-color: var(--green-50);
+  }
+
+  .map-hours-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 2.5rem;
+    align-items: start;
+  }
+
+  @media (min-width: 1024px) {
+    .map-hours-grid {
+      grid-template-columns: 0.95fr 1.05fr;
+      gap: 3rem;
+    }
+  }
+
+  .hours-table-wrap {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+  }
+
+  .directions-guidance-card {
+    padding: clamp(1.5rem, 3vw, 2rem);
+    background-color: var(--white);
+    border: 1px solid var(--sand-400);
+    border-radius: var(--radius-md);
+  }
+
+  .guidance-title {
+    font-size: 1.35rem;
+    color: var(--green-900);
+    margin-bottom: 0.75rem;
+  }
+
+  .guidance-text {
+    font-size: 0.9375rem;
+    color: var(--ink-700);
+    line-height: 1.6;
+    margin-bottom: 1rem;
+  }
+
+  .guidance-links {
+    margin-top: 1.25rem;
+    padding-top: 1rem;
+    border-top: 1px solid var(--sand-100);
+  }
+
+  .link-bold {
+    font-size: 0.9375rem;
+    font-weight: 600;
+    color: var(--green-700);
+    text-decoration: none;
+  }
+
+  .link-bold:hover {
+    text-decoration: underline;
+    color: var(--green-900);
+  }
+
+  .w-full {
+    width: 100%;
+  }
+</style>

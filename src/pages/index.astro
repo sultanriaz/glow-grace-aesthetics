@@ -1,0 +1,794 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Mark from '../components/Mark.astro';
+import Icon from '../components/Icon.astro';
+import Button from '../components/Button.astro';
+import SectionHeading from '../components/SectionHeading.astro';
+import CategoryTile from '../components/CategoryTile.astro';
+import ServiceCard from '../components/ServiceCard.astro';
+import ConcernChips from '../components/ConcernChips.astro';
+import ProcessSteps from '../components/ProcessSteps.astro';
+import MapFacade from '../components/MapFacade.astro';
+import CtaBand from '../components/CtaBand.astro';
+import { clinic } from '../data/clinic';
+import { categories } from '../data/categories';
+import { getClinicBookingWhatsAppLink, getClinicTelLink } from '../utils/whatsapp';
+import { getMapDirectionsUrl } from '../utils/maps';
+import { getCollection } from 'astro:content';
+
+// Query all services and pick the 6 featured ones in defined order
+const allServices = await getCollection('services');
+const featuredSlugs = [
+  'hydrafacial',
+  'prp-therapy',
+  'botox-lip-fillers',
+  'laser-hair-removal',
+  'hair-transplant',
+  'bridal-glow-packages'
+];
+
+const featuredServices = featuredSlugs
+  .map((slug) => allServices.find((s) => s.id === slug || s.id === `${slug}.md`))
+  .filter((s): s is NonNullable<typeof s> => Boolean(s));
+
+// Category lookup map
+const catMap = Object.fromEntries(categories.map((c) => [c.slug, c.name]));
+
+const pageTitle = `${clinic.name} | Medical Aesthetics Clinic DG Khan`;
+const pageDescription = "Safe, certified, and doctor-led hair, skin, and laser aesthetic treatments in Dera Ghazi Khan. Book your consultation on WhatsApp today.";
+---
+
+<BaseLayout
+  title={pageTitle}
+  description={pageDescription}
+  jsonLdType="home"
+>
+  <!-- 1. Hero Section -->
+  <section class="hero-section" aria-label="Welcome to Glow & Grace Aesthetics">
+    <div class="container hero-container">
+      <div class="hero-content">
+        <span class="eyebrow hero-eyebrow">AESTHETIC MEDICINE IN DERA GHAZI KHAN</span>
+        <h1 class="hero-title">Your skin deserves expert care, not guesswork.</h1>
+        <p class="hero-subtext">
+          Safe, certified, and advanced aesthetic treatments to help you look and feel your best. Your confidence begins with healthy, glowing skin.
+        </p>
+
+        <!-- Hero Actions -->
+        <div class="hero-actions">
+          <Button
+            href={getClinicBookingWhatsAppLink()}
+            target="_blank"
+            variant="primary"
+            size="lg"
+            icon="whatsapp"
+            class="hero-cta-primary"
+          >
+            Book on WhatsApp
+          </Button>
+
+          <Button
+            href="/services/"
+            variant="secondary"
+            size="lg"
+            icon="arrow-right"
+            iconPosition="right"
+          >
+            Explore Services
+          </Button>
+        </div>
+
+        <!-- Trust Chips (Verified Facts Only) -->
+        <div class="trust-chips" role="list" aria-label="Clinic Highlights">
+          <div class="trust-chip" role="listitem">
+            <Icon name="shield-check" size={16} class="trust-icon" />
+            <span>Doctor-led care</span>
+          </div>
+          <div class="trust-chip" role="listitem">
+            <Icon name="clock" size={16} class="trust-icon" />
+            <span>Mon–Sat 10 AM – 10 PM</span>
+          </div>
+          <div class="trust-chip" role="listitem">
+            <Icon name="map-pin" size={16} class="trust-icon" />
+            <span>Multan Road, DG Khan</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Hero Visual: Mark in large circular arc with soft gradient disc & service pills -->
+      <div class="hero-visual" aria-hidden="true">
+        <div class="hero-arc-container">
+          <div class="hero-gradient-disc"></div>
+          <div class="hero-arc-ring"></div>
+          <div class="hero-mark-center">
+            <Mark size={140} />
+          </div>
+
+          <!-- Decorative Floating Service Pills (Purely visual) -->
+          <div class="floating-pill pill-top">
+            <Icon name="sparkles" size={14} />
+            <span>HydraFacial Glow</span>
+          </div>
+          <div class="floating-pill pill-left">
+            <Icon name="zap" size={14} />
+            <span>Laser Hair Removal</span>
+          </div>
+          <div class="floating-pill pill-bottom">
+            <Icon name="shield-check" size={14} />
+            <span>PRP Therapy</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 2. Aesthetic Categories Grid (6 Tiles) -->
+  <section class="section categories-section" id="categories" aria-label="Treatment Categories">
+    <div class="container">
+      <SectionHeading
+        eyebrow="TREATMENT SPECIALTIES"
+        title="Comprehensive Medical Aesthetic Solutions"
+        description="Explore our specialized clinical divisions tailored to address your specific skin, hair, facial, and wellness aspirations."
+      />
+
+      <div class="category-grid">
+        {categories.map((cat) => (
+          <div class="fade-up-item">
+            <CategoryTile
+              slug={cat.slug}
+              name={cat.name}
+              description={cat.shortDescription}
+              icon={cat.icon}
+            />
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- 3. Signature Treatments (6 Featured Services) -->
+  <section class="section signature-section" aria-label="Signature Treatments">
+    <div class="container">
+      <SectionHeading
+        eyebrow="SIGNATURE CARE"
+        title="Featured Clinical Treatments"
+        description="Our most requested evidence-guided procedures administered with meticulous clinical precision and individualized attention."
+      />
+
+      <div class="signature-grid">
+        {featuredServices.map((service) => (
+          <div class="fade-up-item">
+            <ServiceCard
+              slug={service.id.replace(/\.md$/, '')}
+              title={service.data.title}
+              tagline={service.data.tagline}
+              category={catMap[service.data.category] || service.data.category}
+              icon={service.data.icon}
+              featured={true}
+            />
+          </div>
+        ))}
+      </div>
+
+      <div class="signature-footer text-center">
+        <Button href="/services/" variant="secondary" size="md" icon="arrow-right" iconPosition="right">
+          View All 23 Aesthetic Services
+        </Button>
+      </div>
+    </div>
+  </section>
+
+  <!-- 4. Concern Finder Chips -->
+  <section class="section concerns-section" aria-label="Find Treatments by Concern">
+    <div class="container text-center">
+      <SectionHeading
+        eyebrow="TARGETED CARE"
+        title="What would you like to address?"
+        description="Select your primary concern to discover appropriate doctor-led clinical treatment pathways."
+      />
+      <div class="fade-up-item">
+        <ConcernChips />
+      </div>
+    </div>
+  </section>
+
+  <!-- 5. Why Glow & Grace (4 Pillars, Verified Facts Only) -->
+  <section class="section pillars-section" aria-label="Why Choose Glow & Grace">
+    <div class="container">
+      <SectionHeading
+        eyebrow="THE CLINICAL DIFFERENCE"
+        title="Why Glow & Grace Aesthetics"
+        description="Grounded in medical integrity, patient safety, and personalized care in Dera Ghazi Khan."
+      />
+
+      <div class="pillars-grid">
+        <div class="pillar-card card-base fade-up-item">
+          <div class="pillar-icon-wrap" aria-hidden="true">
+            <Icon name="shield-check" size={26} />
+          </div>
+          <h3 class="pillar-title">Doctor-Led Care</h3>
+          <p class="pillar-text">
+            Every consultation, treatment evaluation, and procedure protocol is overseen by qualified medical aesthetic practitioners.
+          </p>
+        </div>
+
+        <div class="pillar-card card-base fade-up-item">
+          <div class="pillar-icon-wrap" aria-hidden="true">
+            <Icon name="sparkles" size={26} />
+          </div>
+          <h3 class="pillar-title">Safe & Certified Protocols</h3>
+          <p class="pillar-text">
+            We adhere strictly to certified medical aesthetic standards, clinical hygiene, and genuine equipment technologies.
+          </p>
+        </div>
+
+        <div class="pillar-card card-base fade-up-item">
+          <div class="pillar-icon-wrap" aria-hidden="true">
+            <Icon name="user" size={26} />
+          </div>
+          <h3 class="pillar-title">Personalized Consultation</h3>
+          <p class="pillar-text">
+            No cookie-cutter packages. Your treatment plan is tailored to your unique anatomical profile, skin tolerance, and personal goals.
+          </p>
+        </div>
+
+        <div class="pillar-card card-base fade-up-item">
+          <div class="pillar-icon-wrap" aria-hidden="true">
+            <Icon name="clock" size={26} />
+          </div>
+          <h3 class="pillar-title">Convenient Six-Day Hours</h3>
+          <p class="pillar-text">
+            Open Monday through Saturday from 10:00 AM to 10:00 PM, providing accessible appointments around your busy schedule.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 6. Treatment Process (4 Steps) -->
+  <section class="section process-section" aria-label="Treatment Process">
+    <div class="container">
+      <SectionHeading
+        eyebrow="YOUR JOURNEY"
+        title="How We Care For You"
+        description="A structured, medical approach to ensure safety, comfort, and realistic aesthetic refinement at every stage."
+      />
+      <div class="fade-up-item">
+        <ProcessSteps />
+      </div>
+    </div>
+  </section>
+
+  <!-- 7. Bridal Spotlight Band -->
+  <section class="section bridal-spotlight-section" aria-label="Bridal Aesthetics">
+    <div class="container">
+      <div class="bridal-banner card-base fade-up-item">
+        <div class="bridal-content">
+          <span class="eyebrow bridal-eyebrow">WEDDING PREPARATION</span>
+          <h2 class="bridal-title">Bridal & Groom Glow Packages</h2>
+          <p class="bridal-description">
+            Planned well ahead of your wedding festivities to ensure clarified, radiant skin without last-minute redness or downtime.
+          </p>
+          <div class="bridal-actions">
+            <Button
+              href="/services/bridal-glow-packages/"
+              variant="primary"
+              size="md"
+              icon="arrow-right"
+              iconPosition="right"
+            >
+              Explore Bridal Packages
+            </Button>
+            <Button
+              href={getClinicBookingWhatsAppLink()}
+              target="_blank"
+              variant="secondary"
+              size="md"
+              icon="whatsapp"
+            >
+              Discuss Wedding Timeline
+            </Button>
+          </div>
+        </div>
+        <div class="bridal-visual" aria-hidden="true">
+          <div class="bridal-flower-icon">
+            <Icon name="flower" size={96} strokeWidth={1} />
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 8. Visit Us & Map -->
+  <section class="section visit-section" id="visit" aria-label="Visit Our Clinic">
+    <div class="container">
+      <SectionHeading
+        eyebrow="OUR LOCATION"
+        title="Visit Glow & Grace Aesthetics"
+        description="Located conveniently within YCDO Ghazi National Hospital on Multan Road, Dera Ghazi Khan."
+      />
+
+      <div class="visit-grid">
+        <!-- Location details card -->
+        <div class="visit-info-card card-base fade-up-item">
+          <h3 class="visit-info-title">Clinic Details</h3>
+
+          <div class="visit-detail-item">
+            <div class="visit-icon-wrap" aria-hidden="true">
+              <Icon name="map-pin" size={20} />
+            </div>
+            <div>
+              <strong class="detail-label">Address</strong>
+              <p class="detail-value">{clinic.address.line1}</p>
+              <p class="detail-sub">{clinic.address.line2}, {clinic.address.cityFull}</p>
+            </div>
+          </div>
+
+          <div class="visit-detail-item">
+            <div class="visit-icon-wrap" aria-hidden="true">
+              <Icon name="clock" size={20} />
+            </div>
+            <div>
+              <strong class="detail-label">Hours</strong>
+              <p class="detail-value">Monday – Saturday: 10:00 AM – 10:00 PM</p>
+              <p class="detail-sub">Sunday: Closed</p>
+            </div>
+          </div>
+
+          <div class="visit-detail-item">
+            <div class="visit-icon-wrap" aria-hidden="true">
+              <Icon name="phone" size={20} />
+            </div>
+            <div>
+              <strong class="detail-label">Phone & Inquiries</strong>
+              <p class="detail-value">{clinic.phone.display}</p>
+              <p class="detail-sub">WhatsApp appointments available</p>
+            </div>
+          </div>
+
+          <div class="visit-actions">
+            <Button
+              href={getClinicBookingWhatsAppLink()}
+              target="_blank"
+              variant="primary"
+              size="md"
+              icon="whatsapp"
+              class="w-full"
+            >
+              Book on WhatsApp
+            </Button>
+            <div class="visit-sub-actions">
+              <Button href={getClinicTelLink()} variant="secondary" size="sm" icon="phone">
+                Call Clinic
+              </Button>
+              <Button href={getMapDirectionsUrl()} target="_blank" variant="secondary" size="sm" icon="navigation">
+                Get Directions
+              </Button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Click-to-load Map Facade -->
+        <div class="visit-map-wrap fade-up-item">
+          <MapFacade />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 9. Final CTA Band -->
+  <CtaBand />
+</BaseLayout>
+
+<style>
+  /* Hero Section */
+  .hero-section {
+    padding-top: clamp(48px, 7vw, 96px);
+    padding-bottom: clamp(64px, 8vw, 112px);
+    position: relative;
+    overflow: hidden;
+    background: radial-gradient(circle at top right, #EAF4EF 0%, #FAF7F2 65%);
+  }
+
+  .hero-container {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 3rem;
+    align-items: center;
+  }
+
+  @media (min-width: 1024px) {
+    .hero-container {
+      grid-template-columns: 1.15fr 0.85fr;
+      gap: 4rem;
+    }
+  }
+
+  .hero-content {
+    max-width: 640px;
+  }
+
+  .hero-eyebrow {
+    margin-bottom: 1rem;
+  }
+
+  .hero-title {
+    font-size: var(--text-h1);
+    color: var(--green-900);
+    line-height: 1.12;
+    margin-bottom: 1.5rem;
+  }
+
+  .hero-subtext {
+    font-size: clamp(1.125rem, 0.4vw + 1rem, 1.25rem);
+    color: var(--ink-700);
+    line-height: 1.6;
+    margin-bottom: 2.25rem;
+  }
+
+  .hero-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-bottom: 2.5rem;
+  }
+
+  .trust-chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+  }
+
+  .trust-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    font-size: 0.8125rem;
+    font-weight: 500;
+    color: var(--green-900);
+    background-color: var(--white);
+    padding: 0.45rem 0.85rem;
+    border-radius: var(--radius-full);
+    border: 1px solid var(--sand-400);
+    box-shadow: var(--shadow-subtle);
+  }
+
+  .trust-icon {
+    color: var(--green-700);
+  }
+
+  /* Hero Visual */
+  .hero-visual {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+  }
+
+  .hero-arc-container {
+    position: relative;
+    width: clamp(260px, 38vw, 420px);
+    height: clamp(260px, 38vw, 420px);
+    aspect-ratio: 1 / 1;
+    max-width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    contain: layout;
+  }
+
+  .hero-gradient-disc {
+    position: absolute;
+    inset: 15px;
+    border-radius: var(--radius-full);
+    background: radial-gradient(circle at 35% 35%, #D5EADF 0%, #FAF7F2 75%);
+    box-shadow: var(--shadow-card);
+  }
+
+  .hero-arc-ring {
+    position: absolute;
+    inset: 0;
+    border-radius: var(--radius-full);
+    border: 2px dashed var(--sand-400);
+    opacity: 0.7;
+    animation: slowRotate 80s linear infinite;
+  }
+
+  @keyframes slowRotate {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .hero-arc-ring {
+      animation: none;
+    }
+  }
+
+  .hero-mark-center {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  /* Floating visual pills */
+  .floating-pill {
+    position: absolute;
+    z-index: 3;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    background-color: var(--white);
+    color: var(--green-900);
+    font-size: 0.8125rem;
+    font-weight: 500;
+    padding: 0.45rem 0.95rem;
+    border-radius: var(--radius-full);
+    border: 1px solid var(--sand-400);
+    box-shadow: var(--shadow-card);
+    white-space: nowrap;
+  }
+
+  .pill-top {
+    top: 5%;
+    right: 5%;
+  }
+
+  .pill-left {
+    bottom: 25%;
+    left: 2%;
+  }
+
+  .pill-bottom {
+    bottom: 2%;
+    right: 12%;
+  }
+
+  /* Category Grid */
+  .category-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+
+  @media (min-width: 640px) {
+    .category-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .category-grid {
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2rem;
+    }
+  }
+
+  /* Signature Section */
+  .signature-section {
+    background-color: var(--green-50);
+  }
+
+  .signature-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+
+  @media (min-width: 640px) {
+    .signature-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .signature-grid {
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2rem;
+    }
+  }
+
+  .signature-footer {
+    margin-top: 3rem;
+  }
+
+  /* Pillars Section */
+  .pillars-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+
+  @media (min-width: 640px) {
+    .pillars-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .pillars-grid {
+      grid-template-columns: repeat(4, 1fr);
+    }
+  }
+
+  .pillar-card {
+    padding: clamp(1.5rem, 3vw, 2rem);
+    border-radius: var(--radius-md);
+    background-color: var(--white);
+    border: 1px solid var(--sand-100);
+  }
+
+  .pillar-icon-wrap {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 52px;
+    height: 52px;
+    border-radius: var(--radius-sm);
+    background-color: var(--green-50);
+    color: var(--green-700);
+    margin-bottom: 1.25rem;
+  }
+
+  .pillar-title {
+    font-size: 1.25rem;
+    color: var(--green-900);
+    margin-bottom: 0.65rem;
+  }
+
+  .pillar-text {
+    font-size: 0.9375rem;
+    color: var(--ink-500);
+    line-height: 1.55;
+    margin: 0;
+  }
+
+  /* Bridal Spotlight */
+  .bridal-banner {
+    background: linear-gradient(135deg, #FAF7F2 0%, #EAF4EF 100%);
+    border: 1px solid var(--sand-400);
+    border-radius: var(--radius-lg);
+    padding: clamp(2rem, 5vw, 3.5rem);
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 2rem;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  @media (min-width: 768px) {
+    .bridal-banner {
+      grid-template-columns: 1.4fr 0.6fr;
+    }
+  }
+
+  .bridal-content {
+    max-width: 600px;
+  }
+
+  .bridal-eyebrow {
+    color: var(--sand-700);
+  }
+
+  .bridal-title {
+    font-size: var(--text-h2);
+    color: var(--green-900);
+    margin-bottom: 0.75rem;
+  }
+
+  .bridal-description {
+    font-size: var(--text-base);
+    color: var(--ink-700);
+    margin-bottom: 1.75rem;
+    line-height: 1.6;
+  }
+
+  .bridal-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+
+  .bridal-visual {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .bridal-flower-icon {
+    color: var(--green-500);
+    opacity: 0.35;
+  }
+
+  /* Visit Section */
+  .visit-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 2rem;
+    align-items: start;
+  }
+
+  @media (min-width: 1024px) {
+    .visit-grid {
+      grid-template-columns: 0.95fr 1.05fr;
+      gap: 3rem;
+    }
+  }
+
+  .visit-info-card {
+    padding: clamp(1.75rem, 4vw, 2.5rem);
+    border-radius: var(--radius-lg);
+    background-color: var(--white);
+    border: 1px solid var(--sand-400);
+  }
+
+  .visit-info-title {
+    font-size: 1.6rem;
+    color: var(--green-900);
+    margin-bottom: 1.5rem;
+    padding-bottom: 0.75rem;
+    border-bottom: 1px solid var(--sand-100);
+  }
+
+  .visit-detail-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .visit-icon-wrap {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    border-radius: var(--radius-sm);
+    background-color: var(--green-50);
+    color: var(--green-700);
+    flex-shrink: 0;
+  }
+
+  .detail-label {
+    display: block;
+    font-size: 0.8125rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--green-700);
+    margin-bottom: 0.2rem;
+  }
+
+  .detail-value {
+    font-size: 1rem;
+    font-weight: 500;
+    color: var(--green-900);
+    margin: 0;
+  }
+
+  .detail-sub {
+    font-size: 0.875rem;
+    color: var(--ink-500);
+    margin: 0.15rem 0 0 0;
+  }
+
+  .visit-actions {
+    margin-top: 2rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--sand-100);
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .visit-sub-actions {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.75rem;
+  }
+
+  .w-full {
+    width: 100%;
+  }
+</style>

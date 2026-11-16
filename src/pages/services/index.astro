@@ -1,0 +1,444 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import ServiceCard from '../../components/ServiceCard.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import Icon from '../../components/Icon.astro';
+import CtaBand from '../../components/CtaBand.astro';
+import { clinic } from '../../data/clinic';
+import { categories, categoryOrder } from '../../data/categories';
+import { getCollection } from 'astro:content';
+
+const allServices = await getCollection('services');
+
+// Group services by category in ordered sequence
+const servicesByCategory = categoryOrder.map((catSlug) => {
+  const categoryMeta = categories.find((c) => c.slug === catSlug)!;
+  const services = allServices
+    .filter((s) => s.data.category === catSlug)
+    .sort((a, b) => a.data.order - b.data.order);
+  return {
+    ...categoryMeta,
+    services
+  };
+});
+
+const pageTitle = `Clinical Aesthetic Services | ${clinic.name} DG Khan`;
+const pageDescription = `Explore all 23 doctor-led aesthetic treatments at Glow & Grace Aesthetics in Dera Ghazi Khan. Hair transplant, PRP, HydraFacial, laser hair removal & skin care.`;
+
+const breadcrumbs = [
+  { label: 'Services' }
+];
+---
+
+<BaseLayout
+  title={pageTitle}
+  description={pageDescription}
+>
+  <!-- Page Header -->
+  <section class="services-header-section section">
+    <div class="container">
+      <Breadcrumbs items={breadcrumbs} />
+      <div class="header-content">
+        <span class="eyebrow">COMPREHENSIVE CLINICAL DIRECTORY</span>
+        <h1 class="page-title">Aesthetic Treatments & Therapies</h1>
+        <p class="lead-text">
+          Browse our complete range of certified medical aesthetic procedures across hair restoration, clinical dermatology, laser technologies, and facial aesthetics.
+        </p>
+      </div>
+
+      <!-- Progressive Enhancement Search & Sticky Filter Bar -->
+      <div class="filter-controls-wrap">
+        <!-- Live Search Input -->
+        <div class="search-input-wrap">
+          <label for="services-search-input" class="sr-only">Search aesthetic treatments by name or keyword</label>
+          <Icon name="search" size={20} class="search-icon" />
+          <input
+            type="search"
+            id="services-search-input"
+            class="services-search-input"
+            placeholder="Search treatments (e.g., PRP, HydraFacial, Melasma, Laser)..."
+            autocomplete="off"
+          />
+        </div>
+
+        <!-- Category Filter Buttons / Anchor Links -->
+        <div class="category-chips-bar" role="navigation" aria-label="Filter Services by Category">
+          <button
+            type="button"
+            class="cat-chip-btn is-active"
+            data-filter="all"
+          >
+            All Services ({allServices.length})
+          </button>
+          {categories.map((cat) => (
+            <a
+              href={`#${cat.slug}`}
+              class="cat-chip-btn"
+              data-filter={cat.slug}
+            >
+              {cat.name}
+            </a>
+          ))}
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Categorized Services Sections -->
+  <div class="services-hub-body section">
+    <div class="container">
+      <!-- Search Empty Notice -->
+      <div id="no-search-results" class="no-results-card card-base" style="display: none;">
+        <Icon name="sparkles" size={32} class="no-results-icon" />
+        <h3>No matching treatments found</h3>
+        <p>Try searching with another keyword or explore our categories below.</p>
+        <button type="button" class="btn btn-secondary btn-sm" id="clear-search-btn">
+          Clear Search
+        </button>
+      </div>
+
+      {servicesByCategory.map((category) => (
+        <section
+          class="category-group-section"
+          id={category.slug}
+          data-category={category.slug}
+          aria-labelledby={`heading-${category.slug}`}
+        >
+          <div class="category-group-header">
+            <div class="category-group-icon" aria-hidden="true">
+              <Icon name={category.icon} size={28} />
+            </div>
+            <div>
+              <h2 class="category-group-title" id={`heading-${category.slug}`}>
+                {category.name}
+              </h2>
+              <p class="category-group-desc">{category.shortDescription}</p>
+            </div>
+          </div>
+
+          <div class="services-cards-grid">
+            {category.services.map((service) => (
+              <div
+                class="service-item-wrapper fade-up-item"
+                data-title={service.data.title.toLowerCase()}
+                data-tags={service.data.tags.join(' ').toLowerCase()}
+                data-category={service.data.category}
+                data-summary={service.data.summary.toLowerCase()}
+              >
+                <ServiceCard
+                  slug={service.id.replace(/\.md$/, '')}
+                  title={service.data.title}
+                  tagline={service.data.tagline}
+                  category={category.name}
+                  icon={service.data.icon}
+                  featured={service.data.featured}
+                />
+              </div>
+            ))}
+          </div>
+        </section>
+      ))}
+    </div>
+  </div>
+
+  <!-- Final CTA Band -->
+  <CtaBand
+    title="Not sure which treatment aligns with your goals?"
+    subtitle="Our medical team is here to listen and guide you. Book an initial clinical consultation at Glow & Grace Aesthetics."
+  />
+</BaseLayout>
+
+<script>
+  // Progressive enhancement client search and category filtering
+  function initServicesFilter() {
+    const searchInput = document.getElementById('services-search-input') as HTMLInputElement | null;
+    const filterButtons = document.querySelectorAll<HTMLElement>('.cat-chip-btn');
+    const categorySections = document.querySelectorAll<HTMLElement>('.category-group-section');
+    const noResults = document.getElementById('no-search-results');
+    const clearBtn = document.getElementById('clear-search-btn');
+
+    let currentCategory = 'all';
+    let currentSearchTerm = '';
+
+    function applyFilters() {
+      let visibleTotal = 0;
+
+      categorySections.forEach((section) => {
+        const itemsInSection = section.querySelectorAll<HTMLElement>('.service-item-wrapper');
+        let visibleInSection = 0;
+
+        itemsInSection.forEach((item) => {
+          const itemCat = item.getAttribute('data-category');
+          const title = item.getAttribute('data-title') || '';
+          const tags = item.getAttribute('data-tags') || '';
+          const summary = item.getAttribute('data-summary') || '';
+
+          const matchesCategory = currentCategory === 'all' || currentCategory === itemCat;
+          const matchesSearch =
+            currentSearchTerm === '' ||
+            title.includes(currentSearchTerm) ||
+            tags.includes(currentSearchTerm) ||
+            summary.includes(currentSearchTerm);
+
+          if (matchesCategory && matchesSearch) {
+            item.style.display = 'block';
+            visibleInSection++;
+            visibleTotal++;
+          } else {
+            item.style.display = 'none';
+          }
+        });
+
+        // Hide section heading if no items visible in it
+        if (visibleInSection === 0) {
+          section.style.display = 'none';
+        } else {
+          section.style.display = 'block';
+        }
+      });
+
+      if (noResults) {
+        noResults.style.display = visibleTotal === 0 ? 'block' : 'none';
+      }
+    }
+
+    // Search event
+    searchInput?.addEventListener('input', (e) => {
+      currentSearchTerm = (e.target as HTMLInputElement).value.toLowerCase().trim();
+      applyFilters();
+    });
+
+    clearBtn?.addEventListener('click', () => {
+      if (searchInput) searchInput.value = '';
+      currentSearchTerm = '';
+      currentCategory = 'all';
+      filterButtons.forEach((btn) => btn.classList.remove('is-active'));
+      filterButtons[0]?.classList.add('is-active');
+      applyFilters();
+    });
+
+    // Filter button events
+    filterButtons.forEach((button) => {
+      button.addEventListener('click', () => {
+        const filterVal = button.getAttribute('data-filter') || 'all';
+
+        // Update active class
+        filterButtons.forEach((btn) => btn.classList.remove('is-active'));
+        button.classList.add('is-active');
+
+        currentCategory = filterVal;
+        applyFilters();
+
+        // If clicking a category anchor, smoothly scroll if all categories visible
+        if (filterVal !== 'all') {
+          const targetSection = document.getElementById(filterVal);
+          targetSection?.scrollIntoView({ behavior: 'smooth' });
+        }
+      });
+    });
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initServicesFilter);
+  } else {
+    initServicesFilter();
+  }
+</script>
+
+<style>
+  .services-header-section {
+    padding-top: clamp(32px, 5vw, 64px);
+    padding-bottom: clamp(32px, 5vw, 48px);
+    background-color: var(--green-50);
+    border-bottom: 1px solid var(--sand-100);
+  }
+
+  .header-content {
+    max-width: 800px;
+    margin-bottom: 2rem;
+  }
+
+  .page-title {
+    font-size: var(--text-h1);
+    color: var(--green-900);
+    margin-top: 0.5rem;
+    margin-bottom: 1.25rem;
+    line-height: 1.15;
+  }
+
+  .lead-text {
+    font-size: clamp(1.125rem, 0.4vw + 1rem, 1.25rem);
+    color: var(--ink-700);
+    line-height: 1.6;
+    margin: 0;
+  }
+
+  /* Filter & Search Controls */
+  .filter-controls-wrap {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+    margin-top: 1.5rem;
+  }
+
+  .search-input-wrap {
+    position: relative;
+    max-width: 600px;
+  }
+
+  .search-icon {
+    position: absolute;
+    left: 1.25rem;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--green-700);
+    pointer-events: none;
+  }
+
+  .services-search-input {
+    width: 100%;
+    padding: 0.85rem 1.25rem 0.85rem 3rem;
+    font-size: 1rem;
+    font-family: var(--font-sans);
+    color: var(--ink-700);
+    background-color: var(--white);
+    border: 1px solid var(--sand-400);
+    border-radius: var(--radius-full);
+    box-shadow: var(--shadow-subtle);
+    outline: none;
+    transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
+  }
+
+  .services-search-input:focus {
+    border-color: var(--green-700);
+    box-shadow: 0 0 0 3px rgba(31, 122, 90, 0.15);
+  }
+
+  /* Category chips */
+  .category-chips-bar {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  .cat-chip-btn {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.5rem 1rem;
+    font-family: var(--font-sans);
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: var(--green-900);
+    background-color: var(--white);
+    border: 1px solid var(--sand-400);
+    border-radius: var(--radius-full);
+    text-decoration: none;
+    cursor: pointer;
+    transition: background-color var(--transition-fast), color var(--transition-fast), border-color var(--transition-fast);
+    min-height: 38px;
+  }
+
+  .cat-chip-btn:hover {
+    background-color: var(--green-50);
+    color: var(--green-900);
+  }
+
+  .cat-chip-btn.is-active {
+    background-color: var(--green-900);
+    color: var(--white);
+    border-color: var(--green-900);
+  }
+
+  /* Hub Body */
+  .services-hub-body {
+    padding-top: clamp(48px, 6vw, 72px);
+    padding-bottom: clamp(64px, 8vw, 96px);
+  }
+
+  .category-group-section {
+    margin-bottom: clamp(3rem, 6vw, 5rem);
+    scroll-margin-top: 100px;
+  }
+
+  .category-group-section:last-child {
+    margin-bottom: 0;
+  }
+
+  .category-group-header {
+    display: flex;
+    align-items: flex-start;
+    gap: 1.25rem;
+    padding-bottom: 1.25rem;
+    margin-bottom: 2rem;
+    border-bottom: 1px solid var(--sand-400);
+  }
+
+  .category-group-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 52px;
+    height: 52px;
+    border-radius: var(--radius-sm);
+    background-color: var(--green-50);
+    color: var(--green-900);
+    flex-shrink: 0;
+    border: 1px solid var(--green-100);
+  }
+
+  .category-group-title {
+    font-size: var(--text-h2);
+    color: var(--green-900);
+    margin-bottom: 0.25rem;
+    line-height: 1.2;
+  }
+
+  .category-group-desc {
+    font-size: 1rem;
+    color: var(--ink-500);
+    margin: 0;
+  }
+
+  .services-cards-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+
+  @media (min-width: 640px) {
+    .services-cards-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .services-cards-grid {
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2rem;
+    }
+  }
+
+  /* No results */
+  .no-results-card {
+    text-align: center;
+    padding: 3rem 2rem;
+    max-width: 500px;
+    margin: 2rem auto;
+  }
+
+  .no-results-icon {
+    color: var(--sand-400);
+    margin-bottom: 1rem;
+  }
+
+  .no-results-card h3 {
+    font-size: 1.5rem;
+    color: var(--green-900);
+    margin-bottom: 0.5rem;
+  }
+
+  .no-results-card p {
+    color: var(--ink-500);
+    margin-bottom: 1.5rem;
+  }
+</style>

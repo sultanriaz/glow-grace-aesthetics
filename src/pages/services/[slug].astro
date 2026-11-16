@@ -1,0 +1,676 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import Button from '../../components/Button.astro';
+import Icon from '../../components/Icon.astro';
+import ServiceCard from '../../components/ServiceCard.astro';
+import SectionHeading from '../../components/SectionHeading.astro';
+import CtaBand from '../../components/CtaBand.astro';
+import { clinic } from '../../data/clinic';
+import { categories } from '../../data/categories';
+import { getServiceBookingWhatsAppLink, getClinicTelLink } from '../../utils/whatsapp';
+import { getCollection, render } from 'astro:content';
+
+export async function getStaticPaths() {
+  const allServices = await getCollection('services');
+  return allServices.map((service) => ({
+    params: { slug: service.id.replace(/\.md$/, '') },
+    props: { service, allServices }
+  }));
+}
+
+const { service, allServices } = Astro.props;
+const { Content } = await render(service);
+
+const currentSlug = service.id.replace(/\.md$/, '');
+const categoryObj = categories.find((c) => c.slug === service.data.category);
+const categoryName = categoryObj ? categoryObj.name : service.data.category;
+
+// Related services (same category, excluding self, up to 3)
+const relatedServices = allServices
+  .filter((s) => s.data.category === service.data.category && s.id !== service.id)
+  .slice(0, 3);
+
+const waBookingLink = getServiceBookingWhatsAppLink(service.data.title);
+
+const pageTitle = service.data.seoTitle || `${service.data.title} in DG Khan | ${clinic.shortName}`;
+const pageDescription = service.data.seoDescription || service.data.summary;
+
+const breadcrumbs = [
+  { label: 'Services', href: '/services/' },
+  { label: categoryName, href: `/services/#${service.data.category}` },
+  { label: service.data.title }
+];
+
+const serviceJsonLd = {
+  title: service.data.title,
+  description: service.data.summary,
+  category: categoryName,
+  url: Astro.url.href
+};
+
+const breadcrumbsJsonLd = [
+  { name: 'Home', item: '/' },
+  { name: 'Services', item: '/services/' },
+  { name: categoryName, item: `/services/#${service.data.category}` },
+  { name: service.data.title, item: Astro.url.pathname }
+];
+
+const isMoleRemoval = currentSlug === 'mole-wart-removal';
+---
+
+<BaseLayout
+  title={pageTitle}
+  description={pageDescription}
+  jsonLdType="service"
+  serviceJsonLd={serviceJsonLd}
+  breadcrumbsJsonLd={breadcrumbsJsonLd}
+>
+  <!-- Service Hero Section -->
+  <header class="service-hero-section section">
+    <div class="container">
+      <Breadcrumbs items={breadcrumbs} />
+
+      <div class="service-hero-grid">
+        <div class="service-hero-content">
+          <div class="service-category-badge">
+            <Icon name={categoryObj?.icon || 'sparkles'} size={16} />
+            <span>{categoryName}</span>
+          </div>
+
+          <h1 class="service-title">{service.data.title}</h1>
+          <p class="service-tagline">{service.data.tagline}</p>
+
+          <p class="service-summary-lead">{service.data.summary}</p>
+
+          <div class="service-hero-actions">
+            <Button
+              href={waBookingLink}
+              target="_blank"
+              variant="primary"
+              size="lg"
+              icon="whatsapp"
+              class="service-primary-wa"
+            >
+              Book Consultation on WhatsApp
+            </Button>
+
+            <Button
+              href={getClinicTelLink()}
+              variant="secondary"
+              size="lg"
+              icon="phone"
+            >
+              Call {clinic.phone.display}
+            </Button>
+          </div>
+        </div>
+
+        <!-- Service Trust & Quick Facts Card -->
+        <div class="service-hero-card-wrap">
+          <div class="service-facts-card card-base">
+            <h2 class="facts-title">Clinical Care Overview</h2>
+            <ul class="facts-list" role="list">
+              <li class="fact-item">
+                <Icon name="shield-check" size={18} class="fact-icon" />
+                <div>
+                  <strong>Evaluation</strong>
+                  <p>In-person doctor assessment required</p>
+                </div>
+              </li>
+              <li class="fact-item">
+                <Icon name="clock" size={18} class="fact-icon" />
+                <div>
+                  <strong>Availability</strong>
+                  <p>Monday to Saturday, 10 AM to 10 PM</p>
+                </div>
+              </li>
+              <li class="fact-item">
+                <Icon name="map-pin" size={18} class="fact-icon" />
+                <div>
+                  <strong>Facility</strong>
+                  <p>YCDO Ghazi National Hospital, DG Khan</p>
+                </div>
+              </li>
+              <li class="fact-item">
+                <Icon name="user" size={18} class="fact-icon" />
+                <div>
+                  <strong>Suitability</strong>
+                  <p>Decided by the physician during consultation</p>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Special Clinical Advisory for Mole & Wart Removal -->
+  {isMoleRemoval && (
+    <div class="container mole-alert-container">
+      <div class="mole-warning-banner" role="alert">
+        <div class="alert-icon" aria-hidden="true">
+          <Icon name="shield-alert" size={24} />
+        </div>
+        <div>
+          <strong class="alert-title">Important Medical Precaution:</strong>
+          <p class="alert-desc">
+            Any mole that changes in size, shape, borders, or color, or exhibits itching or bleeding, must be clinically examined by a doctor to rule out atypical lesions before any cosmetic removal is considered.
+          </p>
+        </div>
+      </div>
+    </div>
+  )}
+
+  <!-- Service Details Section: Overview, Benefits & Ideal-For -->
+  <section class="section service-body-section" aria-label="Treatment Information">
+    <div class="container">
+      <div class="service-layout-grid">
+        <!-- Main Clinical Body -->
+        <div class="service-main-content">
+          <div class="content-block card-base fade-up-item">
+            <h2 class="content-heading">What to Expect from this Treatment</h2>
+            <div class="prose-treatment">
+              <Content />
+            </div>
+
+            <!-- Standard Consultation Medical Note -->
+            <div class="consultation-medical-notice">
+              <Icon name="shield-check" size={20} class="notice-icon" />
+              <p>
+                <strong>Medical Notice:</strong> Suitability is decided by the doctor after a consultation. Results vary from person to person based on biological characteristics, skin type, and post-procedure care adherence.
+              </p>
+            </div>
+          </div>
+
+          <!-- Benefits Block (4 items) -->
+          <div class="content-block card-base fade-up-item">
+            <h2 class="content-heading">Key Clinical Advantages</h2>
+            <ul class="benefits-grid-list" role="list">
+              {service.data.benefits.map((benefit) => (
+                <li class="benefit-card-item">
+                  <div class="benefit-check-icon" aria-hidden="true">
+                    <Icon name="check" size={16} />
+                  </div>
+                  <span class="benefit-text">{benefit}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          <!-- Ideal For Block (3 items) -->
+          <div class="content-block card-base fade-up-item">
+            <h2 class="content-heading">Who is this Treatment Ideal For?</h2>
+            <ul class="ideal-for-list" role="list">
+              {service.data.idealFor.map((target) => (
+                <li class="ideal-item">
+                  <div class="ideal-bullet" aria-hidden="true">
+                    <Icon name="sparkles" size={16} />
+                  </div>
+                  <span class="ideal-text">{target}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+
+        <!-- Sidebar / Action Sticky Card -->
+        <aside class="service-sidebar">
+          <div class="sticky-inquiry-card card-base fade-up-item">
+            <h3 class="inquiry-card-title">Book for {service.data.title}</h3>
+            <p class="inquiry-card-desc">
+              Send an instant WhatsApp inquiry to check doctor availability and discuss your scheduling preferences.
+            </p>
+
+            <Button
+              href={waBookingLink}
+              target="_blank"
+              variant="primary"
+              size="md"
+              icon="whatsapp"
+              class="w-full mb-3"
+            >
+              Inquire on WhatsApp
+            </Button>
+
+            <Button
+              href={getClinicTelLink()}
+              variant="secondary"
+              size="md"
+              icon="phone"
+              class="w-full"
+            >
+              Call {clinic.phone.display}
+            </Button>
+
+            <hr class="inquiry-divider" />
+
+            <div class="inquiry-tags">
+              <span class="tags-label">Keywords:</span>
+              <div class="tags-wrap">
+                {service.data.tags.map((tag) => (
+                  <span class="tag-pill">{tag}</span>
+                ))}
+              </div>
+            </div>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </section>
+
+  <!-- Related Services in Same Category -->
+  {relatedServices.length > 0 && (
+    <section class="section related-services-section" aria-label="Related Treatments">
+      <div class="container">
+        <SectionHeading
+          eyebrow={`EXPLORE MORE IN ${categoryName.toUpperCase()}`}
+          title="Related Clinical Procedures"
+          description="Discover complementary aesthetic options within this specialized division."
+        />
+
+        <div class="related-services-grid">
+          {relatedServices.map((rel) => (
+            <div class="fade-up-item">
+              <ServiceCard
+                slug={rel.id.replace(/\.md$/, '')}
+                title={rel.data.title}
+                tagline={rel.data.tagline}
+                category={categoryName}
+                icon={rel.data.icon}
+                featured={rel.data.featured}
+              />
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  )}
+
+  <!-- Final CTA Band -->
+  <CtaBand
+    title={`Ready to discuss ${service.data.title}?`}
+    subtitle="Our doctor conducts personalized evaluations to map the safest, most effective pathway for your aesthetic goals."
+  />
+</BaseLayout>
+
+<style>
+  .service-hero-section {
+    padding-top: clamp(32px, 5vw, 64px);
+    padding-bottom: clamp(32px, 5vw, 48px);
+    background-color: var(--green-50);
+    border-bottom: 1px solid var(--sand-100);
+  }
+
+  .service-hero-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 2.5rem;
+    align-items: center;
+  }
+
+  @media (min-width: 1024px) {
+    .service-hero-grid {
+      grid-template-columns: 1.25fr 0.75fr;
+      gap: 3.5rem;
+    }
+  }
+
+  .service-category-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    font-size: 0.8125rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--green-700);
+    background-color: var(--white);
+    padding: 0.35rem 0.85rem;
+    border-radius: var(--radius-full);
+    border: 1px solid var(--sand-400);
+    margin-bottom: 1rem;
+  }
+
+  .service-title {
+    font-size: var(--text-h1);
+    color: var(--green-900);
+    line-height: 1.15;
+    margin-bottom: 0.75rem;
+  }
+
+  .service-tagline {
+    font-family: var(--font-serif);
+    font-size: clamp(1.25rem, 1.5vw + 0.8rem, 1.6rem);
+    color: var(--green-700);
+    font-style: italic;
+    line-height: 1.4;
+    margin-bottom: 1.25rem;
+  }
+
+  .service-summary-lead {
+    font-size: 1.0625rem;
+    color: var(--ink-700);
+    line-height: 1.65;
+    margin-bottom: 2rem;
+    max-width: 640px;
+  }
+
+  .service-hero-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+
+  /* Facts Card */
+  .service-facts-card {
+    padding: clamp(1.5rem, 3vw, 2rem);
+    background-color: var(--white);
+    border: 1px solid var(--sand-400);
+    border-radius: var(--radius-lg);
+  }
+
+  .facts-title {
+    font-size: 1.35rem;
+    color: var(--green-900);
+    margin-bottom: 1.25rem;
+    padding-bottom: 0.65rem;
+    border-bottom: 1px solid var(--sand-100);
+  }
+
+  .facts-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 1.1rem;
+  }
+
+  .fact-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.75rem;
+  }
+
+  .fact-icon {
+    color: var(--green-700);
+    margin-top: 0.2rem;
+    flex-shrink: 0;
+  }
+
+  .fact-item strong {
+    display: block;
+    font-size: 0.875rem;
+    color: var(--green-900);
+  }
+
+  .fact-item p {
+    font-size: 0.8125rem;
+    color: var(--ink-500);
+    margin: 0;
+  }
+
+  /* Mole Alert Banner */
+  .mole-alert-container {
+    margin-top: 2rem;
+    margin-bottom: -1rem;
+  }
+
+  .mole-warning-banner {
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+    background-color: #FEF3C7;
+    border: 1px solid #F59E0B;
+    border-radius: var(--radius-md);
+    padding: 1.25rem 1.5rem;
+    color: #92400E;
+  }
+
+  .alert-icon {
+    color: #D97706;
+    flex-shrink: 0;
+    margin-top: 0.15rem;
+  }
+
+  .alert-title {
+    display: block;
+    font-size: 1rem;
+    margin-bottom: 0.25rem;
+  }
+
+  .alert-desc {
+    font-size: 0.9375rem;
+    line-height: 1.5;
+    margin: 0;
+  }
+
+  /* Layout Grid */
+  .service-body-section {
+    padding-top: clamp(48px, 6vw, 72px);
+    padding-bottom: clamp(64px, 8vw, 96px);
+  }
+
+  .service-layout-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 2.5rem;
+    align-items: start;
+  }
+
+  @media (min-width: 1024px) {
+    .service-layout-grid {
+      grid-template-columns: 1.35fr 0.65fr;
+      gap: 3.5rem;
+    }
+  }
+
+  .content-block {
+    padding: clamp(1.75rem, 4vw, 2.5rem);
+    background-color: var(--white);
+    border: 1px solid var(--sand-100);
+    border-radius: var(--radius-lg);
+    margin-bottom: 2rem;
+  }
+
+  .content-heading {
+    font-size: 1.6rem;
+    color: var(--green-900);
+    margin-bottom: 1.25rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid var(--sand-100);
+  }
+
+  .prose-treatment {
+    font-size: 1.0625rem;
+    line-height: 1.7;
+    color: var(--ink-700);
+  }
+
+  .prose-treatment :global(p) {
+    margin-bottom: 1.25rem;
+  }
+
+  .prose-treatment :global(p:last-child) {
+    margin-bottom: 0;
+  }
+
+  .consultation-medical-notice {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.75rem;
+    background-color: var(--green-50);
+    border: 1px solid var(--green-100);
+    border-radius: var(--radius-md);
+    padding: 1.25rem;
+    margin-top: 2rem;
+    font-size: 0.875rem;
+    color: var(--green-900);
+    line-height: 1.55;
+  }
+
+  .notice-icon {
+    color: var(--green-700);
+    flex-shrink: 0;
+    margin-top: 0.15rem;
+  }
+
+  /* Benefits Grid */
+  .benefits-grid-list {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1rem;
+    list-style: none;
+  }
+
+  @media (min-width: 640px) {
+    .benefits-grid-list {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  .benefit-card-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.75rem;
+    padding: 1rem;
+    background-color: var(--cream-50);
+    border: 1px solid var(--sand-100);
+    border-radius: var(--radius-sm);
+  }
+
+  .benefit-check-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 26px;
+    height: 26px;
+    border-radius: var(--radius-full);
+    background-color: var(--green-900);
+    color: var(--white);
+    flex-shrink: 0;
+  }
+
+  .benefit-text {
+    font-size: 0.9375rem;
+    color: var(--ink-700);
+    line-height: 1.45;
+  }
+
+  /* Ideal For List */
+  .ideal-for-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .ideal-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.75rem;
+  }
+
+  .ideal-bullet {
+    color: var(--sand-700);
+    margin-top: 0.15rem;
+    flex-shrink: 0;
+  }
+
+  .ideal-text {
+    font-size: 1rem;
+    color: var(--ink-700);
+    line-height: 1.5;
+  }
+
+  /* Sidebar Sticky Card */
+  .sticky-inquiry-card {
+    padding: 2rem;
+    background-color: var(--white);
+    border: 1px solid var(--sand-400);
+    border-radius: var(--radius-lg);
+    position: sticky;
+    top: 96px;
+  }
+
+  .inquiry-card-title {
+    font-size: 1.4rem;
+    color: var(--green-900);
+    margin-bottom: 0.5rem;
+  }
+
+  .inquiry-card-desc {
+    font-size: 0.875rem;
+    color: var(--ink-500);
+    line-height: 1.5;
+    margin-bottom: 1.5rem;
+  }
+
+  .inquiry-divider {
+    border: 0;
+    height: 1px;
+    background-color: var(--sand-100);
+    margin: 1.5rem 0;
+  }
+
+  .inquiry-tags {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .tags-label {
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--ink-500);
+  }
+
+  .tags-wrap {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+  }
+
+  .tag-pill {
+    font-size: 0.75rem;
+    background-color: var(--green-50);
+    color: var(--green-900);
+    padding: 0.25rem 0.65rem;
+    border-radius: var(--radius-full);
+    border: 1px solid var(--green-100);
+  }
+
+  .w-full {
+    width: 100%;
+  }
+
+  .mb-3 {
+    margin-bottom: 0.75rem;
+  }
+
+  /* Related Services Section */
+  .related-services-section {
+    background-color: var(--green-50);
+  }
+
+  .related-services-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+
+  @media (min-width: 640px) {
+    .related-services-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .related-services-grid {
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2rem;
+    }
+  }
+</style>

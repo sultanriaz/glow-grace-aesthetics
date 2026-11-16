@@ -1,0 +1,99 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Button from '../components/Button.astro';
+import { getClinicBookingWhatsAppLink } from '../utils/whatsapp';
+
+const pageTitle = `Page Not Found | Glow & Grace Aesthetics`;
+const pageDescription = `The page you requested could not be located. Explore our aesthetic services or contact our clinic in Dera Ghazi Khan.`;
+---
+
+<BaseLayout
+  title={pageTitle}
+  description={pageDescription}
+  noindex={true}
+  hideActions={true}
+>
+  <section class="not-found-section section" aria-label="Page Not Found">
+    <div class="container text-center">
+      <div class="not-found-card card-base fade-up-item">
+        <span class="error-code">404</span>
+        <h1 class="error-title">Page Not Located</h1>
+        <p class="error-desc">
+          We could not find the page or service you were looking for. The link may have changed, or the address might be mistyped.
+        </p>
+
+        <div class="error-actions">
+          <Button href="/" variant="primary" size="md" icon="sparkles">
+            Return to Homepage
+          </Button>
+
+          <Button href="/services/" variant="secondary" size="md" icon="arrow-right" iconPosition="right">
+            Explore All Services
+          </Button>
+
+          <Button
+            href={getClinicBookingWhatsAppLink()}
+            target="_blank"
+            variant="secondary"
+            size="md"
+            icon="whatsapp"
+          >
+            Chat on WhatsApp
+          </Button>
+        </div>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .not-found-section {
+    min-height: calc(75vh - 120px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: radial-gradient(circle at center, #FAF7F2 0%, #EAF4EF 100%);
+    padding-top: clamp(48px, 8vw, 80px);
+    padding-bottom: clamp(64px, 8vw, 96px);
+  }
+
+  .not-found-card {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: clamp(2.5rem, 6vw, 4rem) clamp(1.5rem, 5vw, 3rem);
+    background-color: var(--white);
+    border: 1px solid var(--sand-400);
+    border-radius: var(--radius-lg);
+  }
+
+  .error-code {
+    display: block;
+    font-family: var(--font-serif);
+    font-size: clamp(3.5rem, 8vw, 6rem);
+    font-weight: 700;
+    color: var(--sand-400);
+    line-height: 1;
+    margin-bottom: 0.5rem;
+  }
+
+  .error-title {
+    font-size: var(--text-h2);
+    color: var(--green-900);
+    margin-bottom: 1rem;
+  }
+
+  .error-desc {
+    font-size: 1.0625rem;
+    color: var(--ink-500);
+    line-height: 1.6;
+    margin-bottom: 2.25rem;
+  }
+
+  .error-actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75rem;
+  }
+</style>

@@ -1,0 +1,386 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import SectionHeading from '../components/SectionHeading.astro';
+import Icon from '../components/Icon.astro';
+import Button from '../components/Button.astro';
+import CtaBand from '../components/CtaBand.astro';
+import Breadcrumbs from '../components/Breadcrumbs.astro';
+import { clinic } from '../data/clinic';
+import { getClinicBookingWhatsAppLink } from '../utils/whatsapp';
+import { getMapDirectionsUrl } from '../utils/maps';
+
+const pageTitle = `About ${clinic.shortName} | Aesthetic Clinic DG Khan`;
+const pageDescription = `Learn about Glow & Grace Aesthetics in Dera Ghazi Khan. Our medical aesthetics philosophy, doctor-led patient care, and certified clinical standards.`;
+
+const breadcrumbs = [
+  { label: 'About Us' }
+];
+
+const hasDoctorData = Boolean(clinic.doctor.name && clinic.doctor.title);
+---
+
+<BaseLayout
+  title={pageTitle}
+  description={pageDescription}
+  jsonLdType="about"
+>
+  <!-- Page Header -->
+  <section class="page-header-section section">
+    <div class="container">
+      <Breadcrumbs items={breadcrumbs} />
+      <div class="header-inner">
+        <span class="eyebrow">OUR CLINIC & VALUES</span>
+        <h1 class="page-title">Dedicated to Safe, Evidence-Guided Aesthetic Care</h1>
+        <p class="lead-text">
+          At Glow & Grace Aesthetics, we believe that aesthetic medicine should be grounded in medical ethics, individualized consultation, and patient safety.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Clinic Story & Philosophy -->
+  <section class="section story-section" aria-label="Clinic Story">
+    <div class="container">
+      <div class="story-grid">
+        <div class="story-content fade-up-item">
+          <SectionHeading
+            eyebrow="OUR PHILOSOPHY"
+            title="Care Grounded in Medical Ethics"
+            align="left"
+          />
+          <div class="prose-content">
+            <p>
+              Glow & Grace Aesthetics was established to provide residents of Dera Ghazi Khan and surrounding regions with a calm, professional sanctuary for specialized medical aesthetics. We approach aesthetic medicine not as a superficial trend, but as an extension of clinical wellness.
+            </p>
+            <p>
+              Too often, individuals seeking treatments for pigmentation, hair loss, or skin revitalization face confusing marketing claims or unqualified practitioners. Our founding commitment is simple: <strong>your skin deserves expert care, not guesswork</strong>. We combine evidence-guided clinical protocols with modern aesthetic technologies to assist patients in achieving healthy, balanced outcomes.
+            </p>
+            <p>
+              We firmly avoid one-size-fits-all treatments. Every individual who visits our clinic receives a dedicated medical consultation to assess their skin barrier, biological suitability, and personal expectations before any procedure is scheduled.
+            </p>
+          </div>
+        </div>
+
+        <div class="story-highlights fade-up-item">
+          <div class="values-card card-base">
+            <h3 class="values-title">Our Guiding Pillars</h3>
+            <ul class="values-list" role="list">
+              <li class="value-item">
+                <div class="value-icon" aria-hidden="true">
+                  <Icon name="shield-check" size={20} />
+                </div>
+                <div>
+                  <strong>Medical Integrity First</strong>
+                  <p>We only perform treatments that align with your health and biological suitability.</p>
+                </div>
+              </li>
+              <li class="value-item">
+                <div class="value-icon" aria-hidden="true">
+                  <Icon name="user" size={20} />
+                </div>
+                <div>
+                  <strong>Doctor-Guided Consultation</strong>
+                  <p>In-depth clinical evaluations ensure you understand the procedure, care steps, and realistic milestones.</p>
+                </div>
+              </li>
+              <li class="value-item">
+                <div class="value-icon" aria-hidden="true">
+                  <Icon name="sparkles" size={20} />
+                </div>
+                <div>
+                  <strong>Safe & Certified Standards</strong>
+                  <p>Strict clinical hygiene, authentic medical technologies, and evidence-based formulations.</p>
+                </div>
+              </li>
+              <li class="value-item">
+                <div class="value-icon" aria-hidden="true">
+                  <Icon name="heart" size={20} />
+                </div>
+                <div>
+                  <strong>Patient-Centered Comfort</strong>
+                  <p>A serene, welcoming environment where your privacy, dignity, and peace of mind are honored.</p>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Doctor Card (Rendered ONLY if doctor data exists) -->
+  {hasDoctorData && (
+    <section class="section doctor-section" aria-label="Lead Physician">
+      <div class="container">
+        <SectionHeading
+          eyebrow="CLINICAL LEADERSHIP"
+          title="Meet Our Medical Director"
+          description="Experienced clinical care dedicated to safe, personalized aesthetic medicine."
+        />
+        <div class="doctor-card card-base fade-up-item">
+          <div class="doctor-info">
+            <h3 class="doctor-name">{clinic.doctor.name}</h3>
+            <p class="doctor-title">{clinic.doctor.title}</p>
+            {clinic.doctor.bio && <p class="doctor-bio">{clinic.doctor.bio}</p>}
+            {clinic.doctor.qualifications.length > 0 && (
+              <ul class="doctor-quals" role="list">
+                {clinic.doctor.qualifications.map((q) => (
+                  <li class="qual-badge">{q}</li>
+                ))}
+              </ul>
+            )}
+          </div>
+        </div>
+      </div>
+    </section>
+  )}
+
+  <!-- Facility & Location Overview -->
+  <section class="section location-overview-section" aria-label="Our Location">
+    <div class="container">
+      <SectionHeading
+        eyebrow="CONVENIENT MEDICAL SETTING"
+        title="Located at Ghazi National Hospital"
+        description="Providing accessibility, clinical security, and peace of mind on Multan Road, DG Khan."
+      />
+
+      <div class="location-banner card-base fade-up-item">
+        <div class="location-text">
+          <h3 class="location-heading">A Secure Hospital-Adjacent Environment</h3>
+          <p>
+            Operating within the respected YCDO Ghazi National Hospital near Samina Chowk ensures that our clinic adheres to stringent institutional hygiene protocols, emergency readiness, and clinical support frameworks.
+          </p>
+          <div class="location-points">
+            <div class="loc-point">
+              <Icon name="check" size={18} class="point-icon" />
+              <span>Dedicated aesthetic consultation suites</span>
+            </div>
+            <div class="loc-point">
+              <Icon name="check" size={18} class="point-icon" />
+              <span>Full sterilization and medical hygiene measures</span>
+            </div>
+            <div class="loc-point">
+              <Icon name="check" size={18} class="point-icon" />
+              <span>Easy vehicular access and parking on Multan Road</span>
+            </div>
+          </div>
+          <div class="location-ctas">
+            <Button href={getMapDirectionsUrl()} target="_blank" variant="secondary" size="md" icon="navigation">
+              Directions to Clinic
+            </Button>
+            <Button href={getClinicBookingWhatsAppLink()} target="_blank" variant="primary" size="md" icon="whatsapp">
+              Schedule Visit
+            </Button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA Band -->
+  <CtaBand />
+</BaseLayout>
+
+<style>
+  .page-header-section {
+    padding-top: clamp(32px, 5vw, 64px);
+    padding-bottom: clamp(32px, 5vw, 48px);
+    background-color: var(--green-50);
+    border-bottom: 1px solid var(--sand-100);
+  }
+
+  .header-inner {
+    max-width: 800px;
+  }
+
+  .page-title {
+    font-size: var(--text-h1);
+    color: var(--green-900);
+    margin-top: 0.5rem;
+    margin-bottom: 1.25rem;
+    line-height: 1.15;
+  }
+
+  .lead-text {
+    font-size: clamp(1.125rem, 0.4vw + 1rem, 1.25rem);
+    color: var(--ink-700);
+    line-height: 1.6;
+    margin: 0;
+  }
+
+  /* Story section */
+  .story-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 3rem;
+    align-items: start;
+  }
+
+  @media (min-width: 1024px) {
+    .story-grid {
+      grid-template-columns: 1.2fr 0.8fr;
+      gap: 4rem;
+    }
+  }
+
+  .prose-content p {
+    font-size: 1.0625rem;
+    line-height: 1.7;
+    color: var(--ink-700);
+    margin-bottom: 1.5rem;
+  }
+
+  .values-card {
+    padding: clamp(1.75rem, 4vw, 2.5rem);
+    background-color: var(--white);
+    border: 1px solid var(--sand-400);
+    border-radius: var(--radius-lg);
+  }
+
+  .values-title {
+    font-size: 1.5rem;
+    color: var(--green-900);
+    margin-bottom: 1.5rem;
+    padding-bottom: 0.75rem;
+    border-bottom: 1px solid var(--sand-100);
+  }
+
+  .values-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+  }
+
+  .value-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.85rem;
+  }
+
+  .value-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 38px;
+    height: 38px;
+    border-radius: var(--radius-sm);
+    background-color: var(--green-50);
+    color: var(--green-700);
+    flex-shrink: 0;
+    margin-top: 0.15rem;
+  }
+
+  .value-item strong {
+    display: block;
+    font-size: 1rem;
+    color: var(--green-900);
+    margin-bottom: 0.25rem;
+  }
+
+  .value-item p {
+    font-size: 0.875rem;
+    color: var(--ink-500);
+    line-height: 1.45;
+    margin: 0;
+  }
+
+  /* Doctor card */
+  .doctor-card {
+    max-width: 700px;
+    margin: 0 auto;
+    padding: 2.5rem;
+    background-color: var(--white);
+    border: 1px solid var(--sand-400);
+    border-radius: var(--radius-lg);
+  }
+
+  .doctor-name {
+    font-size: 1.75rem;
+    color: var(--green-900);
+    margin-bottom: 0.25rem;
+  }
+
+  .doctor-title {
+    font-size: 1rem;
+    color: var(--green-700);
+    font-weight: 500;
+    margin-bottom: 1rem;
+  }
+
+  .doctor-bio {
+    font-size: 1rem;
+    color: var(--ink-700);
+    line-height: 1.6;
+    margin-bottom: 1.5rem;
+  }
+
+  .doctor-quals {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    list-style: none;
+  }
+
+  .qual-badge {
+    font-size: 0.8125rem;
+    background-color: var(--green-50);
+    color: var(--green-900);
+    padding: 0.35rem 0.75rem;
+    border-radius: var(--radius-full);
+    border: 1px solid var(--sand-100);
+  }
+
+  /* Location Overview */
+  .location-overview-section {
+    background-color: var(--green-50);
+  }
+
+  .location-banner {
+    padding: clamp(2rem, 5vw, 3.5rem);
+    background-color: var(--white);
+    border: 1px solid var(--sand-400);
+    border-radius: var(--radius-lg);
+    max-width: 900px;
+    margin: 0 auto;
+  }
+
+  .location-heading {
+    font-size: 1.6rem;
+    color: var(--green-900);
+    margin-bottom: 1rem;
+  }
+
+  .location-text p {
+    font-size: 1.0625rem;
+    color: var(--ink-700);
+    line-height: 1.65;
+    margin-bottom: 1.5rem;
+  }
+
+  .location-points {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    margin-bottom: 2rem;
+  }
+
+  .loc-point {
+    display: flex;
+    align-items: center;
+    gap: 0.65rem;
+    font-size: 0.9375rem;
+    color: var(--ink-700);
+    font-weight: 500;
+  }
+
+  .point-icon {
+    color: var(--green-700);
+  }
+
+  .location-ctas {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+</style>

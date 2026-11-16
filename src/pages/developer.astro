@@ -1,0 +1,255 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Icon from '../components/Icon.astro';
+import Button from '../components/Button.astro';
+import { developer } from '../data/developer';
+import { Image } from 'astro:assets';
+
+// Check for developer photo in src/assets/developer/
+const devPhotos = import.meta.glob<{ default: ImageMetadata }>('/src/assets/developer/*.{jpg,jpeg,png,webp}', { eager: true });
+const photoEntries = Object.values(devPhotos);
+const devPhoto = photoEntries.length > 0 ? photoEntries[0].default : null;
+
+const pageTitle = `Website by ${developer.name} | Developer Credits`;
+const pageDescription = `Technical architecture and web development portfolio credit for Glow & Grace Aesthetics by ${developer.name}.`;
+---
+
+<BaseLayout
+  title={pageTitle}
+  description={pageDescription}
+  noindex={true}
+  hideActions={true}
+>
+  <section class="developer-page-section section" aria-label="Website Developer Information">
+    <div class="container">
+      <div class="developer-card card-base">
+        <!-- Developer Avatar / Portrait -->
+        <div class="avatar-container">
+          {devPhoto ? (
+            <Image
+              src={devPhoto}
+              alt="Portrait of Sultan Mehmood"
+              width={160}
+              height={160}
+              widths={[480, 960]}
+              format="webp"
+              loading="eager"
+              decoding="async"
+              class="developer-portrait-img"
+            />
+          ) : (
+            <div class="monogram-avatar" aria-label="Sultan Mehmood avatar monogram">
+              <span class="monogram-initials">SM</span>
+            </div>
+          )}
+        </div>
+
+        <!-- H1 & Role -->
+        <h1 class="developer-heading">Website by {developer.name}</h1>
+        <p class="developer-role">{developer.role}</p>
+
+        <!-- Project Attribution -->
+        <p class="developer-summary">
+          Designed and developed this website for Glow & Grace Aesthetics.
+        </p>
+
+        <!-- Action CTAs -->
+        <div class="developer-actions">
+          <Button
+            href={developer.portfolioUrl}
+            target="_blank"
+            variant="primary"
+            size="md"
+            icon="external-link"
+            iconPosition="right"
+            class="dev-btn-portfolio"
+          >
+            View my portfolio
+          </Button>
+
+          <Button
+            href={developer.whatsAppUrl}
+            target="_blank"
+            variant="secondary"
+            size="md"
+            icon="whatsapp"
+            class="dev-btn-wa"
+          >
+            Chat on WhatsApp
+          </Button>
+        </div>
+
+        <!-- Social Links (GitHub, LinkedIn) -->
+        <div class="developer-socials" aria-label="Developer Profiles">
+          <a
+            href={developer.githubUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="social-icon-link touch-target"
+            aria-label="GitHub Profile of Sultan Mehmood"
+          >
+            <Icon name="github" size={22} />
+          </a>
+
+          <a
+            href={developer.linkedinUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="social-icon-link touch-target"
+            aria-label="LinkedIn Profile of Sultan Mehmood"
+          >
+            <Icon name="linkedin" size={22} />
+          </a>
+        </div>
+
+        <div class="developer-return">
+          <a href="/" class="return-home-link">
+            &larr; Return to Glow & Grace Aesthetics Home
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .developer-page-section {
+    min-height: calc(80vh - 120px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-top: clamp(48px, 8vw, 80px);
+    padding-bottom: clamp(64px, 8vw, 96px);
+    background: radial-gradient(circle at center, #FAF7F2 0%, #EAF4EF 100%);
+  }
+
+  .developer-card {
+    max-width: 580px;
+    margin: 0 auto;
+    padding: clamp(2.5rem, 6vw, 3.5rem) clamp(1.5rem, 5vw, 3rem);
+    text-align: center;
+    background-color: var(--white);
+    border: 1px solid var(--sand-400);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-card);
+  }
+
+  .avatar-container {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 1.75rem;
+  }
+
+  /* Monogram avatar fallback */
+  .monogram-avatar {
+    width: 120px;
+    height: 120px;
+    border-radius: var(--radius-full);
+    background: linear-gradient(135deg, var(--green-900) 0%, #1F7A5A 100%);
+    border: 3px solid var(--sand-400);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 8px 24px rgba(3, 66, 47, 0.2);
+  }
+
+  .monogram-initials {
+    font-family: var(--font-serif);
+    font-size: 2.75rem;
+    font-weight: 700;
+    color: var(--cream-50);
+    letter-spacing: 0.05em;
+  }
+
+  .developer-portrait-img {
+    width: 120px;
+    height: 120px;
+    border-radius: var(--radius-full);
+    object-fit: cover;
+    border: 3px solid var(--sand-400);
+    box-shadow: 0 8px 24px rgba(3, 66, 47, 0.2);
+  }
+
+  .developer-heading {
+    font-size: clamp(1.85rem, 3vw + 0.8rem, 2.35rem);
+    color: var(--green-900);
+    margin-bottom: 0.35rem;
+    line-height: 1.2;
+  }
+
+  .developer-role {
+    font-family: var(--font-sans);
+    font-size: 1.0625rem;
+    font-weight: 500;
+    color: var(--green-700);
+    margin-bottom: 1.25rem;
+  }
+
+  .developer-summary {
+    font-size: 1.0625rem;
+    color: var(--ink-700);
+    line-height: 1.6;
+    margin-bottom: 2rem;
+  }
+
+  .developer-actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    margin-bottom: 2rem;
+  }
+
+  .developer-socials {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    margin-bottom: 2rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--sand-100);
+  }
+
+  .social-icon-link {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    border-radius: var(--radius-full);
+    background-color: var(--green-50);
+    color: var(--green-900);
+    text-decoration: none;
+    border: 1px solid var(--sand-100);
+    transition: background-color var(--transition-fast), color var(--transition-fast), transform var(--transition-fast);
+  }
+
+  .social-icon-link:hover {
+    background-color: var(--green-900);
+    color: var(--white);
+    transform: translateY(-2px);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .social-icon-link:hover {
+      transform: none;
+    }
+  }
+
+  .developer-return {
+    margin-top: 1rem;
+  }
+
+  .return-home-link {
+    font-size: 0.875rem;
+    color: var(--green-700);
+    text-decoration: none;
+    font-weight: 500;
+  }
+
+  .return-home-link:hover {
+    text-decoration: underline;
+    color: var(--green-900);
+  }
+</style>

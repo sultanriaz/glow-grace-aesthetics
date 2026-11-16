@@ -5,6 +5,12 @@ export interface DeveloperProject {
   url: string;
 }
 
+export interface ClientOffering {
+  title: string;
+  description: string;
+  icon: string;
+}
+
 export interface DeveloperSkillGroup {
   category: string;
   skills: string[];
@@ -31,24 +37,25 @@ export interface DeveloperData {
   bio: string;
   headline: string;
   siteStats: SiteStats;
+  offerings: ClientOffering[];
   projects: DeveloperProject[];
   skillGroups: DeveloperSkillGroup[];
 }
 
-const waMessage = "Hi Sultan, I saw the Glow & Grace Aesthetics website and would like to discuss a project.";
+const waMessage = "Hi Sultan, I saw your work on the Glow & Grace Aesthetics website and have a project I would like to discuss with you.";
 const waEncoded = encodeURIComponent(waMessage);
 
 export const developer: DeveloperData = {
   name: "Sultan Mehmood",
-  role: "Software Engineer & Applied ML Developer",
-  location: "Dera Ghazi Khan, Pakistan",
+  role: "Software Engineer & Full-Stack Systems Architect",
+  location: "Dera Ghazi Khan, Pakistan & Remote Worldwide",
   portfolioUrl: "https://portfolio-cms-ten-beige.vercel.app/",
   whatsAppUrl: `https://wa.me/923229781129?text=${waEncoded}`,
   whatsAppNumber: "923229781129",
   githubUrl: "https://github.com/sultanriaz",
   linkedinUrl: "https://www.linkedin.com/in/sultan-mehmood-24a664300",
   attributionText: "Website by Sultan Mehmood",
-  headline: "Applied Machine Learning. Production Architecture.",
+  headline: "Applied Machine Learning. Production Architecture. High-Performance Web Engineering.",
   bio: "Software engineer and CS student specialising in Python, Go, applied machine learning, and event-driven backend systems. Focused on building high-integrity AI systems: from grounded RAG and financial sentiment pipelines to containerised event-driven microservices. Dedicated to engineering robust, accessible web architectures that deliver measurable value.",
   siteStats: {
     performance: 100,
@@ -57,6 +64,28 @@ export const developer: DeveloperData = {
     seo: 100,
     measuredOn: "16 November 2026"
   },
+  offerings: [
+    {
+      title: "Custom High-Performance Websites",
+      description: "Bespoke Jamstack static architectures (Astro, TypeScript) loading in under 1 second on mobile 4G networks with perfect 100/100 Lighthouse benchmarks.",
+      icon: "zap"
+    },
+    {
+      title: "Conversion-Focused UI/UX Design",
+      description: "Tailored brand aesthetics engineered to turn website visitors into qualified WhatsApp leads, direct phone calls, and booked appointments.",
+      icon: "sparkles"
+    },
+    {
+      title: "Scalable Full-Stack Web Applications",
+      description: "Production backends and distributed APIs built with Python (FastAPI), Go (Gin), PostgreSQL, Kafka, and modern React 18 interfaces.",
+      icon: "layers"
+    },
+    {
+      title: "Applied AI & Verification Pipelines",
+      description: "Citation-verified enterprise document search (RAG), automated guardrails, and multi-agent workflows leveraging Google Gemini and LLMs.",
+      icon: "cpu"
+    }
+  ],
   projects: [
     {
       title: "Compliance Verification System",

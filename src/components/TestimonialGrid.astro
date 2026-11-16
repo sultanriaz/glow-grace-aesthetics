@@ -1,0 +1,131 @@
+---
+import { getCollection } from 'astro:content';
+import { hasTestimonials } from '../utils/visibility';
+import SectionHeading from './SectionHeading.astro';
+import Icon from './Icon.astro';
+
+interface Props {
+  eyebrow?: string;
+  title?: string;
+  description?: string;
+  class?: string;
+}
+
+const {
+  eyebrow = "PATIENT EXPERIENCES",
+  title = "Real Words from Our Patients",
+  description = "Reflections from patients who have visited Glow & Grace Aesthetics in Dera Ghazi Khan. Published only with verified patient consent.",
+  class: className = ""
+} = Astro.props;
+
+let allTestimonials: any[] = [];
+try {
+  allTestimonials = await getCollection('testimonials');
+} catch {
+  allTestimonials = [];
+}
+
+const approvedTestimonials = allTestimonials
+  .filter((t) => t.data.consentConfirmed === true);
+
+const shouldDisplay = hasTestimonials(approvedTestimonials);
+---
+
+{shouldDisplay && (
+  <section class={`section testimonials-section ${className}`.trim()} aria-label="Patient Feedback">
+    <div class="container">
+      <SectionHeading
+        eyebrow={eyebrow}
+        title={title}
+        description={description}
+        align="center"
+      />
+
+      <div class="testimonials-grid">
+        {approvedTestimonials.map((t) => (
+          <div class="testimonial-card card-base fade-up-item">
+            <div class="quote-icon-wrap" aria-hidden="true">
+              <Icon name="chat" size={24} />
+            </div>
+            <blockquote class="testimonial-quote">
+              <p>"{t.data.quote}"</p>
+            </blockquote>
+            <div class="testimonial-author">
+              <span class="author-name">{t.data.displayName}</span>
+              <span class="author-service">{t.data.service}</span>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+)}
+
+<style>
+  .testimonials-section {
+    background-color: var(--sand-50);
+    border-top: 1px solid var(--sand-200);
+    border-bottom: 1px solid var(--sand-200);
+  }
+
+  .testimonials-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.75rem;
+    margin-top: 2.5rem;
+  }
+
+  @media (min-width: 640px) {
+    .testimonials-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .testimonials-grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+  .testimonial-card {
+    padding: clamp(1.5rem, 3vw, 2.25rem);
+    background-color: var(--white);
+    border: 1px solid var(--sand-200);
+    border-radius: var(--radius-lg);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+
+  .quote-icon-wrap {
+    color: var(--gold-600);
+    margin-bottom: 1rem;
+  }
+
+  .testimonial-quote {
+    margin: 0 0 1.5rem;
+    font-size: 1rem;
+    line-height: 1.65;
+    color: var(--text-body);
+    font-style: italic;
+  }
+
+  .testimonial-author {
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+    border-top: 1px solid var(--sand-100);
+    padding-top: 1rem;
+  }
+
+  .author-name {
+    font-size: 0.9375rem;
+    font-weight: 600;
+    color: var(--green-900);
+  }
+
+  .author-service {
+    font-size: 0.8125rem;
+    color: var(--text-muted);
+  }
+</style>

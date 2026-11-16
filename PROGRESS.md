@@ -7,55 +7,55 @@
 
 ## Phase Checklist
 
-- [ ] **Step 0: Reconnaissance & Environment Setup**
+- [x] **Step 0: Reconnaissance & Environment Setup**
   - [x] Branch `part-2-content` created
   - [x] Install `@astrojs/rss` and dev dependency `vitest`
   - [x] Configure npm scripts (`test`, `check:claims`)
   - [x] Create `scripts/check-claims.mjs` and `scripts/claims-allowlist.json`
   - [x] Initialize `PROGRESS.md`
 
-- [ ] **Step 1: Utility & Data Model Extensions**
-  - [ ] Create `src/utils/tokens.ts` (`renderTokens` with clinic variables)
-  - [ ] Create `src/utils/visibility.ts` (`hasGallery`, `hasTestimonials`)
-  - [ ] Create `src/utils/booking.ts` (Appointment & bridal message builders, date validation)
-  - [ ] Write unit tests in `tests/utils.test.ts` & verify with `npm test`
-  - [ ] Update `src/content.config.ts` (services, blog, gallery, testimonials schemas)
-  - [ ] Update `src/data/categories.ts` (longIntro, concerns, 4 FAQs, hair journey)
-  - [ ] Create `src/data/bridal.ts` (`packages: []`)
+- [x] **Step 1: Utility & Data Model Extensions**
+  - [x] Create `src/utils/tokens.ts` (`renderTokens` with clinic variables)
+  - [x] Create `src/utils/visibility.ts` (`hasGallery`, `hasTestimonials`)
+  - [x] Create `src/utils/booking.ts` (Appointment & bridal message builders, date validation)
+  - [x] Write unit tests in `tests/utils.test.ts` & verify with `npm test`
+  - [x] Update `src/content.config.ts` (services, blog, gallery, testimonials schemas)
+  - [x] Update `src/data/categories.ts` (longIntro, concerns, 4 FAQs, hair journey)
+  - [x] Create `src/data/bridal.ts` (`packages: []`)
 
-- [ ] **Phase A: Deep Content for all 23 Service Pages**
-  - [ ] Category: Hair (3 services: `hair-transplant`, `hair-fall-treatment`, `prp-hair-restoration`)
-  - [ ] Category: Skin (7 services: `melasma-treatment`, `microneedling-mesotherapy`, `mole-wart-removal`, `acne-scar-treatment`, `chemical-peels`, `dark-circles-under-eye`, `stretch-marks-scars`)
-  - [ ] Category: Facial (5 services: `hydrafacial`, `botox-lip-fillers`, `dermal-fillers-facial-contouring`, `anti-aging-treatments`, `bridal-glow-packages`)
-  - [ ] Category: Laser (4 services: `laser-hair-removal`, `electrolysis`, `carbon-pico-laser`, `tattoo-removal`)
-  - [ ] Category: Regenerative (2 services: `prp-therapy`, `exosome-therapy`)
-  - [ ] Category: Body (2 services: `weight-fat-reduction`, `whitening-drips`)
-  - [ ] Upgrade `src/pages/services/[slug].astro` template (sticky desktop in-page nav, sticky CTA sidebar, FAQ accordions + JSON-LD)
+- [x] **Phase A: Deep Content for all 23 Service Pages**
+  - [x] Category: Hair (3 services: `hair-transplant`, `hair-fall-treatment`, `prp-hair-restoration`)
+  - [x] Category: Skin (7 services: `melasma-treatment`, `microneedling-mesotherapy`, `mole-wart-removal`, `acne-scar-treatment`, `chemical-peels`, `dark-circles-under-eye`, `stretch-marks-scars`)
+  - [x] Category: Facial (5 services: `hydrafacial`, `botox-lip-fillers`, `dermal-fillers-facial-contouring`, `anti-aging-treatments`, `bridal-glow-packages`)
+  - [x] Category: Laser (4 services: `laser-hair-removal`, `electrolysis`, `carbon-pico-laser`, `tattoo-removal`)
+  - [x] Category: Regenerative (2 services: `prp-therapy`, `exosome-therapy`)
+  - [x] Category: Body (2 services: `weight-fat-reduction`, `whitening-drips`)
+  - [x] Upgrade `src/pages/services/[slug].astro` template (sticky desktop in-page nav, sticky CTA sidebar, FAQ accordions + JSON-LD)
 
-- [ ] **Phase B: Category Landing Pages (6)**
-  - [ ] Create `src/pages/services/category/[slug].astro`
-  - [ ] Render hero, longIntro, concern chips, service cards, category FAQs with FAQPage JSON-LD, CtaBand
-  - [ ] Dedicated 5-step "Your hair journey" on `/services/category/hair/`
-  - [ ] Update navigation links (header dropdown, category tiles, footer)
+- [x] **Phase B: Category Landing Pages (6)**
+  - [x] Create `src/pages/services/category/[slug].astro`
+  - [x] Render hero, longIntro, concern chips, service cards, category FAQs with FAQPage JSON-LD, CtaBand
+  - [x] Dedicated 5-step "Your hair journey" on `/services/category/hair/`
+  - [x] Update navigation links (header dropdown, category tiles, footer)
 
-- [ ] **Phase C: FAQ Page**
-  - [ ] Create `src/pages/faq.astro` (Categorized accordions, progressive search filter, zero-JS accessible, FAQPage JSON-LD)
+- [x] **Phase C: FAQ Page**
+  - [x] Create `src/pages/faq.astro` (Categorized accordions, progressive search filter, zero-JS accessible, FAQPage JSON-LD)
 
-- [ ] **Phase D: Appointment Request Page**
-  - [ ] Create `src/pages/book-appointment.astro`
-  - [ ] Accessible form: Full name, Service select with `<optgroup>`, Preferred Date, Preferred Time, Note
-  - [ ] Date validation (no past dates, no Sundays in `Asia/Karachi`), prefill from `?service=<slug>`, error summary
+- [x] **Phase D: Appointment Request Page**
+  - [x] Create `src/pages/book-appointment.astro`
+  - [x] Accessible form: Full name, Service select with `<optgroup>`, Preferred Date, Preferred Time, Note
+  - [x] Date validation (no past dates, no Sundays in `Asia/Karachi`), prefill from `?service=<slug>`, error summary
 
-- [ ] **Phase E: Bridal Experience Upgrade**
-  - [ ] Upgrade `bridal-glow-packages.md` with `extras: "bridal"`
-  - [ ] 4-step "Your bridal glow journey" path & "What can be part of a bridal plan" cards
-  - [ ] Interactive WhatsApp bridal planner
-  - [ ] 301 redirect `/bridal/` -> `/services/bridal-glow-packages/` in `vercel.json`
+- [x] **Phase E: Bridal Experience Upgrade**
+  - [x] Upgrade `bridal-glow-packages.md` with `extras: "bridal"`
+  - [x] 4-step "Your bridal glow journey" path & "What can be part of a bridal plan" cards
+  - [x] Interactive WhatsApp bridal planner
+  - [x] 301 redirect `/bridal/` -> `/services/bridal-glow-packages/` in `vercel.json`
 
-- [ ] **Phase F: Gallery & Testimonials Systems**
-  - [ ] Create `src/pages/gallery.astro` (Hidden & noindex when empty, category filters, vanilla lightbox)
-  - [ ] Create `src/components/TestimonialGrid.astro`
-  - [ ] Test with temporary consented fixtures and verify empty state in production
+- [x] **Phase F: Gallery & Testimonials Systems**
+  - [x] Create `src/pages/gallery.astro` (Hidden & noindex when empty, category filters, vanilla lightbox)
+  - [x] Create `src/components/TestimonialGrid.astro`
+  - [x] Test with temporary consented fixtures and verify empty state in production
 
 - [ ] **Phase G: Blog Collection & RSS Feed**
   - [ ] 6 evergreen educational articles in `src/content/blog/` (600–800 words, British English)

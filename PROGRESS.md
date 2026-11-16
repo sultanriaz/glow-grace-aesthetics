@@ -122,12 +122,12 @@
   - [x] Create `scripts/check-seo.mjs` (`npm run check:seo`)
   - [x] Create `scripts/check-schema.mjs` (`npm run check:schema`)
 
-- [ ] **Phase E: Security & Privacy Verification**
-  - [ ] Add Content-Security-Policy (CSP) headers in `vercel.json`
-  - [ ] Test zero CSP violations across routes, map facade, forms, and lightbox
-  - [ ] Create `scripts/check-privacy.mjs` (`npm run check:privacy`)
-  - [ ] Create `scripts/check-headers.mjs`
-  - [ ] Create `docs/SECURITY.md`
+- [x] **Phase E: Security & Privacy Verification**
+  - [x] Add Content-Security-Policy (CSP) headers in `vercel.json`
+  - [x] Test zero CSP violations across routes, map facade, forms, and lightbox
+  - [x] Create `scripts/check-privacy.mjs` (`npm run check:privacy`)
+  - [x] Create `scripts/check-headers.mjs`
+  - [x] Create `docs/SECURITY.md`
 
 - [ ] **Phase F: Performance, Accessibility & Cross-Browser QA**
   - [ ] Install `@playwright/test` and `@axe-core/playwright`

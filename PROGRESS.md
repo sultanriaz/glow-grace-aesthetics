@@ -129,13 +129,13 @@
   - [x] Create `scripts/check-headers.mjs`
   - [x] Create `docs/SECURITY.md`
 
-- [ ] **Phase F: Performance, Accessibility & Cross-Browser QA**
-  - [ ] Install `@playwright/test` and `@axe-core/playwright`
-  - [ ] Configure `playwright.config.ts` (chromium, mobile chromium, webkit mobile, firefox)
-  - [ ] Write `tests/e2e/smoke.spec.ts` and `tests/e2e/flows.spec.ts`
-  - [ ] Write `tests/a11y/axe.spec.ts` (0 serious or critical violations)
-  - [ ] Create `scripts/check-budgets.mjs` (`npm run check:budgets`)
-  - [ ] Run Lighthouse mobile on 10 routes (Performance >= 95, Accessibility 100, Best Practices >= 95, SEO 100)
+- [x] **Phase F: Performance, Accessibility & Cross-Browser QA**
+  - [x] Install `@playwright/test` and `@axe-core/playwright`
+  - [x] Configure `playwright.config.ts` (chromium, mobile chromium, webkit mobile, firefox)
+  - [x] Write `tests/e2e/smoke.spec.ts` and `tests/e2e/flows.spec.ts`
+  - [x] Write `tests/a11y/axe.spec.ts` (0 serious or critical violations)
+  - [x] Create `scripts/check-budgets.mjs` (`npm run check:budgets`)
+  - [x] Run Lighthouse mobile on 10 routes (Performance >= 95, Accessibility 100, Best Practices >= 95, SEO 100)
 
 - [ ] **Phase G: Domain, Search Console & Local SEO Kit**
   - [ ] Create `docs/CUSTOM-DOMAIN.md`

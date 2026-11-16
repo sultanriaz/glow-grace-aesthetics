@@ -8,6 +8,7 @@ import SectionHeading from '../../components/SectionHeading.astro';
 import CtaBand from '../../components/CtaBand.astro';
 import { clinic } from '../../data/clinic';
 import { categories } from '../../data/categories';
+import { bridalTimelineOptions, bridalTreatmentOptions } from '../../data/bridal';
 import { getServiceBookingWhatsAppLink, getClinicTelLink } from '../../utils/whatsapp';
 import { getCollection, render } from 'astro:content';
 
@@ -23,6 +24,7 @@ const { service, allServices } = Astro.props;
 const { Content } = await render(service);
 
 const currentSlug = service.id.replace(/\.md$/, '');
+const isBridal = service.data.extras === 'bridal';
 const categoryObj = categories.find((c) => c.slug === service.data.category);
 const categoryName = categoryObj ? categoryObj.name : service.data.category;
 const categoryHref = `/services/category/${service.data.category}/`;
@@ -154,6 +156,12 @@ const isMoleRemoval = currentSlug === 'mole-wart-removal';
     <div class="container inpage-nav-container">
       <ul class="inpage-nav-list" role="list">
         <li><a href="#overview" class="inpage-nav-link">Overview</a></li>
+        {isBridal && (
+          <li><a href="#bridal-journey" class="inpage-nav-link">Bridal Journey</a></li>
+        )}
+        {isBridal && (
+          <li><a href="#bridal-planner" class="inpage-nav-link">Custom Planner</a></li>
+        )}
         {service.data.whatToExpect.length > 0 && (
           <li><a href="#what-to-expect" class="inpage-nav-link">What to Expect</a></li>
         )}
@@ -240,6 +248,203 @@ const isMoleRemoval = currentSlug === 'mole-wart-removal';
               ))}
             </ul>
           </div>
+
+          <!-- Specialized Bridal Journey & What Can Be Part of a Plan (if isBridal) -->
+          {isBridal && (
+            <>
+              <!-- 4-Step Bridal Journey -->
+              <div id="bridal-journey" class="content-block card-base bridal-timeline-card">
+                <span class="eyebrow">REVERSE-CALENDAR PLANNING</span>
+                <h2 class="content-heading">Your 4-Step Bridal Glow Journey</h2>
+                <p class="bridal-timeline-intro">
+                  Every bridal plan works backward from your wedding celebration date. Phasing procedures properly prevents last-minute skin redness and delivers rested, dewy luminosity for your photographs.
+                </p>
+
+                <div class="bridal-steps-grid">
+                  <div class="bridal-step-item">
+                    <div class="bridal-step-header">
+                      <span class="bridal-step-time">8 to 12 Weeks Prior</span>
+                      <span class="bridal-step-tag">Step 01</span>
+                    </div>
+                    <h3 class="bridal-step-title">Foundation & Skin Tone Evening</h3>
+                    <p class="bridal-step-desc">
+                      Address persistent pigmentation, uneven sun damage, and active congestion with gentle chemical peels or carbon laser toning.
+                    </p>
+                  </div>
+
+                  <div class="bridal-step-item">
+                    <div class="bridal-step-header">
+                      <span class="bridal-step-time">4 to 6 Weeks Prior</span>
+                      <span class="bridal-step-tag">Step 02</span>
+                    </div>
+                    <h3 class="bridal-step-title">Deep Dermal Nourishment</h3>
+                    <p class="bridal-step-desc">
+                      Stimulate natural collagen and boost cellular moisture with peptide mesotherapy or biological PRP skin rejuvenation.
+                    </p>
+                  </div>
+
+                  <div class="bridal-step-item">
+                    <div class="bridal-step-header">
+                      <span class="bridal-step-time">2 Weeks Prior</span>
+                      <span class="bridal-step-tag">Step 03</span>
+                    </div>
+                    <h3 class="bridal-step-title">Polish & Precision Touch-Ups</h3>
+                    <p class="bridal-step-desc">
+                      Laser hair reduction touch-ups and delicate periorbital brightening. No aggressive peeling or heat at this stage.
+                    </p>
+                  </div>
+
+                  <div class="bridal-step-item highlight-final-step">
+                    <div class="bridal-step-header">
+                      <span class="bridal-step-time">2 to 4 Days Prior</span>
+                      <span class="bridal-step-tag">Step 04</span>
+                    </div>
+                    <h3 class="bridal-step-title">The Luminous Dew Finish</h3>
+                    <p class="bridal-step-desc">
+                      A soothing HydraFacial vortex cleanse and antioxidant peptide infusion for effortless makeup application and camera glow.
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              <!-- What can be part of a bridal plan -->
+              <div class="content-block card-base">
+                <h2 class="content-heading">What Can Be Part of Your Custom Bridal Plan</h2>
+                <p class="bridal-plan-desc">
+                  Based on doctor evaluation and personal preferences, your bespoke plan may combine any of these evidence-guided modalities:
+                </p>
+
+                <div class="bridal-options-grid">
+                  <div class="bridal-option-card">
+                    <Icon name="smile" size={24} class="option-icon" />
+                    <h3 class="option-title">HydraFacial Glow</h3>
+                    <p class="option-text">Vortex deep pore extraction and multi-peptide hydration for luminous radiance.</p>
+                  </div>
+                  <div class="bridal-option-card">
+                    <Icon name="flower" size={24} class="option-icon" />
+                    <h3 class="option-title">Brightening Peels</h3>
+                    <p class="option-text">Gentle lactic and mandelic acid exfoliation for a clear, uniform tone.</p>
+                  </div>
+                  <div class="bridal-option-card">
+                    <Icon name="zap" size={24} class="option-icon" />
+                    <h3 class="option-title">Carbon Laser Toning</h3>
+                    <p class="option-text">Pore tightening and photoacoustic texture smoothing without social downtime.</p>
+                  </div>
+                  <div class="bridal-option-card">
+                    <Icon name="sparkles" size={24} class="option-icon" />
+                    <h3 class="option-title">Laser Hair Reduction</h3>
+                    <p class="option-text">Silky smooth facial and body skin, eliminating painful waxing cycles.</p>
+                  </div>
+                  <div class="bridal-option-card">
+                    <Icon name="shield-check" size={24} class="option-icon" />
+                    <h3 class="option-title">Under-Eye Care</h3>
+                    <p class="option-text">Targeting dark circles and tired shadows for fresh wedding portraits.</p>
+                  </div>
+                  <div class="bridal-option-card">
+                    <Icon name="heart-pulse" size={24} class="option-icon" />
+                    <h3 class="option-title">Body & Hands Polish</h3>
+                    <p class="option-text">Hydrating exfoliation and nourishment for back, arms, and mehndi-ready hands.</p>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Interactive WhatsApp Bridal Planner -->
+              <div id="bridal-planner" class="content-block card-base bridal-planner-container">
+                <span class="eyebrow">CUSTOM WEDDING CONSULTATION</span>
+                <h2 class="content-heading">Build Your Personal Bridal Plan on WhatsApp</h2>
+                <p class="planner-lead">
+                  Select your timeline and areas of interest below. We will format a clear consultation request and connect you directly with our aesthetic team on WhatsApp.
+                </p>
+
+                <form id="bridal-planner-form" class="bridal-planner-form" novalidate>
+                  <div class="form-group">
+                    <label for="bridal-name" class="form-label">
+                      Your Full Name <span class="required-indicator" aria-hidden="true">*</span>
+                    </label>
+                    <input
+                      type="text"
+                      id="bridal-name"
+                      name="name"
+                      class="form-input"
+                      placeholder="e.g. Ayesha Khan"
+                      required
+                    />
+                    <span class="field-error-msg" id="bridal-error-name" style="display: none;"></span>
+                  </div>
+
+                  <div class="form-row-2col">
+                    <div class="form-group">
+                      <label for="bridal-timeline" class="form-label">Timeline to Wedding</label>
+                      <div class="select-wrapper">
+                        <select id="bridal-timeline" name="timeframe" class="form-select">
+                          {bridalTimelineOptions.map((opt) => (
+                            <option value={opt.label}>{opt.label}</option>
+                          ))}
+                        </select>
+                        <Icon name="chevron-down" size={16} class="select-chevron" />
+                      </div>
+                    </div>
+
+                    <div class="form-group">
+                      <label for="bridal-date" class="form-label">
+                        Approximate Wedding Date <span class="optional-tag">(Optional)</span>
+                      </label>
+                      <input
+                        type="date"
+                        id="bridal-date"
+                        name="weddingDate"
+                        class="form-input"
+                      />
+                    </div>
+                  </div>
+
+                  <div class="form-group">
+                    <label class="form-label">Treatments You Wish to Explore</label>
+                    <div class="bridal-checkboxes-grid">
+                      {bridalTreatmentOptions.map((treatment) => (
+                        <label class="checkbox-label">
+                          <input
+                            type="checkbox"
+                            name="treatments"
+                            value={treatment}
+                            class="bridal-checkbox"
+                          />
+                          <span>{treatment}</span>
+                        </label>
+                      ))}
+                    </div>
+                  </div>
+
+                  <div class="form-group">
+                    <label for="bridal-notes" class="form-label">
+                      Specific Goals or Focus Areas <span class="optional-tag">(Optional)</span>
+                    </label>
+                    <textarea
+                      id="bridal-notes"
+                      name="notes"
+                      class="form-textarea"
+                      rows="3"
+                      maxlength="300"
+                      placeholder="e.g. Focusing on pigmentation and glowing skin for a December wedding..."
+                    ></textarea>
+                  </div>
+
+                  <div class="form-submit-wrap">
+                    <button
+                      type="submit"
+                      class="btn btn-primary btn-lg w-full submit-bridal-btn"
+                    >
+                      <Icon name="whatsapp" size={20} class="btn-icon" />
+                      <span>Request Custom Bridal Plan on WhatsApp &rarr;</span>
+                    </button>
+                    <p class="submit-privacy-note">
+                      Opens WhatsApp with your selected wedding details. Our doctor will review your timeline and suggest suitable consultation slots.
+                    </p>
+                  </div>
+                </form>
+              </div>
+            </>
+          )}
 
           <!-- What to Expect Block -->
           {service.data.whatToExpect.length > 0 && (
@@ -1056,6 +1261,363 @@ const isMoleRemoval = currentSlug === 'mole-wart-removal';
   @media (min-width: 1024px) {
     .related-services-grid {
       grid-template-columns: repeat(3, 1fr);
+      gap: 2rem;
     }
   }
+
+  /* Bridal Specialized Styles */
+  .bridal-timeline-card {
+    background-color: var(--white);
+    border: 1px solid var(--sand-200);
+  }
+
+  .bridal-timeline-intro {
+    font-size: 1rem;
+    line-height: 1.65;
+    color: var(--text-body);
+    margin-bottom: 2rem;
+  }
+
+  .bridal-steps-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.25rem;
+  }
+
+  @media (min-width: 640px) {
+    .bridal-steps-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  .bridal-step-item {
+    padding: 1.5rem;
+    background-color: var(--sand-50);
+    border: 1px solid var(--sand-200);
+    border-radius: var(--radius-md);
+    display: flex;
+    flex-direction: column;
+  }
+
+  .bridal-step-item.highlight-final-step {
+    background-color: var(--green-50);
+    border-color: var(--green-600);
+  }
+
+  .bridal-step-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.75rem;
+  }
+
+  .bridal-step-time {
+    font-size: 0.8125rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--green-800);
+  }
+
+  .bridal-step-tag {
+    font-family: var(--font-serif);
+    font-size: 0.8125rem;
+    font-weight: 700;
+    color: var(--gold-600);
+    background-color: var(--white);
+    padding: 0.2rem 0.5rem;
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--sand-300);
+  }
+
+  .bridal-step-title {
+    font-size: 1.1rem;
+    color: var(--green-900);
+    margin-bottom: 0.5rem;
+  }
+
+  .bridal-step-desc {
+    font-size: 0.875rem;
+    color: var(--text-body);
+    line-height: 1.55;
+    margin: 0;
+  }
+
+  /* Bridal Options Grid */
+  .bridal-plan-desc {
+    font-size: 0.95rem;
+    color: var(--text-muted);
+    margin-bottom: 1.75rem;
+  }
+
+  .bridal-options-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.25rem;
+  }
+
+  @media (min-width: 640px) {
+    .bridal-options-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .bridal-options-grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+  .bridal-option-card {
+    padding: 1.25rem;
+    background-color: var(--sand-50);
+    border: 1px solid var(--sand-200);
+    border-radius: var(--radius-md);
+  }
+
+  .option-icon {
+    color: var(--green-700);
+    margin-bottom: 0.65rem;
+  }
+
+  .option-title {
+    font-size: 1rem;
+    color: var(--green-900);
+    margin-bottom: 0.35rem;
+  }
+
+  .option-text {
+    font-size: 0.85rem;
+    color: var(--text-body);
+    line-height: 1.5;
+    margin: 0;
+  }
+
+  /* Bridal Planner Form */
+  .bridal-planner-container {
+    background-color: var(--green-50);
+    border: 1px solid var(--green-100);
+  }
+
+  .planner-lead {
+    font-size: 0.95rem;
+    color: var(--text-body);
+    line-height: 1.6;
+    margin-bottom: 1.75rem;
+  }
+
+  .bridal-planner-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+  }
+
+  .form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+  }
+
+  .form-row-2col {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.25rem;
+  }
+
+  @media (min-width: 640px) {
+    .form-row-2col {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  .form-label {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--green-900);
+  }
+
+  .required-indicator {
+    color: #DC2626;
+  }
+
+  .optional-tag {
+    font-size: 0.8125rem;
+    font-weight: 400;
+    color: var(--text-muted);
+  }
+
+  .form-input,
+  .form-select,
+  .form-textarea {
+    width: 100%;
+    padding: 0.8rem 1rem;
+    font-size: 0.95rem;
+    color: var(--green-900);
+    background-color: var(--white);
+    border: 1px solid var(--sand-300);
+    border-radius: var(--radius-md);
+    outline: none;
+    font-family: inherit;
+    transition: var(--transition-fast);
+  }
+
+  .form-input:focus,
+  .form-select:focus,
+  .form-textarea:focus {
+    border-color: var(--green-700);
+    box-shadow: 0 0 0 3px rgba(31, 122, 90, 0.15);
+  }
+
+  .form-input.is-invalid {
+    border-color: #DC2626;
+    background-color: #FEF2F2;
+  }
+
+  .select-wrapper {
+    position: relative;
+  }
+
+  .form-select {
+    appearance: none;
+    padding-right: 2.5rem;
+    cursor: pointer;
+  }
+
+  .select-chevron {
+    position: absolute;
+    right: 1rem;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--text-muted);
+    pointer-events: none;
+  }
+
+  .field-error-msg {
+    font-size: 0.8125rem;
+    color: #DC2626;
+    font-weight: 500;
+  }
+
+  .bridal-checkboxes-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 0.65rem;
+    margin-top: 0.25rem;
+  }
+
+  @media (min-width: 640px) {
+    .bridal-checkboxes-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  .checkbox-label {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    font-size: 0.875rem;
+    color: var(--green-900);
+    background-color: var(--white);
+    padding: 0.65rem 0.85rem;
+    border: 1px solid var(--sand-300);
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    user-select: none;
+    transition: var(--transition-fast);
+  }
+
+  .checkbox-label:hover {
+    border-color: var(--green-600);
+    background-color: var(--sand-50);
+  }
+
+  .bridal-checkbox {
+    width: 16px;
+    height: 16px;
+    accent-color: var(--green-800);
+    cursor: pointer;
+  }
+
+  .form-submit-wrap {
+    margin-top: 0.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .submit-bridal-btn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.95rem 1.25rem;
+    font-size: 1rem;
+    font-weight: 600;
+  }
+
+  .submit-privacy-note {
+    font-size: 0.8125rem;
+    color: var(--text-muted);
+    text-align: center;
+    line-height: 1.45;
+    margin: 0;
+  }
 </style>
+
+{isBridal && (
+  <script>
+    import { buildBridalPlannerWhatsAppUrl } from '../../utils/booking';
+
+    function initBridalPlanner() {
+      const form = document.getElementById('bridal-planner-form') as HTMLFormElement | null;
+      if (!form) return;
+
+      const nameInput = document.getElementById('bridal-name') as HTMLInputElement | null;
+      const timelineSelect = document.getElementById('bridal-timeline') as HTMLSelectElement | null;
+      const dateInput = document.getElementById('bridal-date') as HTMLInputElement | null;
+      const notesInput = document.getElementById('bridal-notes') as HTMLTextAreaElement | null;
+      const errorName = document.getElementById('bridal-error-name');
+
+      form.addEventListener('submit', (e) => {
+        e.preventDefault();
+
+        const name = nameInput?.value.trim() || '';
+        if (!name) {
+          if (nameInput) nameInput.classList.add('is-invalid');
+          if (errorName) {
+            errorName.textContent = 'Please enter your full name.';
+            errorName.style.display = 'block';
+          }
+          nameInput?.focus();
+          return;
+        }
+
+        if (nameInput) nameInput.classList.remove('is-invalid');
+        if (errorName) errorName.style.display = 'none';
+
+        const timeframe = timelineSelect?.value || undefined;
+        const weddingDate = dateInput?.value || undefined;
+        const notes = notesInput?.value.trim() || undefined;
+
+        const checkedBoxes = Array.from(form.querySelectorAll<HTMLInputElement>('input[name="treatments"]:checked'));
+        const selectedTreatments = checkedBoxes.map((cb) => cb.value);
+
+        const waUrl = buildBridalPlannerWhatsAppUrl({
+          name,
+          timeframe,
+          weddingDate,
+          selectedTreatments,
+          notes
+        });
+
+        window.location.href = waUrl;
+      });
+    }
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', initBridalPlanner);
+    } else {
+      initBridalPlanner();
+    }
+  </script>
+)}

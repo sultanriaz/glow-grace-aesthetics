@@ -112,7 +112,12 @@ const breadcrumbs = [
               <h2 class="category-group-title" id={`heading-${category.slug}`}>
                 {category.name}
               </h2>
-              <p class="category-group-desc">{category.shortDescription}</p>
+              <p class="category-group-desc">
+                {category.shortDescription}
+                <a href={`/services/category/${category.slug}/`} class="category-guide-link">
+                  View {category.name} Guide & FAQs &rarr;
+                </a>
+              </p>
             </div>
           </div>
 
@@ -397,6 +402,21 @@ const breadcrumbs = [
     font-size: 1rem;
     color: var(--ink-500);
     margin: 0;
+  }
+
+  .category-guide-link {
+    display: inline-block;
+    margin-left: 0.5rem;
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--green-800);
+    text-decoration: none;
+    transition: var(--transition-fast);
+  }
+
+  .category-guide-link:hover {
+    color: var(--gold-600);
+    text-decoration: underline;
   }
 
   .services-cards-grid {

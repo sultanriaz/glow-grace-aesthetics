@@ -12,7 +12,7 @@ interface Props {
 const { slug, name, description, icon, class: className = '' } = Astro.props;
 ---
 
-<a href={`/services/#${slug}`} class={`category-tile card-base ${className}`.trim()}>
+<a href={`/services/category/${slug}/`} class={`category-tile card-base ${className}`.trim()}>
   <div class="tile-icon-wrap" aria-hidden="true">
     <Icon name={icon} size={28} />
   </div>

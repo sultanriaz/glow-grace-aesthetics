@@ -58,7 +58,7 @@ const { currentPath } = Astro.props;
                   </li>
                   {categories.map((cat) => (
                     <li>
-                      <a href={`/services/#${cat.slug}`} class="mobile-sublink">
+                      <a href={`/services/category/${cat.slug}/`} class="mobile-sublink">
                         <Icon name={cat.icon} size={16} class="sublink-icon" />
                         <span>{cat.name}</span>
                       </a>

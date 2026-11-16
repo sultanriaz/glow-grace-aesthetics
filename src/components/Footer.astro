@@ -42,7 +42,7 @@ const currentYear = new Date().getFullYear();
         <ul class="footer-links" role="list">
           {categories.map((cat) => (
             <li>
-              <a href={`/services/#${cat.slug}`} class="footer-link">
+              <a href={`/services/category/${cat.slug}/`} class="footer-link">
                 {cat.name}
               </a>
             </li>

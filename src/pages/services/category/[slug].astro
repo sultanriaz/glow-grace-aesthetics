@@ -1,0 +1,545 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import Breadcrumbs from '../../../components/Breadcrumbs.astro';
+import Button from '../../../components/Button.astro';
+import Icon from '../../../components/Icon.astro';
+import ServiceCard from '../../../components/ServiceCard.astro';
+import SectionHeading from '../../../components/SectionHeading.astro';
+import CtaBand from '../../../components/CtaBand.astro';
+import { categories } from '../../../data/categories';
+import { clinic } from '../../../data/clinic';
+import { getClinicBookingWhatsAppLink } from '../../../utils/whatsapp';
+import { getCollection } from 'astro:content';
+
+export async function getStaticPaths() {
+  const allServices = await getCollection('services');
+
+  return categories.map((category) => {
+    const categoryServices = allServices
+      .filter((s) => s.data.category === category.slug)
+      .sort((a, b) => a.data.order - b.data.order);
+
+    return {
+      params: { slug: category.slug },
+      props: { category, categoryServices }
+    };
+  });
+}
+
+const { category, categoryServices } = Astro.props;
+
+const breadcrumbs = [
+  { label: 'Services', href: '/services/' },
+  { label: category.name }
+];
+
+const breadcrumbsJsonLd = [
+  { name: 'Home', item: '/' },
+  { name: 'Services', item: '/services/' },
+  { name: category.name, item: Astro.url.pathname }
+];
+
+const isHairCategory = category.slug === 'hair';
+const waBookingLink = getClinicBookingWhatsAppLink();
+---
+
+<BaseLayout
+  title={category.seoTitle}
+  description={category.seoDescription}
+  breadcrumbsJsonLd={breadcrumbsJsonLd}
+  faqsJsonLd={category.faqs}
+>
+  <!-- Category Hero Section -->
+  <header class="category-hero-section section">
+    <div class="container">
+      <Breadcrumbs items={breadcrumbs} />
+
+      <div class="category-hero-content">
+        <div class="category-badge">
+          <Icon name={category.icon} size={20} />
+          <span>Clinical Department</span>
+        </div>
+
+        <h1 class="category-title">{category.name}</h1>
+
+        <div class="category-intro-lead">
+          <p>{category.longIntro[0]}</p>
+          <p>{category.longIntro[1]}</p>
+        </div>
+
+        <div class="hero-actions">
+          <Button
+            href="/book-appointment/"
+            variant="primary"
+            size="lg"
+            icon="calendar"
+          >
+            Book Appointment
+          </Button>
+
+          <Button
+            href={waBookingLink}
+            target="_blank"
+            variant="secondary"
+            size="lg"
+            icon="whatsapp"
+          >
+            Ask on WhatsApp
+          </Button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Common Concerns Addressed -->
+  <section class="section concerns-section" aria-label="Key Concerns Addressed">
+    <div class="container">
+      <div class="concerns-card card-base">
+        <h2 class="concerns-title">Target Concerns Addressed in this Division</h2>
+        <p class="concerns-sub">
+          Our doctor evaluates underlying physiological factors to recommend safe, calibrated protocols.
+        </p>
+
+        <div class="concerns-chip-list" role="list">
+          {category.concerns.map((concern) => (
+            <div class="concern-pill" role="listitem">
+              <Icon name="check" size={14} class="concern-icon" />
+              <span>{concern}</span>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Specialized 5-Step Hair Journey (Only for Hair Category) -->
+  {isHairCategory && category.journey && (
+    <section class="section hair-journey-section" aria-label="Hair Restoration Journey">
+      <div class="container">
+        <SectionHeading
+          eyebrow="STRUCTURED CLINICAL CARE"
+          title="Your 5-Step Hair Restoration Journey"
+          description="From initial trichoscopy to long-term density preservation, each step is doctor-monitored in Dera Ghazi Khan."
+        />
+
+        <div class="journey-steps-grid">
+          {category.journey.map((step) => (
+            <div class="journey-step-card card-base fade-up-item">
+              <div class="step-badge">Step 0{step.step}</div>
+              <h3 class="step-title">{step.title}</h3>
+              <p class="step-desc">{step.description}</p>
+              {step.serviceSlug && (
+                <a href={`/services/${step.serviceSlug}/`} class="step-link">
+                  Explore Treatment &rarr;
+                </a>
+              )}
+            </div>
+          ))}
+        </div>
+
+        <!-- Hair Guide Banner -->
+        <div class="hair-guide-banner card-base">
+          <div class="guide-banner-icon" aria-hidden="true">
+            <Icon name="sparkles" size={28} />
+          </div>
+          <div class="guide-banner-content">
+            <h3 class="guide-banner-title">Considering a Hair Transplant?</h3>
+            <p class="guide-banner-desc">
+              Read our educational guide on key medical questions to ask before deciding on surgical follicular restoration.
+            </p>
+          </div>
+          <Button
+            href="/blog/hair-transplant-questions-to-ask-before-you-decide/"
+            variant="secondary"
+            size="sm"
+            icon="arrow-right"
+          >
+            Read Article
+          </Button>
+        </div>
+      </div>
+    </section>
+  )}
+
+  <!-- Services in this Category -->
+  <section class="section services-grid-section" aria-label="Available Procedures">
+    <div class="container">
+      <SectionHeading
+        eyebrow="TREATMENTS & PROCEDURES"
+        title={`Explore Our ${category.name} Services`}
+        description="Select a treatment below to view clinical details, expected outcomes, aftercare, and frequently asked questions."
+      />
+
+      <div class="category-services-grid">
+        {categoryServices.map((service) => (
+          <div class="fade-up-item">
+            <ServiceCard
+              slug={service.id.replace(/\.md$/, '')}
+              title={service.data.title}
+              tagline={service.data.tagline}
+              category={category.name}
+              icon={service.data.icon}
+              featured={service.data.featured}
+            />
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Category FAQs -->
+  <section class="section category-faqs-section" aria-label="Frequently Asked Questions">
+    <div class="container">
+      <div class="faqs-container-narrow">
+        <SectionHeading
+          eyebrow="QUESTIONS & ANSWERS"
+          title={`Frequently Asked About ${category.name}`}
+          description="Clear, doctor-reviewed guidance to help you make informed decisions about your aesthetic care."
+          align="center"
+        />
+
+        <div class="category-faqs-list">
+          {category.faqs.map((faq) => (
+            <details class="category-faq-card card-base">
+              <summary class="category-faq-summary">
+                <span class="faq-question-text">{faq.question}</span>
+                <span class="faq-icon" aria-hidden="true">
+                  <Icon name="chevron-down" size={18} />
+                </span>
+              </summary>
+              <div class="category-faq-answer">
+                <p>{faq.answer}</p>
+              </div>
+            </details>
+          ))}
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Final CTA Band -->
+  <CtaBand
+    title={`Looking for personalised ${category.name.toLowerCase()} in DG Khan?`}
+    subtitle="Our doctor conducts thorough, respectful consultations at YCDO Ghazi National Hospital to build a plan tailored to your health."
+    primaryHref="/book-appointment/"
+    primaryText="Book Appointment Online"
+    secondaryHref={waBookingLink}
+    secondaryText="Consult on WhatsApp"
+  />
+</BaseLayout>
+
+<style>
+  .category-hero-section {
+    padding-top: clamp(32px, 5vw, 64px);
+    padding-bottom: clamp(32px, 5vw, 48px);
+    background-color: var(--green-50);
+    border-bottom: 1px solid var(--sand-200);
+  }
+
+  .category-hero-content {
+    max-width: 820px;
+  }
+
+  .category-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.8125rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--green-800);
+    background-color: var(--white);
+    padding: 0.4rem 0.95rem;
+    border-radius: var(--radius-full);
+    border: 1px solid var(--sand-300);
+    margin-bottom: 1.25rem;
+  }
+
+  .category-title {
+    font-size: var(--text-h1);
+    color: var(--green-900);
+    line-height: 1.15;
+    margin-bottom: 1.5rem;
+  }
+
+  .category-intro-lead {
+    font-size: clamp(1.05rem, 1.2vw + 0.5rem, 1.2rem);
+    line-height: 1.7;
+    color: var(--text-body);
+    margin-bottom: 2rem;
+  }
+
+  .category-intro-lead p {
+    margin-bottom: 1rem;
+  }
+
+  .category-intro-lead p:last-child {
+    margin-bottom: 0;
+  }
+
+  .hero-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    align-items: center;
+  }
+
+  /* Concerns Section */
+  .concerns-section {
+    padding-top: 2rem;
+    padding-bottom: 2rem;
+  }
+
+  .concerns-card {
+    padding: clamp(1.75rem, 3vw, 2.5rem);
+    background-color: var(--white);
+    border: 1px solid var(--sand-200);
+    border-radius: var(--radius-lg);
+  }
+
+  .concerns-title {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--green-900);
+    margin-bottom: 0.5rem;
+  }
+
+  .concerns-sub {
+    font-size: 0.9375rem;
+    color: var(--text-muted);
+    margin-bottom: 1.5rem;
+  }
+
+  .concerns-chip-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+  }
+
+  .concern-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.55rem 1rem;
+    background-color: var(--green-50);
+    border: 1px solid var(--green-100);
+    border-radius: var(--radius-full);
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: var(--green-900);
+  }
+
+  .concern-icon {
+    color: var(--green-700);
+    flex-shrink: 0;
+  }
+
+  /* Hair Journey Section */
+  .hair-journey-section {
+    background-color: var(--sand-50);
+    border-top: 1px solid var(--sand-200);
+    border-bottom: 1px solid var(--sand-200);
+  }
+
+  .journey-steps-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+    margin-top: 2.5rem;
+  }
+
+  @media (min-width: 640px) {
+    .journey-steps-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .journey-steps-grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+  .journey-step-card {
+    padding: 1.75rem;
+    background-color: var(--white);
+    border: 1px solid var(--sand-200);
+    border-radius: var(--radius-lg);
+    display: flex;
+    flex-direction: column;
+  }
+
+  .step-badge {
+    align-self: flex-start;
+    font-family: var(--font-serif);
+    font-size: 0.875rem;
+    font-weight: 700;
+    color: var(--gold-600);
+    background-color: var(--sand-100);
+    padding: 0.25rem 0.65rem;
+    border-radius: var(--radius-sm);
+    margin-bottom: 1rem;
+  }
+
+  .step-title {
+    font-size: 1.15rem;
+    color: var(--green-900);
+    margin-bottom: 0.75rem;
+    line-height: 1.35;
+  }
+
+  .step-desc {
+    font-size: 0.9375rem;
+    color: var(--text-body);
+    line-height: 1.6;
+    margin-bottom: 1.25rem;
+    flex-grow: 1;
+  }
+
+  .step-link {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--green-800);
+    text-decoration: none;
+    transition: var(--transition-fast);
+  }
+
+  .step-link:hover {
+    color: var(--gold-600);
+    text-decoration: underline;
+  }
+
+  .hair-guide-banner {
+    margin-top: 2.5rem;
+    padding: 1.5rem 2rem;
+    background-color: var(--white);
+    border: 1px solid var(--sand-300);
+    border-radius: var(--radius-lg);
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+    align-items: flex-start;
+  }
+
+  @media (min-width: 768px) {
+    .hair-guide-banner {
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-between;
+    }
+  }
+
+  .guide-banner-icon {
+    color: var(--gold-600);
+    flex-shrink: 0;
+  }
+
+  .guide-banner-content {
+    flex-grow: 1;
+  }
+
+  .guide-banner-title {
+    font-size: 1.125rem;
+    color: var(--green-900);
+    margin-bottom: 0.25rem;
+  }
+
+  .guide-banner-desc {
+    font-size: 0.9375rem;
+    color: var(--text-muted);
+    margin: 0;
+  }
+
+  /* Services Grid Section */
+  .category-services-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.75rem;
+    margin-top: 2.5rem;
+  }
+
+  @media (min-width: 640px) {
+    .category-services-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .category-services-grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+  /* FAQs Section */
+  .category-faqs-section {
+    background-color: var(--green-50);
+  }
+
+  .faqs-container-narrow {
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .category-faqs-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    margin-top: 2rem;
+  }
+
+  .category-faq-card {
+    background-color: var(--white);
+    border: 1px solid var(--sand-200);
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    transition: var(--transition-fast);
+  }
+
+  .category-faq-card[open] {
+    border-color: var(--green-600);
+  }
+
+  .category-faq-summary {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+    padding: 1.25rem 1.5rem;
+    font-size: 1.05rem;
+    font-weight: 600;
+    color: var(--green-900);
+    cursor: pointer;
+    list-style: none;
+    user-select: none;
+  }
+
+  .category-faq-summary::-webkit-details-marker {
+    display: none;
+  }
+
+  .faq-icon {
+    color: var(--green-700);
+    transition: transform 0.2s ease;
+    flex-shrink: 0;
+  }
+
+  .category-faq-card[open] .faq-icon {
+    transform: rotate(180deg);
+  }
+
+  .category-faq-answer {
+    padding: 0 1.5rem 1.5rem;
+    font-size: 0.95rem;
+    line-height: 1.7;
+    color: var(--text-body);
+    border-top: 1px solid var(--sand-100);
+    margin-top: 0.5rem;
+    padding-top: 1rem;
+  }
+
+  .category-faq-answer p {
+    margin: 0;
+  }
+</style>

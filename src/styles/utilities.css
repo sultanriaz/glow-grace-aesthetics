@@ -1,0 +1,105 @@
+/* Utility Classes */
+
+.sr-only,
+.visually-hidden {
+  position: absolute !important;
+  width: 1px !important;
+  height: 1px !important;
+  padding: 0 !important;
+  margin: -1px !important;
+  overflow: hidden !important;
+  clip: rect(0, 0, 0, 0) !important;
+  white-space: nowrap !important;
+  border: 0 !important;
+}
+
+/* Typography Utilities */
+.eyebrow {
+  display: inline-block;
+  font-family: var(--font-sans);
+  font-size: var(--text-xs);
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: var(--green-700);
+  margin-bottom: var(--space-2);
+}
+
+.lead {
+  font-size: clamp(1.125rem, 0.5vw + 1rem, 1.25rem);
+  line-height: 1.6;
+  color: var(--ink-700);
+}
+
+.text-muted {
+  color: var(--ink-500);
+}
+
+.text-center {
+  text-align: center;
+}
+
+/* Card & Surface */
+.card-base {
+  background-color: var(--white);
+  border: 1px solid var(--sand-100);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-subtle);
+  transition: transform var(--transition-base), box-shadow var(--transition-base), border-color var(--transition-base);
+}
+
+.card-base:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-card);
+  border-color: var(--sand-400);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .card-base:hover {
+    transform: none;
+  }
+}
+
+/* Hairline border */
+.hairline-top {
+  border-top: 1px solid var(--sand-100);
+}
+
+.hairline-bottom {
+  border-bottom: 1px solid var(--sand-100);
+}
+
+/* Grid & Flex */
+.grid {
+  display: grid;
+}
+
+.flex {
+  display: flex;
+}
+
+.flex-col {
+  display: flex;
+  flex-direction: column;
+}
+
+.items-center {
+  align-items: center;
+}
+
+.justify-between {
+  justify-content: space-between;
+}
+
+.justify-center {
+  justify-content: center;
+}
+
+/* Touch target guarantee */
+.touch-target {
+  min-height: var(--touch-target-min);
+  min-width: var(--touch-target-min);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}

@@ -1,0 +1,33 @@
+{
+  "name": "glow-grace-aesthetics",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "astro dev",
+    "start": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "check": "astro check",
+    "make-icons": "node scripts/make-icons.mjs",
+    "check:links": "node scripts/check-links.mjs",
+    "check:content": "node scripts/check-content.mjs"
+  },
+  "engines": {
+    "node": ">=20.0.0"
+  },
+  "dependencies": {
+    "@astrojs/check": "^0.9.4",
+    "@astrojs/sitemap": "^3.2.1",
+    "@fontsource/cormorant-garamond": "^5.1.1",
+    "@fontsource/jost": "^5.1.1",
+    "astro": "^5.4.2",
+    "png-to-ico": "^2.1.8",
+    "sharp": "^0.33.5",
+    "typescript": "^5.7.3"
+  },
+  "devDependencies": {
+    "axe-core": "^4.14.0",
+    "puppeteer-core": "^25.17.0"
+  }
+}

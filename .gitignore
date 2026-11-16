@@ -1,0 +1,24 @@
+# Dependencies
+node_modules/
+.pnp
+.pnp.js
+
+# Build Output
+dist/
+.astro/
+
+# Environment files
+.env
+.env.production
+.env.local
+.env.*.local
+
+# Vercel
+.vercel/
+
+# OS / Editor files
+.DS_Store
+Thumbs.db
+*.log
+.vscode/
+.idea/

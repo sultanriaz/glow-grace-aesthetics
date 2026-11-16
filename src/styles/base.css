@@ -1,0 +1,186 @@
+@import "@fontsource/cormorant-garamond/latin-600.css";
+@import "@fontsource/jost/latin-400.css";
+@import "@fontsource/jost/latin-500.css";
+
+/* Reset & Box Sizing */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-size: 16px;
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+  background-color: var(--cream-50);
+  overflow-x: hidden;
+}
+
+body {
+  font-family: var(--font-sans);
+  font-size: var(--text-base);
+  line-height: 1.65;
+  color: var(--ink-700);
+  background-color: var(--cream-50);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+  position: relative;
+  width: 100%;
+}
+
+/* Headings */
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-serif);
+  color: var(--green-900);
+  line-height: 1.15;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+
+h1 {
+  font-size: var(--text-h1);
+  font-weight: 600;
+}
+
+h2 {
+  font-size: var(--text-h2);
+  font-weight: 600;
+}
+
+h3 {
+  font-size: var(--text-h3);
+  font-weight: 600;
+}
+
+h4 {
+  font-size: var(--text-h4);
+  font-weight: 600;
+}
+
+p {
+  margin-bottom: 1rem;
+}
+
+p:last-child {
+  margin-bottom: 0;
+}
+
+a {
+  color: var(--green-700);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  transition: color var(--transition-fast);
+}
+
+a:hover {
+  color: var(--green-900);
+}
+
+/* Images & Media */
+img, svg, picture, video {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* Form Elements & Buttons */
+button, input, select, textarea {
+  font: inherit;
+  color: inherit;
+}
+
+button {
+  cursor: pointer;
+  border: none;
+  background: none;
+}
+
+/* Accessible Focus Ring */
+:focus-visible {
+  outline: 2px solid var(--color-focus);
+  outline-offset: 3px;
+}
+
+/* Skip link */
+.skip-link {
+  position: absolute;
+  top: -9999px;
+  left: 1rem;
+  background: var(--green-900);
+  color: var(--white);
+  padding: 0.75rem 1.25rem;
+  z-index: 9999;
+  border-radius: var(--radius-sm);
+  font-weight: 500;
+  text-decoration: none;
+  box-shadow: var(--shadow-card);
+  transition: top 0.2s ease-in-out;
+}
+
+.skip-link:focus {
+  top: 1rem;
+  outline: 2px solid var(--sand-400);
+  outline-offset: 2px;
+}
+
+/* Layout Container */
+.container {
+  width: 100%;
+  max-width: var(--container-max);
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: var(--container-padding);
+  padding-right: var(--container-padding);
+}
+
+/* Section base */
+.section {
+  padding-top: var(--section-padding-y);
+  padding-bottom: var(--section-padding-y);
+  position: relative;
+}
+
+/* Bottom padding on body/main for sticky mobile bar */
+@media (max-width: 1023px) {
+  main {
+    padding-bottom: calc(var(--sticky-bar-height) + env(safe-area-inset-bottom, 0px));
+  }
+}
+
+/* Subtle scroll fade-up progressive enhancement */
+.fade-up-item {
+  opacity: 0;
+  transform: translateY(16px);
+  transition: opacity 600ms cubic-bezier(0.16, 1, 0.3, 1), transform 600ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.fade-up-item.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* When JavaScript is disabled, keep items fully visible */
+.no-js .fade-up-item {
+  opacity: 1 !important;
+  transform: none !important;
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+  .fade-up-item {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+}

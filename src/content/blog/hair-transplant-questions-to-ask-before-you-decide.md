@@ -4,7 +4,7 @@ description: "A candid medical guide to follicular unit extraction, donor area e
 publishedAt: "2026-03-18"
 tags: ["Hair Transplant", "Hair Restoration", "Surgery Guide"]
 relatedServices: ["hair-transplant", "prp-hair-restoration", "hair-fall-treatment"]
-reviewStatus: "doctor-approved"
+reviewStatus: "draft"
 reviewedBy: null
 draft: false
 ---

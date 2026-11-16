@@ -76,3 +76,77 @@
     - `node scripts/verify-site.mjs`: 11 pages audited across 5 viewports (55 screenshots), 0 console errors, 0 third-party requests, 0 Axe a11y violations
     - `node scripts/run-lighthouse.mjs`: Performance 99-100, Accessibility 100, Best Practices 100, SEO 100
   - [x] Update `CONTENT_REVIEW.md` and commit locally on branch `part-2-content`
+
+---
+
+# Glow & Grace Aesthetics — Mission: Part 3 of 3 Progress
+**Branch**: `part-3-launch`  
+**Quality Bar**: Launch-ready, fast, secure, private by default, fully documented, and easy to hand over to a non-technical client.
+
+## Part 3 Phase Checklist
+
+- [ ] **Step 0: Reconnaissance & Environment Setup**
+  - [x] Branch `part-3-launch` created and pushed to origin
+  - [x] Baseline health verification passed (`check`, `test`, `build`, `check:claims`, `check:content`, `check:links`)
+  - [x] Confirm no sample gallery/testimonial fixtures exist (`hasGallery()` and `hasTestimonials()` are false)
+  - [x] Confirm all 23 services and 6 blog posts have `reviewStatus: "draft"`
+  - [x] Update `PROGRESS.md`
+
+- [x] **Phase A: Full Developer Page (/developer/)**
+  - [x] Research developer portfolio at https://portfolio-cms-ten-beige.vercel.app/
+  - [x] Save portfolio extraction summary in `docs/developer-page-sources.md`
+  - [x] Update `src/data/developer.ts` with real projects, skills, and measured `siteStats`
+  - [x] Capture portfolio preview screenshot at 1440x900, optimize to WebP (<= 120 KB)
+  - [x] Build upgraded `/developer/` page (Hero, About, Selected Work, Skills, Portfolio Preview, About This Website, CTA)
+  - [x] Verify robots `noindex`, sitemap exclusion, developer phone isolation (923229781129)
+
+- [ ] **Phase B: Legal Pages (/privacy/, /terms/, /medical-disclaimer/)**
+  - [ ] Create `src/data/site.ts` with real configuration flags
+  - [ ] Create `LegalLayout.astro` (readable measure, auto table of contents, "Last updated")
+  - [ ] Write Privacy Policy (`/privacy/`), Terms of Use (`/terms/`), Medical Disclaimer (`/medical-disclaimer/`)
+  - [ ] Link legal pages in footer and relevant form disclaimers; add to sitemap
+  - [ ] Update claims allowlist for negated guarantee phrases on legal pages
+
+- [ ] **Phase C: Privacy-Friendly Analytics (Off by Default)**
+  - [ ] Install `@vercel/analytics`
+  - [ ] Create `src/utils/analytics.ts` with `track(name, props)` (no-op unless `PUBLIC_ANALYTICS_PROVIDER="vercel"`)
+  - [ ] Add tiny delegated click listener (<= 1 KB) and `data-track-*` attributes
+  - [ ] Create `docs/ANALYTICS.md`
+  - [ ] Verify both analytics modes ("none" and "vercel") pass budgets, set zero cookies, and make zero 3rd-party requests
+
+- [ ] **Phase D: Social Cards & SEO Polish**
+  - [ ] Install `satori`, `@resvg/resvg-js`, `@fontsource/cormorant-garamond`, `@fontsource/jost`
+  - [ ] Create `scripts/make-og.mjs` (1200x630 JPEG, <= 200 KB) generating OG cards for services, categories, posts, key pages
+  - [ ] Update `Seo.astro` (per-page og:image, twitter:card, article timestamps, verification meta tags)
+  - [ ] Add `lastmod` to sitemap in `astro.config.mjs`
+  - [ ] Create `scripts/check-seo.mjs` (`npm run check:seo`)
+  - [ ] Create `scripts/check-schema.mjs` (`npm run check:schema`)
+
+- [ ] **Phase E: Security & Privacy Verification**
+  - [ ] Add Content-Security-Policy (CSP) headers in `vercel.json`
+  - [ ] Test zero CSP violations across routes, map facade, forms, and lightbox
+  - [ ] Create `scripts/check-privacy.mjs` (`npm run check:privacy`)
+  - [ ] Create `scripts/check-headers.mjs`
+  - [ ] Create `docs/SECURITY.md`
+
+- [ ] **Phase F: Performance, Accessibility & Cross-Browser QA**
+  - [ ] Install `@playwright/test` and `@axe-core/playwright`
+  - [ ] Configure `playwright.config.ts` (chromium, mobile chromium, webkit mobile, firefox)
+  - [ ] Write `tests/e2e/smoke.spec.ts` and `tests/e2e/flows.spec.ts`
+  - [ ] Write `tests/a11y/axe.spec.ts` (0 serious or critical violations)
+  - [ ] Create `scripts/check-budgets.mjs` (`npm run check:budgets`)
+  - [ ] Run Lighthouse mobile on 10 routes (Performance >= 95, Accessibility 100, Best Practices >= 95, SEO 100)
+
+- [ ] **Phase G: Domain, Search Console & Local SEO Kit**
+  - [ ] Create `docs/CUSTOM-DOMAIN.md`
+  - [ ] Create `docs/LOCAL-SEO.md`
+  - [ ] Install `qrcode` and create `scripts/make-qr.mjs` (`npm run make-qr`)
+  - [ ] Create `marketing/README.md` and generate QR codes for website and WhatsApp
+
+- [ ] **Phase H: Handover Docs, CI & Launch Gate**
+  - [ ] Create `docs/HANDOVER.md`, `docs/EDITING-GUIDE.md`, `docs/MAINTENANCE.md`, `docs/LAUNCH-CHECKLIST.md`, `CHANGELOG.md`
+  - [ ] Generate `docs/Client-Handover.pdf` via Playwright
+  - [ ] Create `.github/workflows/ci.yml`
+  - [ ] Add `npm run review:status` and `npm run launch:check`
+  - [ ] Update `CONTENT_REVIEW.md`
+  - [ ] Full quality gate verification and final commit & push on `part-3-launch`

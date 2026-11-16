@@ -4,7 +4,7 @@ description: "Differentiating normal shedding from clinical hair loss, nutrition
 publishedAt: "2026-03-12"
 tags: ["Hair Health", "Hair Fall", "Scalp Care"]
 relatedServices: ["hair-fall-treatment", "prp-hair-restoration", "hair-transplant"]
-reviewStatus: "doctor-approved"
+reviewStatus: "draft"
 reviewedBy: null
 draft: false
 ---

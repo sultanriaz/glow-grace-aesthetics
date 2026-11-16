@@ -4,7 +4,7 @@ description: "A compassionate medical guide to stubborn facial pigmentation, why
 publishedAt: "2026-03-08"
 tags: ["Melasma", "Pigmentation", "Skin Care"]
 relatedServices: ["melasma-treatment", "chemical-peels", "carbon-pico-laser"]
-reviewStatus: "doctor-approved"
+reviewStatus: "draft"
 reviewedBy: null
 draft: false
 ---

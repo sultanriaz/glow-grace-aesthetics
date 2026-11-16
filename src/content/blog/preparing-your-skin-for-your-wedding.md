@@ -4,7 +4,7 @@ description: "How to plan your pre-wedding aesthetic treatments safely, avoiding
 publishedAt: "2026-03-22"
 tags: ["Bridal Care", "Skin Preparation", "Facial Glow"]
 relatedServices: ["bridal-glow-packages", "hydrafacial", "chemical-peels"]
-reviewStatus: "doctor-approved"
+reviewStatus: "draft"
 reviewedBy: null
 draft: false
 ---

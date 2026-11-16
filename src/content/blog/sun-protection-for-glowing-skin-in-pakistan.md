@@ -4,7 +4,7 @@ description: "Understanding ultraviolet radiation, selecting broad-spectrum suns
 publishedAt: "2026-03-05"
 tags: ["Sun Protection", "Skin Care", "Pigmentation"]
 relatedServices: ["chemical-peels", "melasma-treatment", "carbon-pico-laser"]
-reviewStatus: "doctor-approved"
+reviewStatus: "draft"
 reviewedBy: null
 draft: false
 ---

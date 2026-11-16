@@ -5,12 +5,10 @@ import Button from '../components/Button.astro';
 import { developer } from '../data/developer';
 import { Image } from 'astro:assets';
 
-// Check for developer photo in src/assets/developer/
-const devPhotos = import.meta.glob<{ default: ImageMetadata }>('/src/assets/developer/*.{jpg,jpeg,png,webp}', { eager: true });
-const photoEntries = Object.values(devPhotos);
-const devPhoto = photoEntries.length > 0 ? photoEntries[0].default : null;
+import devPhoto from '../assets/developer/developer.webp';
+import portfolioPreview from '../assets/developer/portfolio-preview.webp';
 
-const pageTitle = `Website by ${developer.name} | Developer Credits`;
+const pageTitle = `Hi, I'm ${developer.name} | Web Developer`;
 const pageDescription = `Technical architecture and web development portfolio credit for Glow & Grace Aesthetics by ${developer.name}.`;
 ---
 
@@ -20,236 +18,765 @@ const pageDescription = `Technical architecture and web development portfolio cr
   noindex={true}
   hideActions={true}
 >
-  <section class="developer-page-section section" aria-label="Website Developer Information">
-    <div class="container">
-      <div class="developer-card card-base">
-        <!-- Developer Avatar / Portrait -->
-        <div class="avatar-container">
-          {devPhoto ? (
+  <main id="main-content" class="developer-page-main">
+    <!-- 1. Hero Section -->
+    <header class="developer-hero-section section">
+      <div class="container container--developer">
+        <div class="developer-hero-layout">
+          <div class="avatar-container">
             <Image
               src={devPhoto}
               alt="Portrait of Sultan Mehmood"
-              width={160}
-              height={160}
-              widths={[480, 960]}
+              width={180}
+              height={180}
               format="webp"
               loading="eager"
               decoding="async"
               class="developer-portrait-img"
             />
-          ) : (
-            <div class="monogram-avatar" aria-label="Sultan Mehmood avatar monogram">
-              <span class="monogram-initials">SM</span>
+          </div>
+
+          <div class="hero-text-content">
+            <span class="eyebrow">DEVELOPER &amp; SYSTEMS ARCHITECT</span>
+            <h1 class="developer-heading">Hi, I'm {developer.name}</h1>
+            <p class="developer-role">{developer.role}</p>
+            <p class="developer-lead">
+              {developer.headline}
+            </p>
+
+            <div class="developer-actions">
+              <Button
+                href={developer.portfolioUrl}
+                target="_blank"
+                variant="primary"
+                size="md"
+                icon="external-link"
+                iconPosition="right"
+                class="dev-btn-portfolio"
+              >
+                View my portfolio
+              </Button>
+
+              <Button
+                href={developer.whatsAppUrl}
+                target="_blank"
+                variant="secondary"
+                size="md"
+                icon="whatsapp"
+                class="dev-btn-wa"
+              >
+                Chat on WhatsApp
+              </Button>
             </div>
-          )}
+
+            <!-- Social Links (GitHub, LinkedIn) -->
+            <div class="developer-socials" aria-label="Developer Profiles">
+              <a
+                href={developer.githubUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                class="social-icon-link touch-target"
+                aria-label="GitHub Profile of Sultan Mehmood"
+              >
+                <Icon name="github" size={20} />
+                <span>GitHub</span>
+              </a>
+
+              <a
+                href={developer.linkedinUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                class="social-icon-link touch-target"
+                aria-label="LinkedIn Profile of Sultan Mehmood"
+              >
+                <Icon name="linkedin" size={20} />
+                <span>LinkedIn</span>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- 2. About Section -->
+    <section class="section developer-about-section" aria-label="About the Developer">
+      <div class="container container--developer">
+        <div class="card-base developer-content-card">
+          <span class="section-badge">ABOUT ME</span>
+          <h2 class="subheading">Background &amp; Philosophy</h2>
+          <p class="about-text">
+            {developer.bio}
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 3. Selected Work Section -->
+    <section class="section developer-projects-section" aria-label="Selected Engineering Work">
+      <div class="container container--developer">
+        <div class="section-title-wrap">
+          <span class="section-badge">PORTFOLIO WORK</span>
+          <h2 class="subheading">Selected Engineering Projects</h2>
+          <p class="section-subtext">Featured backend architectures, verification pipelines, and machine learning systems.</p>
         </div>
 
-        <!-- H1 & Role -->
-        <h1 class="developer-heading">Website by {developer.name}</h1>
-        <p class="developer-role">{developer.role}</p>
+        <div class="projects-grid">
+          {developer.projects.map((project) => (
+            <article class="project-card card-base">
+              <h3 class="project-title">
+                <a href={project.url} target="_blank" rel="noopener noreferrer">
+                  {project.title}
+                  <Icon name="external-link" size={14} />
+                </a>
+              </h3>
+              <p class="project-desc">{project.description}</p>
+              <div class="project-tags">
+                {project.tags.map((tag) => (
+                  <span class="tag-pill">{tag}</span>
+                ))}
+              </div>
+            </article>
+          ))}
+        </div>
+      </div>
+    </section>
 
-        <!-- Project Attribution -->
-        <p class="developer-summary">
-          Designed and developed this website for Glow & Grace Aesthetics.
-        </p>
+    <!-- 4. Skills Taxonomy -->
+    <section class="section developer-skills-section" aria-label="Technical Skills">
+      <div class="container container--developer">
+        <div class="section-title-wrap">
+          <span class="section-badge">CORE TOOLKIT</span>
+          <h2 class="subheading">Technical Capabilities &amp; Skills</h2>
+          <p class="section-subtext">Categorised technical tools and engineering proficiencies.</p>
+        </div>
 
-        <!-- Action CTAs -->
-        <div class="developer-actions">
-          <Button
+        <div class="skills-grid">
+          {developer.skillGroups.map((group) => (
+            <div class="skill-group card-base">
+              <h3 class="skill-category-title">{group.category}</h3>
+              <div class="skills-chips">
+                {group.skills.map((skill) => (
+                  <span class="skill-chip">{skill}</span>
+                ))}
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- 5. Portfolio Preview -->
+    <section class="section developer-preview-section" aria-label="Portfolio Visual Preview">
+      <div class="container container--developer">
+        <div class="card-base preview-card">
+          <div class="section-title-wrap">
+            <span class="section-badge">LIVE SITE PREVIEW</span>
+            <h2 class="subheading">Explore the Full Portfolio</h2>
+            <p class="section-subtext">Visit the complete portfolio website for case studies, live demos, and technical writing.</p>
+          </div>
+
+          <a
             href={developer.portfolioUrl}
             target="_blank"
-            variant="primary"
-            size="md"
-            icon="external-link"
-            iconPosition="right"
-            class="dev-btn-portfolio"
-          >
-            View my portfolio
-          </Button>
-
-          <Button
-            href={developer.whatsAppUrl}
-            target="_blank"
-            variant="secondary"
-            size="md"
-            icon="whatsapp"
-            class="dev-btn-wa"
-          >
-            Chat on WhatsApp
-          </Button>
-        </div>
-
-        <!-- Social Links (GitHub, LinkedIn) -->
-        <div class="developer-socials" aria-label="Developer Profiles">
-          <a
-            href={developer.githubUrl}
-            target="_blank"
             rel="noopener noreferrer"
-            class="social-icon-link touch-target"
-            aria-label="GitHub Profile of Sultan Mehmood"
+            class="portfolio-preview-link"
+            aria-label="Open Sultan Mehmood's live portfolio in a new window"
           >
-            <Icon name="github" size={22} />
-          </a>
-
-          <a
-            href={developer.linkedinUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            class="social-icon-link touch-target"
-            aria-label="LinkedIn Profile of Sultan Mehmood"
-          >
-            <Icon name="linkedin" size={22} />
-          </a>
-        </div>
-
-        <div class="developer-return">
-          <a href="/" class="return-home-link">
-            &larr; Return to Glow & Grace Aesthetics Home
+            <div class="browser-chrome-mock">
+              <div class="mock-dot red"></div>
+              <div class="mock-dot yellow"></div>
+              <div class="mock-dot green"></div>
+              <div class="mock-address">portfolio-cms-ten-beige.vercel.app</div>
+            </div>
+            <Image
+              src={portfolioPreview}
+              alt="Screenshot of Sultan Mehmood's portfolio home page"
+              width={1200}
+              height={750}
+              format="webp"
+              loading="lazy"
+              decoding="async"
+              class="preview-img"
+            />
           </a>
         </div>
       </div>
-    </div>
-  </section>
+    </section>
+
+    <!-- 6. About This Website (Audit & Fact Sheet) -->
+    <section class="section developer-specs-section" aria-label="About this Website">
+      <div class="container container--developer">
+        <div class="card-base specs-card">
+          <span class="section-badge">SITE SPECIFICATIONS</span>
+          <h2 class="subheading">About the Glow &amp; Grace Aesthetics Website</h2>
+          <p class="specs-intro">
+            A production-grade, privacy-first static site engineered specifically for fast mobile loading over 4G networks in Pakistan.
+          </p>
+
+          <div class="specs-features-grid">
+            <div class="spec-feature-item">
+              <Icon name="check-circle" size={20} />
+              <div>
+                <strong>Astro Static Architecture</strong>
+                <p>Pure static HTML/CSS build with zero JavaScript runtime overhead on initial load.</p>
+              </div>
+            </div>
+
+            <div class="spec-feature-item">
+              <Icon name="check-circle" size={20} />
+              <div>
+                <strong>Global Edge Hosting on Vercel</strong>
+                <p>Distributed across global edge CDN nodes for sub-second TTFB and automated previews.</p>
+              </div>
+            </div>
+
+            <div class="spec-feature-item">
+              <Icon name="check-circle" size={20} />
+              <div>
+                <strong>Zero Cookies &amp; Trackers</strong>
+                <p>Private by default. Strictly no cookies, no tracking pixels, and no local storage tokens.</p>
+              </div>
+            </div>
+
+            <div class="spec-feature-item">
+              <Icon name="check-circle" size={20} />
+              <div>
+                <strong>WCAG 2.2 AA Accessibility Target</strong>
+                <p>High-contrast colour ratios, touch targets &ge; 44px, and complete keyboard navigation.</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Measured Lighthouse Scores Card -->
+          <div class="scores-card">
+            <h3 class="scores-heading">Measured Mobile Lighthouse Scores</h3>
+            <span class="scores-date">Measured on {developer.siteStats.measuredOn} under simulated 4G mobile conditions</span>
+
+            <div class="scores-grid">
+              <div class="score-pill">
+                <span class="score-number">{developer.siteStats.performance}</span>
+                <span class="score-label">Performance</span>
+              </div>
+              <div class="score-pill">
+                <span class="score-number">{developer.siteStats.accessibility}</span>
+                <span class="score-label">Accessibility</span>
+              </div>
+              <div class="score-pill">
+                <span class="score-number">{developer.siteStats.bestPractices}</span>
+                <span class="score-label">Best Practices</span>
+              </div>
+              <div class="score-pill">
+                <span class="score-number">{developer.siteStats.seo}</span>
+                <span class="score-label">SEO</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 7. CTA Section -->
+    <section class="section developer-cta-section" aria-label="Hire the Developer">
+      <div class="container container--developer">
+        <div class="card-base dev-cta-card">
+          <span class="eyebrow">WORK WITH ME</span>
+          <h2 class="cta-heading">Need a website or app for your business?</h2>
+          <p class="cta-sub">
+            Let's discuss your product goals, technical architecture, and design vision.
+          </p>
+
+          <div class="cta-actions">
+            <Button
+              href={developer.whatsAppUrl}
+              target="_blank"
+              variant="secondary"
+              size="lg"
+              icon="whatsapp"
+            >
+              Chat on WhatsApp
+            </Button>
+
+            <a href="/" class="back-link">
+              <Icon name="arrow-left" size={16} />
+              <span>Back to Glow &amp; Grace Aesthetics</span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
 </BaseLayout>
 
 <style>
-  .developer-page-section {
-    min-height: calc(80vh - 120px);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding-top: clamp(48px, 8vw, 80px);
-    padding-bottom: clamp(64px, 8vw, 96px);
-    background: radial-gradient(circle at center, #FAF7F2 0%, #EAF4EF 100%);
+  .developer-page-main {
+    background-color: var(--color-bg);
   }
 
-  .developer-card {
-    max-width: 580px;
-    margin: 0 auto;
-    padding: clamp(2.5rem, 6vw, 3.5rem) clamp(1.5rem, 5vw, 3rem);
-    text-align: center;
-    background-color: var(--white);
-    border: 1px solid var(--sand-400);
-    border-radius: var(--radius-lg);
-    box-shadow: var(--shadow-card);
+  .container--developer {
+    max-width: 960px;
+  }
+
+  /* 1. Hero */
+  .developer-hero-section {
+    padding-top: var(--space-8);
+    padding-bottom: var(--space-8);
+    border-bottom: 1px solid var(--color-border);
+    background: linear-gradient(180deg, var(--color-surface-sunken) 0%, var(--color-surface) 100%);
+  }
+
+  .developer-hero-layout {
+    display: flex;
+    align-items: center;
+    gap: var(--space-8);
   }
 
   .avatar-container {
-    display: flex;
-    justify-content: center;
-    margin-bottom: 1.75rem;
-  }
-
-  /* Monogram avatar fallback */
-  .monogram-avatar {
-    width: 120px;
-    height: 120px;
-    border-radius: var(--radius-full);
-    background: linear-gradient(135deg, var(--green-900) 0%, #1F7A5A 100%);
-    border: 3px solid var(--sand-400);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    box-shadow: 0 8px 24px rgba(3, 66, 47, 0.2);
-  }
-
-  .monogram-initials {
-    font-family: var(--font-serif);
-    font-size: 2.75rem;
-    font-weight: 700;
-    color: var(--cream-50);
-    letter-spacing: 0.05em;
+    flex-shrink: 0;
   }
 
   .developer-portrait-img {
-    width: 120px;
-    height: 120px;
+    width: 170px;
+    height: 170px;
     border-radius: var(--radius-full);
     object-fit: cover;
-    border: 3px solid var(--sand-400);
-    box-shadow: 0 8px 24px rgba(3, 66, 47, 0.2);
+    border: 3px solid var(--color-border);
+    box-shadow: var(--shadow-md);
+  }
+
+  .hero-text-content {
+    flex-grow: 1;
+  }
+
+  .eyebrow {
+    font-size: var(--font-size-xs);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--color-primary);
+    display: block;
+    margin-bottom: var(--space-1);
   }
 
   .developer-heading {
-    font-size: clamp(1.85rem, 3vw + 0.8rem, 2.35rem);
-    color: var(--green-900);
-    margin-bottom: 0.35rem;
-    line-height: 1.2;
+    font-family: var(--font-heading);
+    font-size: clamp(2rem, 4vw, 2.75rem);
+    font-weight: 600;
+    line-height: 1.15;
+    color: var(--color-text);
+    margin: 0 0 var(--space-2) 0;
   }
 
   .developer-role {
-    font-family: var(--font-sans);
-    font-size: 1.0625rem;
-    font-weight: 500;
-    color: var(--green-700);
-    margin-bottom: 1.25rem;
+    font-size: var(--font-size-lg);
+    font-weight: 600;
+    color: var(--color-primary);
+    margin: 0 0 var(--space-2) 0;
   }
 
-  .developer-summary {
-    font-size: 1.0625rem;
-    color: var(--ink-700);
+  .developer-lead {
+    font-size: var(--font-size-sm);
     line-height: 1.6;
-    margin-bottom: 2rem;
+    color: var(--color-text-muted);
+    margin: 0 0 var(--space-5) 0;
   }
 
   .developer-actions {
     display: flex;
+    gap: var(--space-3);
     flex-wrap: wrap;
-    align-items: center;
-    justify-content: center;
-    gap: 1rem;
-    margin-bottom: 2rem;
+    margin-bottom: var(--space-4);
   }
 
   .developer-socials {
     display: flex;
+    gap: var(--space-4);
     align-items: center;
-    justify-content: center;
-    gap: 1rem;
-    margin-bottom: 2rem;
-    padding-top: 1.5rem;
-    border-top: 1px solid var(--sand-100);
   }
 
   .social-icon-link {
-    display: flex;
+    display: inline-flex;
     align-items: center;
-    justify-content: center;
-    width: 44px;
-    height: 44px;
-    border-radius: var(--radius-full);
-    background-color: var(--green-50);
-    color: var(--green-900);
+    gap: var(--space-2);
+    color: var(--color-text-muted);
     text-decoration: none;
-    border: 1px solid var(--sand-100);
-    transition: background-color var(--transition-fast), color var(--transition-fast), transform var(--transition-fast);
+    font-size: var(--font-size-sm);
+    font-weight: 500;
+    transition: color var(--transition-fast);
   }
 
   .social-icon-link:hover {
-    background-color: var(--green-900);
-    color: var(--white);
+    color: var(--color-primary);
+  }
+
+  /* 2. About */
+  .developer-about-section {
+    padding-top: var(--space-6);
+    padding-bottom: var(--space-6);
+  }
+
+  .section-badge {
+    display: inline-block;
+    padding: 2px var(--space-2);
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    background-color: var(--color-surface-sunken);
+    color: var(--color-primary);
+    border-radius: var(--radius-sm);
+    margin-bottom: var(--space-2);
+  }
+
+  .subheading {
+    font-family: var(--font-heading);
+    font-size: var(--font-size-2xl);
+    font-weight: 600;
+    color: var(--color-text);
+    margin: 0 0 var(--space-3) 0;
+  }
+
+  .developer-content-card {
+    padding: var(--space-6);
+  }
+
+  .about-text {
+    font-size: var(--font-size-base);
+    line-height: 1.7;
+    color: var(--color-text);
+    margin: 0;
+  }
+
+  /* 3. Selected Work */
+  .developer-projects-section {
+    padding-top: var(--space-6);
+    padding-bottom: var(--space-6);
+  }
+
+  .section-title-wrap {
+    margin-bottom: var(--space-6);
+  }
+
+  .section-subtext {
+    font-size: var(--font-size-sm);
+    color: var(--color-text-muted);
+    margin: 0;
+  }
+
+  .projects-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: var(--space-6);
+  }
+
+  .project-card {
+    display: flex;
+    flex-direction: column;
+    padding: var(--space-5);
+  }
+
+  .project-title {
+    font-family: var(--font-heading);
+    font-size: var(--font-size-lg);
+    font-weight: 600;
+    margin: 0 0 var(--space-2) 0;
+  }
+
+  .project-title a {
+    color: var(--color-text);
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-1);
+    transition: color var(--transition-fast);
+  }
+
+  .project-title a:hover {
+    color: var(--color-primary);
+  }
+
+  .project-desc {
+    font-size: var(--font-size-xs);
+    line-height: 1.6;
+    color: var(--color-text-muted);
+    margin: 0 0 var(--space-4) 0;
+    flex-grow: 1;
+  }
+
+  .project-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-1);
+  }
+
+  .tag-pill {
+    padding: 2px var(--space-2);
+    font-size: 11px;
+    background-color: var(--color-surface-sunken);
+    color: var(--color-primary);
+    border-radius: var(--radius-sm);
+  }
+
+  /* 4. Skills */
+  .developer-skills-section {
+    padding-top: var(--space-6);
+    padding-bottom: var(--space-6);
+  }
+
+  .skills-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: var(--space-5);
+  }
+
+  .skill-group {
+    padding: var(--space-5);
+  }
+
+  .skill-category-title {
+    font-family: var(--font-heading);
+    font-size: var(--font-size-base);
+    font-weight: 600;
+    color: var(--color-text);
+    margin: 0 0 var(--space-3) 0;
+    border-bottom: 1px solid var(--color-border);
+    padding-bottom: var(--space-2);
+  }
+
+  .skills-chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+  }
+
+  .skill-chip {
+    padding: 3px var(--space-3);
+    font-size: var(--font-size-xs);
+    background-color: var(--color-surface-sunken);
+    color: var(--color-text);
+    border-radius: var(--radius-full);
+    border: 1px solid var(--color-border);
+  }
+
+  /* 5. Preview */
+  .developer-preview-section {
+    padding-top: var(--space-6);
+    padding-bottom: var(--space-6);
+  }
+
+  .preview-card {
+    padding: var(--space-6);
+  }
+
+  .portfolio-preview-link {
+    display: block;
+    text-decoration: none;
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    border: 1px solid var(--color-border);
+    box-shadow: var(--shadow-sm);
+    transition: transform var(--transition-fast), box-shadow var(--transition-fast);
+  }
+
+  .portfolio-preview-link:hover {
     transform: translateY(-2px);
+    box-shadow: var(--shadow-lg);
   }
 
-  @media (prefers-reduced-motion: reduce) {
-    .social-icon-link:hover {
-      transform: none;
-    }
+  .browser-chrome-mock {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 10px 14px;
+    background-color: #ECEAE4;
+    border-bottom: 1px solid var(--color-border);
   }
 
-  .developer-return {
-    margin-top: 1rem;
+  .mock-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: var(--radius-full);
+  }
+  .mock-dot.red { background-color: #ED6A5E; }
+  .mock-dot.yellow { background-color: #F4BF4F; }
+  .mock-dot.green { background-color: #61C554; }
+
+  .mock-address {
+    margin-left: var(--space-3);
+    font-size: 11px;
+    font-family: monospace;
+    color: #666;
   }
 
-  .return-home-link {
-    font-size: 0.875rem;
-    color: var(--green-700);
+  .preview-img {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+
+  /* 6. Specs & Scores */
+  .developer-specs-section {
+    padding-top: var(--space-6);
+    padding-bottom: var(--space-6);
+  }
+
+  .specs-card {
+    padding: var(--space-6);
+  }
+
+  .specs-intro {
+    font-size: var(--font-size-sm);
+    color: var(--color-text-muted);
+    margin: 0 0 var(--space-6) 0;
+  }
+
+  .specs-features-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: var(--space-5);
+    margin-bottom: var(--space-8);
+  }
+
+  .spec-feature-item {
+    display: flex;
+    gap: var(--space-3);
+    align-items: flex-start;
+  }
+
+  .spec-feature-item :global(svg) {
+    color: var(--color-primary);
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+
+  .spec-feature-item strong {
+    display: block;
+    font-size: var(--font-size-sm);
+    color: var(--color-text);
+    margin-bottom: 2px;
+  }
+
+  .spec-feature-item p {
+    font-size: var(--font-size-xs);
+    line-height: 1.5;
+    color: var(--color-text-muted);
+    margin: 0;
+  }
+
+  .scores-card {
+    background-color: var(--color-surface-sunken);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    padding: var(--space-5);
+  }
+
+  .scores-heading {
+    font-family: var(--font-heading);
+    font-size: var(--font-size-base);
+    font-weight: 600;
+    color: var(--color-text);
+    margin: 0 0 2px 0;
+  }
+
+  .scores-date {
+    display: block;
+    font-size: var(--font-size-xs);
+    color: var(--color-text-muted);
+    margin-bottom: var(--space-4);
+  }
+
+  .scores-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: var(--space-3);
+  }
+
+  .score-pill {
+    background-color: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    padding: var(--space-3);
+    text-align: center;
+  }
+
+  .score-number {
+    display: block;
+    font-family: var(--font-heading);
+    font-size: var(--font-size-2xl);
+    font-weight: 700;
+    color: var(--color-primary);
+  }
+
+  .score-label {
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    color: var(--color-text-muted);
+  }
+
+  /* 7. CTA */
+  .developer-cta-section {
+    padding-top: var(--space-6);
+    padding-bottom: var(--space-12);
+  }
+
+  .dev-cta-card {
+    text-align: center;
+    padding: var(--space-8) var(--space-6);
+    background: linear-gradient(135deg, var(--color-surface-sunken) 0%, var(--color-surface) 100%);
+  }
+
+  .cta-heading {
+    font-family: var(--font-heading);
+    font-size: var(--font-size-2xl);
+    font-weight: 600;
+    color: var(--color-text);
+    margin: 0 0 var(--space-2) 0;
+  }
+
+  .cta-sub {
+    font-size: var(--font-size-sm);
+    color: var(--color-text-muted);
+    max-width: 500px;
+    margin: 0 auto var(--space-6) auto;
+  }
+
+  .cta-actions {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-4);
+  }
+
+  .back-link {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+    font-size: var(--font-size-sm);
+    color: var(--color-primary);
     text-decoration: none;
     font-weight: 500;
   }
 
-  .return-home-link:hover {
+  .back-link:hover {
     text-decoration: underline;
-    color: var(--green-900);
+  }
+
+  @media (max-width: 640px) {
+    .developer-hero-layout {
+      flex-direction: column;
+      text-align: center;
+    }
+
+    .developer-actions {
+      justify-content: center;
+    }
+
+    .developer-socials {
+      justify-content: center;
+    }
+
+    .scores-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
   }
 </style>

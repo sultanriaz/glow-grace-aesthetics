@@ -4,7 +4,7 @@ description: "A calm, step-by-step guide to your initial clinical consultation a
 publishedAt: "2026-03-01"
 tags: ["Skin Care", "Consultation", "Patient Guide"]
 relatedServices: ["hydrafacial", "chemical-peels", "anti-aging-treatments"]
-reviewStatus: "doctor-approved"
+reviewStatus: "draft"
 reviewedBy: null
 draft: false
 ---

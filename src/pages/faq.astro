@@ -1,0 +1,722 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Breadcrumbs from '../components/Breadcrumbs.astro';
+import Button from '../components/Button.astro';
+import Icon from '../components/Icon.astro';
+import SectionHeading from '../components/SectionHeading.astro';
+import CtaBand from '../components/CtaBand.astro';
+import { clinic } from '../data/clinic';
+import { renderTokens } from '../utils/tokens';
+import { getClinicBookingWhatsAppLink } from '../utils/whatsapp';
+
+interface FaqItem {
+  id: string;
+  question: string;
+  answer: string;
+}
+
+interface FaqGroup {
+  category: string;
+  categorySlug: string;
+  icon: string;
+  description: string;
+  items: FaqItem[];
+}
+
+const rawFaqGroups: FaqGroup[] = [
+  {
+    category: "Visiting Our Clinic",
+    categorySlug: "visiting",
+    icon: "map-pin",
+    description: "Location, clinic hours, appointments, and accessibility in Dera Ghazi Khan.",
+    items: [
+      {
+        id: "visiting-location",
+        question: "Where is {{clinicName}} located?",
+        answer: "{{clinicName}} is located inside {{address}}. We are conveniently accessible near Samina Chowk on Multan Road in {{city}}."
+      },
+      {
+        id: "visiting-hours",
+        question: "What are your operating days and hours?",
+        answer: "We are open {{hours}}. Our extended evening hours allow busy professionals and families in {{city}} to schedule their aesthetic visits conveniently after work."
+      },
+      {
+        id: "visiting-walkins",
+        question: "Do I need to book an appointment in advance or can I walk in?",
+        answer: "We strongly advise booking your consultation in advance. Scheduling ahead ensures our doctor has dedicated time to examine your skin or scalp thoroughly without long waiting times. You can easily request an appointment online or via WhatsApp at {{phone}}."
+      },
+      {
+        id: "visiting-parking",
+        question: "Is hospital parking available when visiting the clinic?",
+        answer: "Yes, parking is accessible on the hospital grounds of YCDO Ghazi National Hospital near Samina Chowk, making patient drop-off and arrival straightforward."
+      }
+    ]
+  },
+  {
+    category: "Consultation & Treatments",
+    categorySlug: "consultation",
+    icon: "user",
+    description: "What happens during your first visit, treatment planning, and procedure times.",
+    items: [
+      {
+        id: "consult-first-visit",
+        question: "What happens during my initial consultation?",
+        answer: "Your consultation begins with a friendly, private conversation about your aesthetic concerns and medical history. The doctor examines your skin or scalp, explains the underlying biological causes, and outlines honest treatment options tailored to your needs."
+      },
+      {
+        id: "consult-same-day",
+        question: "Can I receive treatment on the same day as my consultation?",
+        answer: "For non-invasive procedures such as HydraFacial or superficial brightening peels, treatment can frequently be conducted during the same visit if your skin is suitable and clinic time permits. For surgical procedures like hair transplants, a dedicated procedural date is scheduled."
+      },
+      {
+        id: "consult-duration",
+        question: "How long does a typical treatment session take?",
+        answer: "Most clinical appointments range between 30 and 60 minutes. Treatments like HydraFacial take approximately 45 minutes, while minor procedures like mole removals take 20 to 30 minutes. Hair transplants take 4 to 8 hours."
+      },
+      {
+        id: "consult-unnatural",
+        question: "Will my results look natural?",
+        answer: "Natural-looking refinement is our guiding clinical principle. We avoid exaggerated, over-filled, or 'frozen' aesthetics. Every procedure is calibrated to enhance your natural features and facial balance."
+      }
+    ]
+  },
+  {
+    category: "Safety, Skin Types & Aftercare",
+    categorySlug: "safety",
+    icon: "shield-check",
+    description: "Sterility, safety for South Asian skin phototypes, recovery, and home care.",
+    items: [
+      {
+        id: "safety-pakistani-skin",
+        question: "Are your laser and peel treatments safe for South Asian skin?",
+        answer: "Yes. Melanin-rich South Asian complexions require specialized care to avoid post-inflammatory hyperpigmentation. We use dedicated laser wavelengths (such as Nd:YAG) with active contact cooling and gentle, non-aggressive peels suited for olive and brown skin tones."
+      },
+      {
+        id: "safety-hygiene",
+        question: "What clinical hygiene and sterile protocols do you follow?",
+        answer: "Patient safety is our priority. All medical instruments undergo autoclaving, single-use sterile micro-needles and collection tubes are opened directly in your presence, and procedures take place in sanitized clinical rooms."
+      },
+      {
+        id: "safety-downtime",
+        question: "How much recovery downtime should I expect?",
+        answer: "Most of our non-surgical procedures involve minimal downtime. Treatments like HydraFacial and carbon laser toning allow you to return to work immediately. Mild pinkness or light peeling from microneedling or peels typically resolves within 24 to 48 hours."
+      },
+      {
+        id: "safety-sun-care",
+        question: "Why is sun protection so strongly emphasised after treatments?",
+        answer: "In Southern Punjab's sunny climate, ultraviolet radiation can trigger overactive melanocytes following an aesthetic procedure. Using broad-spectrum SPF 50 sunscreen daily protects your newly renewed cells and preserves your clinical results."
+      }
+    ]
+  },
+  {
+    category: "Bridal & Event Planning",
+    categorySlug: "bridal",
+    icon: "sparkles",
+    description: "Timelines, groom grooming, pre-wedding packages, and last-minute care.",
+    items: [
+      {
+        id: "bridal-timeline",
+        question: "How early before my wedding should I start a bridal skincare plan?",
+        answer: "We recommend scheduling your bridal consultation 8 to 12 weeks before your wedding celebrations. This allows adequate time to address deeper concerns like pigmentation or acne scars safely. If your wedding is in 3 to 4 weeks, an express soothing and hydration plan can be arranged."
+      },
+      {
+        id: "bridal-packages-grooms",
+        question: "Are pre-wedding aesthetic treatments suitable for grooms?",
+        answer: "Yes, grooms frequently visit {{clinicName}} for deep vortex pore cleansing, beard line laser definition, and skin tone evening in preparation for wedding photography."
+      },
+      {
+        id: "bridal-last-minute",
+        question: "Can I get a treatment a few days before my wedding functions?",
+        answer: "Yes, but strictly non-invasive treatments. We schedule gentle HydraFacial sessions and antioxidant calming masks 2 to 4 days prior to your Mehndi or main event to deliver a radiant glow without peeling."
+      }
+    ]
+  },
+  {
+    category: "Treatment Costs & Pricing",
+    categorySlug: "costs",
+    icon: "heart-pulse",
+    description: "Transparent pricing philosophy, packages, and consultation fees.",
+    items: [
+      {
+        id: "costs-how-determined",
+        question: "How are aesthetic treatment costs determined?",
+        answer: "Costs depend on the specific modality required, the extent of the treatment area, and the number of sessions recommended. Because every skin and hair condition is biologically unique, our doctor provides a clear, transparent cost breakdown during your initial consultation."
+      },
+      {
+        id: "costs-packages",
+        question: "Do you offer multi-session packages or bundled plans?",
+        answer: "Yes. For therapies requiring multiple visits—such as PRP, laser hair reduction, or bridal preparation—cost-effective multi-session packages are available upon doctor recommendation."
+      },
+      {
+        id: "costs-hidden-charges",
+        question: "Are there any hidden charges or unexpected fees?",
+        answer: "No. At {{clinicName}}, we maintain complete price transparency. All fees for consultations, procedural sessions, and recommended aftercare products are discussed openly before any treatment begins."
+      }
+    ]
+  }
+];
+
+// Render dynamic tokens inside all questions and answers
+const faqGroups: FaqGroup[] = rawFaqGroups.map((group) => ({
+  ...group,
+  items: group.items.map((item) => ({
+    ...item,
+    question: renderTokens(item.question),
+    answer: renderTokens(item.answer)
+  }))
+}));
+
+// Flatten all FAQs for structured JSON-LD schema
+const allFaqsForSchema = faqGroups.flatMap((group) =>
+  group.items.map((item) => ({
+    question: item.question,
+    answer: item.answer
+  }))
+);
+
+const breadcrumbs = [
+  { label: 'FAQs' }
+];
+
+const breadcrumbsJsonLd = [
+  { name: 'Home', item: '/' },
+  { name: 'FAQs', item: '/faq/' }
+];
+
+const pageTitle = `Frequently Asked Questions | ${clinic.name} DG Khan`;
+const pageDescription = `Find answers to common questions regarding aesthetic consultations, treatments, safety, bridal plans, and costs at Glow & Grace Aesthetics in Dera Ghazi Khan.`;
+const waBookingLink = getClinicBookingWhatsAppLink();
+---
+
+<BaseLayout
+  title={pageTitle}
+  description={pageDescription}
+  breadcrumbsJsonLd={breadcrumbsJsonLd}
+  faqsJsonLd={allFaqsForSchema}
+>
+  <!-- Hero Section -->
+  <header class="faq-hero-section section">
+    <div class="container">
+      <Breadcrumbs items={breadcrumbs} />
+
+      <div class="faq-hero-content">
+        <span class="eyebrow">HELP & INFORMATION CENTRE</span>
+        <h1 class="page-title">Frequently Asked Questions</h1>
+        <p class="lead-text">
+          Clear, doctor-reviewed answers about our medical aesthetic procedures, visiting our clinic in Dera Ghazi Khan, treatment safety, and appointment planning.
+        </p>
+
+        <!-- Progressive Filter & Search Controls -->
+        <div class="faq-search-box card-base">
+          <div class="search-input-wrap">
+            <label for="faq-search-input" class="sr-only">Search frequently asked questions</label>
+            <Icon name="search" size={20} class="search-icon" />
+            <input
+              type="search"
+              id="faq-search-input"
+              class="faq-search-input"
+              placeholder="Search questions (e.g. location, downtime, bridal, costs, pain)..."
+              autocomplete="off"
+            />
+          </div>
+
+          <!-- Category Filter Chips -->
+          <div class="faq-filter-chips" role="tablist" aria-label="FAQ Categories">
+            <button
+              type="button"
+              class="faq-chip-btn is-active"
+              data-cat="all"
+              role="tab"
+              aria-selected="true"
+            >
+              All Questions ({allFaqsForSchema.length})
+            </button>
+            {faqGroups.map((group) => (
+              <button
+                type="button"
+                class="faq-chip-btn"
+                data-cat={group.categorySlug}
+                role="tab"
+                aria-selected="false"
+              >
+                {group.category} ({group.items.length})
+              </button>
+            ))}
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- FAQ Groups Body -->
+  <section class="section faq-body-section" aria-label="FAQ Directory">
+    <div class="container">
+      <!-- Search Empty Notice -->
+      <div id="faq-empty-state" class="faq-empty-card card-base" style="display: none;">
+        <Icon name="search" size={32} class="empty-icon" />
+        <h3>No questions matched your search</h3>
+        <p>Try searching with another word, or message our team directly on WhatsApp for personal guidance.</p>
+        <button type="button" class="btn btn-secondary btn-sm" id="clear-faq-search-btn">
+          Clear Search Filter
+        </button>
+      </div>
+
+      <div class="faq-groups-list" id="faq-groups-container">
+        {faqGroups.map((group) => (
+          <div class="faq-group-block" data-category-slug={group.categorySlug} id={`group-${group.categorySlug}`}>
+            <div class="group-header">
+              <div class="group-icon-wrap" aria-hidden="true">
+                <Icon name={group.icon} size={24} />
+              </div>
+              <div>
+                <h2 class="group-title">{group.category}</h2>
+                <p class="group-desc">{group.description}</p>
+              </div>
+            </div>
+
+            <div class="faq-items-list">
+              {group.items.map((item) => (
+                <details
+                  class="faq-accordion-item card-base"
+                  data-question={item.question.toLowerCase()}
+                  data-answer={item.answer.toLowerCase()}
+                >
+                  <summary class="faq-summary">
+                    <span class="faq-question-text">{item.question}</span>
+                    <span class="faq-icon-arrow" aria-hidden="true">
+                      <Icon name="chevron-down" size={18} />
+                    </span>
+                  </summary>
+                  <div class="faq-answer-content">
+                    <p>{item.answer}</p>
+                  </div>
+                </details>
+              ))}
+            </div>
+          </div>
+        ))}
+      </div>
+
+      <!-- Still have questions card -->
+      <div class="faq-contact-callout card-base fade-up-item">
+        <div class="callout-icon" aria-hidden="true">
+          <Icon name="chat" size={32} />
+        </div>
+        <div class="callout-text">
+          <h3 class="callout-title">Have a specific question about your skin or hair?</h3>
+          <p class="callout-desc">
+            Our medical team is here to help. Send us a message on WhatsApp or book an in-person consultation at YCDO Ghazi National Hospital.
+          </p>
+        </div>
+        <div class="callout-actions">
+          <Button
+            href={waBookingLink}
+            target="_blank"
+            variant="primary"
+            size="md"
+            icon="whatsapp"
+          >
+            Chat with Our Team
+          </Button>
+          <Button
+            href="/book-appointment/"
+            variant="secondary"
+            size="md"
+            icon="calendar"
+          >
+            Book Appointment
+          </Button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Final CTA Band -->
+  <CtaBand
+    title="Ready to begin your aesthetic journey?"
+    subtitle="Consult with our doctor in Dera Ghazi Khan to discuss safe, evidence-grounded options for your skin and hair."
+    primaryHref="/book-appointment/"
+    primaryText="Book Appointment Online"
+    secondaryHref={waBookingLink}
+    secondaryText="Chat on WhatsApp"
+  />
+</BaseLayout>
+
+<script>
+  function initFaqSearch() {
+    const searchInput = document.getElementById('faq-search-input') as HTMLInputElement | null;
+    const chipButtons = document.querySelectorAll<HTMLButtonElement>('.faq-chip-btn');
+    const groupBlocks = document.querySelectorAll<HTMLElement>('.faq-group-block');
+    const faqItems = document.querySelectorAll<HTMLDetailsElement>('.faq-accordion-item');
+    const emptyState = document.getElementById('faq-empty-state');
+    const clearBtn = document.getElementById('clear-faq-search-btn');
+
+    let currentTerm = '';
+    let currentCategory = 'all';
+
+    function applyFilter() {
+      let visibleCount = 0;
+
+      groupBlocks.forEach((group) => {
+        const groupCat = group.getAttribute('data-category-slug');
+        const matchesCategory = currentCategory === 'all' || currentCategory === groupCat;
+
+        let groupVisibleItems = 0;
+
+        const itemsInGroup = group.querySelectorAll<HTMLDetailsElement>('.faq-accordion-item');
+        itemsInGroup.forEach((item) => {
+          const qText = item.getAttribute('data-question') || '';
+          const aText = item.getAttribute('data-answer') || '';
+          const matchesSearch = !currentTerm || qText.includes(currentTerm) || aText.includes(currentTerm);
+
+          if (matchesCategory && matchesSearch) {
+            item.style.display = 'block';
+            groupVisibleItems++;
+            visibleCount++;
+            // Automatically open matching items if user searched
+            if (currentTerm) {
+              item.open = true;
+            }
+          } else {
+            item.style.display = 'none';
+          }
+        });
+
+        if (groupVisibleItems > 0) {
+          group.style.display = 'block';
+        } else {
+          group.style.display = 'none';
+        }
+      });
+
+      if (emptyState) {
+        emptyState.style.display = visibleCount === 0 ? 'block' : 'none';
+      }
+    }
+
+    searchInput?.addEventListener('input', (e) => {
+      currentTerm = (e.target as HTMLInputElement).value.toLowerCase().trim();
+      applyFilter();
+    });
+
+    clearBtn?.addEventListener('click', () => {
+      if (searchInput) searchInput.value = '';
+      currentTerm = '';
+      currentCategory = 'all';
+      chipButtons.forEach((btn) => btn.classList.remove('is-active'));
+      chipButtons[0]?.classList.add('is-active');
+      applyFilter();
+    });
+
+    chipButtons.forEach((btn) => {
+      btn.addEventListener('click', () => {
+        chipButtons.forEach((b) => {
+          b.classList.remove('is-active');
+          b.setAttribute('aria-selected', 'false');
+        });
+        btn.classList.add('is-active');
+        btn.setAttribute('aria-selected', 'true');
+
+        currentCategory = btn.getAttribute('data-cat') || 'all';
+        applyFilter();
+      });
+    });
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initFaqSearch);
+  } else {
+    initFaqSearch();
+  }
+</script>
+
+<style>
+  .faq-hero-section {
+    padding-top: clamp(32px, 5vw, 64px);
+    padding-bottom: clamp(32px, 5vw, 48px);
+    background-color: var(--green-50);
+    border-bottom: 1px solid var(--sand-200);
+  }
+
+  .faq-hero-content {
+    max-width: 860px;
+  }
+
+  .page-title {
+    font-size: var(--text-h1);
+    color: var(--green-900);
+    line-height: 1.15;
+    margin-bottom: 1rem;
+  }
+
+  .lead-text {
+    font-size: clamp(1.05rem, 1.2vw + 0.5rem, 1.2rem);
+    line-height: 1.65;
+    color: var(--text-body);
+    margin-bottom: 2rem;
+  }
+
+  /* Search Box Card */
+  .faq-search-box {
+    background-color: var(--white);
+    border: 1px solid var(--sand-300);
+    border-radius: var(--radius-lg);
+    padding: clamp(1.25rem, 2.5vw, 1.75rem);
+    box-shadow: var(--shadow-sm);
+  }
+
+  .search-input-wrap {
+    position: relative;
+    margin-bottom: 1.25rem;
+  }
+
+  .search-icon {
+    position: absolute;
+    left: 1rem;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--text-muted);
+    pointer-events: none;
+  }
+
+  .faq-search-input {
+    width: 100%;
+    padding: 0.85rem 1rem 0.85rem 2.85rem;
+    font-size: 1rem;
+    color: var(--green-900);
+    background-color: var(--sand-50);
+    border: 1px solid var(--sand-300);
+    border-radius: var(--radius-md);
+    outline: none;
+    transition: var(--transition-fast);
+  }
+
+  .faq-search-input:focus {
+    background-color: var(--white);
+    border-color: var(--green-700);
+    box-shadow: 0 0 0 3px rgba(31, 122, 90, 0.15);
+  }
+
+  .faq-filter-chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  .faq-chip-btn {
+    appearance: none;
+    background-color: var(--sand-100);
+    color: var(--green-900);
+    border: 1px solid var(--sand-200);
+    padding: 0.45rem 0.85rem;
+    border-radius: var(--radius-full);
+    font-size: 0.875rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: var(--transition-fast);
+  }
+
+  .faq-chip-btn:hover {
+    background-color: var(--green-100);
+  }
+
+  .faq-chip-btn.is-active {
+    background-color: var(--green-900);
+    color: var(--white);
+    border-color: var(--green-900);
+  }
+
+  /* FAQ Body */
+  .faq-body-section {
+    padding-top: clamp(2.5rem, 5vw, 4rem);
+    padding-bottom: clamp(3rem, 6vw, 5rem);
+  }
+
+  .faq-groups-list {
+    display: flex;
+    flex-direction: column;
+    gap: 3.5rem;
+  }
+
+  .faq-group-block {
+    scroll-margin-top: calc(var(--header-height, 72px) + 20px);
+  }
+
+  .group-header {
+    display: flex;
+    align-items: flex-start;
+    gap: 1.25rem;
+    padding-bottom: 1.25rem;
+    margin-bottom: 1.5rem;
+    border-bottom: 1px solid var(--sand-300);
+  }
+
+  .group-icon-wrap {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 48px;
+    height: 48px;
+    border-radius: var(--radius-sm);
+    background-color: var(--green-50);
+    color: var(--green-800);
+    flex-shrink: 0;
+    border: 1px solid var(--green-100);
+  }
+
+  .group-title {
+    font-size: 1.5rem;
+    color: var(--green-900);
+    margin-bottom: 0.25rem;
+    line-height: 1.25;
+  }
+
+  .group-desc {
+    font-size: 0.95rem;
+    color: var(--text-muted);
+    margin: 0;
+  }
+
+  .faq-items-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.85rem;
+  }
+
+  .faq-accordion-item {
+    background-color: var(--white);
+    border: 1px solid var(--sand-200);
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    transition: var(--transition-fast);
+  }
+
+  .faq-accordion-item[open] {
+    border-color: var(--green-600);
+    box-shadow: var(--shadow-sm);
+  }
+
+  .faq-summary {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+    padding: 1.25rem 1.5rem;
+    font-size: 1.05rem;
+    font-weight: 600;
+    color: var(--green-900);
+    cursor: pointer;
+    list-style: none;
+    user-select: none;
+  }
+
+  .faq-summary::-webkit-details-marker {
+    display: none;
+  }
+
+  .faq-icon-arrow {
+    color: var(--green-700);
+    transition: transform 0.2s ease;
+    flex-shrink: 0;
+  }
+
+  .faq-accordion-item[open] .faq-icon-arrow {
+    transform: rotate(180deg);
+  }
+
+  .faq-answer-content {
+    padding: 0 1.5rem 1.5rem;
+    font-size: 0.95rem;
+    line-height: 1.7;
+    color: var(--text-body);
+    border-top: 1px solid var(--sand-100);
+    margin-top: 0.5rem;
+    padding-top: 1rem;
+  }
+
+  .faq-answer-content p {
+    margin: 0;
+  }
+
+  /* Empty state */
+  .faq-empty-card {
+    text-align: center;
+    padding: 3rem 2rem;
+    max-width: 540px;
+    margin: 2rem auto;
+    border: 1px dashed var(--sand-400);
+  }
+
+  .empty-icon {
+    color: var(--sand-400);
+    margin-bottom: 1rem;
+  }
+
+  .faq-empty-card h3 {
+    font-size: 1.35rem;
+    color: var(--green-900);
+    margin-bottom: 0.5rem;
+  }
+
+  .faq-empty-card p {
+    color: var(--text-muted);
+    margin-bottom: 1.5rem;
+  }
+
+  /* Contact Callout Card */
+  .faq-contact-callout {
+    margin-top: 4rem;
+    padding: clamp(2rem, 4vw, 3rem);
+    background-color: var(--green-50);
+    border: 1px solid var(--green-100);
+    border-radius: var(--radius-lg);
+    display: flex;
+    flex-direction: column;
+    gap: 1.75rem;
+    align-items: flex-start;
+  }
+
+  @media (min-width: 768px) {
+    .faq-contact-callout {
+      flex-direction: row;
+      align-items: center;
+    }
+  }
+
+  .callout-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 60px;
+    height: 60px;
+    border-radius: var(--radius-full);
+    background-color: var(--white);
+    color: var(--green-800);
+    border: 1px solid var(--green-200);
+    flex-shrink: 0;
+  }
+
+  .callout-text {
+    flex-grow: 1;
+  }
+
+  .callout-title {
+    font-size: 1.25rem;
+    color: var(--green-900);
+    margin-bottom: 0.4rem;
+  }
+
+  .callout-desc {
+    font-size: 0.95rem;
+    color: var(--text-muted);
+    margin: 0;
+    line-height: 1.55;
+  }
+
+  .callout-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.85rem;
+    flex-shrink: 0;
+  }
+</style>

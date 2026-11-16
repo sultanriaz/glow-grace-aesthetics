@@ -249,7 +249,7 @@ export const categories: ServiceCategory[] = [
     order: 6,
     longIntro: [
       'Achieving your body confidence goals requires holistic, medically supported care. At Glow & Grace Aesthetics in Dera Ghazi Khan, our body and wellness treatments focus on non-invasive contouring and supportive nutritional therapies.',
-      'Whether you are seeking targeted refinement for localized stubborn deposits or antioxidant nutrient infusions to support daily vitality, we help you select sensible, safe steps that complement a balanced lifestyle.'
+      'Whether you are seeking targeted refinement for localised stubborn deposits or antioxidant nutrient infusions to support daily vitality, we help you select sensible, safe steps that complement a balanced lifestyle.'
     ],
     concerns: [
       'Localized Stubborn Fat Pockets',
@@ -264,7 +264,7 @@ export const categories: ServiceCategory[] = [
       },
       {
         question: 'Who is an ideal candidate for body contouring?',
-        answer: 'Individuals near their target body weight with firm, localized pockets of fullness—such as the submental chin area or lower abdomen—benefit most from localized contouring.'
+        answer: 'Individuals near their target body weight with firm, localised pockets of fullness—such as the submental chin area or lower abdomen—benefit most from localised contouring.'
       },
       {
         question: 'What ingredients are used in nutritional wellness infusions?',

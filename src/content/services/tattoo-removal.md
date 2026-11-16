@@ -26,7 +26,7 @@ faqs:
   - question: "How many sessions are typically required to fade a tattoo?"
     answer: "Tattoo fading is a progressive biological process. Complete clearance or significant lightening typically requires 5 to 10 sessions spaced 6 to 8 weeks apart. The exact number depends on ink density, chemical pigments, tattoo age, and your lymphatic clearance rate."
   - question: "Can all ink colours be faded?"
-    answer: "Black, dark blue, and dark brown pigments respond most quickly because they absorb laser wavelengths effectively. Bright colours like green, light blue, and red require specialized wavelengths and additional sessions for gradual breakdown."
+    answer: "Black, dark blue, and dark brown pigments respond most quickly because they absorb laser wavelengths effectively. Bright colours like green, light blue, and red require specialised wavelengths and additional sessions for gradual breakdown."
   - question: "Is laser tattoo removal painful?"
     answer: "Patients often compare the sensation to the snap of a thick rubber band or grease splatter against the skin. We apply a medical topical numbing cream for 30 to 45 minutes beforehand and use continuous skin cooling to keep the procedure tolerable."
   - question: "Will laser tattoo removal leave a scar?"
@@ -62,7 +62,7 @@ startingFrom: null
 
 ## Overview
 
-Tattoos are often acquired during moments of personal expression, but changing life circumstances, professional requirements, or cosmetic dissatisfaction can lead to a desire for their removal. In the past, tattoo removal involved painful dermabrasion or surgical excision that invariably resulted in prominent, raised scarring. At Glow & Grace Aesthetics in Dera Ghazi Khan, our laser tattoo removal service utilizes specialized photoacoustic laser technology to break down unwanted ink safely while preserving the natural skin architecture.
+Tattoos are often acquired during moments of personal expression, but changing life circumstances, professional requirements, or cosmetic dissatisfaction can lead to a desire for their removal. In the past, tattoo removal involved painful dermabrasion or surgical excision that invariably resulted in prominent, raised scarring. At Glow & Grace Aesthetics in Dera Ghazi Khan, our laser tattoo removal service utilises specialised photoacoustic laser technology to break down unwanted ink safely while preserving the natural skin architecture.
 
 Our clinic prioritises skin integrity, especially on South Asian skin tones that require conservative fluence management to avoid hypopigmentation or keloid formation. Using advanced Q-switched and picosecond platforms, our doctor delivers rapid-fire optical energy directly into the dermal ink particles. The ink deposits shatter into microscopic fragments that your body's immune system naturally processes and eliminates over subsequent weeks. Whether you wish to lighten a tattoo for a new cover-up or clear unwanted ink entirely, we provide realistic milestones and doctor-monitored care.
 

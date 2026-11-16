@@ -24,7 +24,7 @@ seoTitle: "Carbon & Pico Laser in DG Khan | Glow & Grace"
 seoDescription: "Advanced Carbon and Pico laser treatments in Dera Ghazi Khan. Photoacoustic pigment clearance and pore refinement at Glow & Grace Aesthetics."
 faqs:
   - question: "How does the Carbon Laser Peel work?"
-    answer: "A layer of medical-grade activated carbon lotion is applied across the face, bonding with oil and dead cellular debris inside pores. As the specialized laser beam sweeps over the skin, the carbon absorbs the light and vaporises, lifting away deep impurities while stimulating collagen renewal through gentle acoustic waves."
+    answer: "A layer of medical-grade activated carbon lotion is applied across the face, bonding with oil and dead cellular debris inside pores. As the specialised laser beam sweeps over the skin, the carbon absorbs the light and vaporises, lifting away deep impurities while stimulating collagen renewal through gentle acoustic waves."
   - question: "Is the treatment painful?"
     answer: "Most patients describe the sensation as a light, mild tingling or warm snapping feeling accompanied by a popping sound as carbon particles vapourise. It is comfortable and does not require topical anaesthetic."
   - question: "Is there any peeling or recovery downtime?"
@@ -68,7 +68,7 @@ Known globally as the 'Hollywood Laser Peel', this procedure pairs an activated 
 
 ## How it works
 
-The treatment operates through photoacoustic and photothermal mechanisms. High-intensity nanosecond or picosecond laser light at 1064 nm is selectively absorbed by the carbon paste and melanin chromophores. The light pulses vapourise the carbon instantaneously, creating localized acoustic waves that shatter superficial debris and micro-fragment dark pigment clusters into microscopic particles. These fragmented particles are subsequently metabolised and cleared through the body's natural lymphatic circulation.
+The treatment operates through photoacoustic and photothermal mechanisms. High-intensity nanosecond or picosecond laser light at 1064 nm is selectively absorbed by the carbon paste and melanin chromophores. The light pulses vapourise the carbon instantaneously, creating localised acoustic waves that shatter superficial debris and micro-fragment dark pigment clusters into microscopic particles. These fragmented particles are subsequently metabolised and cleared through the body's natural lymphatic circulation.
 
 ## What it can help with
 

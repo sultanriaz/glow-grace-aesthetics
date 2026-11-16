@@ -28,7 +28,7 @@ faqs:
   - question: "What types of acne scars respond to these treatments?"
     answer: "Our combination protocols effectively target rolling scars (soft wave-like indentations), shallow to medium boxcar scars (defined circular craters), and post-inflammatory macular hyperpigmentation (red and brown flat blemishes)."
   - question: "What is subcision and when is it necessary?"
-    answer: "Subcision is a minor clinical technique used for tethered, indented rolling scars. A fine specialized cannula releases fibrous bands pulling the skin downward toward underlying muscle, allowing the depressed area to lift and fill with fresh collagen."
+    answer: "Subcision is a minor clinical technique used for tethered, indented rolling scars. A fine specialised cannula releases fibrous bands pulling the skin downward toward underlying muscle, allowing the depressed area to lift and fill with fresh collagen."
   - question: "How many sessions are typically required for noticeable smoothing?"
     answer: "Scar tissue takes time to remodel. Most patients achieve marked texture softening through a course of 4 to 6 sessions spaced 4 to 6 weeks apart."
   - question: "Will my skin be red or peel after scar treatments?"

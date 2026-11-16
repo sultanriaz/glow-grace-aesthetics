@@ -68,7 +68,7 @@ At Glow & Grace Aesthetics in Dera Ghazi Khan, our approach to stretch mark and 
 
 ## How it works
 
-The treatment creates microscopic puncture channels directly through the fibrotic bands of the stretch mark. This controlled mechanical disruption triggers a localized healing response, recruiting platelets, cytokines, and fibroblasts to the damaged dermal layer. Over subsequent weeks, the fibroblasts deposit fresh, organised collagen and elastin fibres within the tear. Concurrently, topical regenerative factors penetrate deeply, stimulating local microcirculation and helping repigment pale, atrophic bands.
+The treatment creates microscopic puncture channels directly through the fibrotic bands of the stretch mark. This controlled mechanical disruption triggers a localised healing response, recruiting platelets, cytokines, and fibroblasts to the damaged dermal layer. Over subsequent weeks, the fibroblasts deposit fresh, organised collagen and elastin fibres within the tear. Concurrently, topical regenerative factors penetrate deeply, stimulating local microcirculation and helping repigment pale, atrophic bands.
 
 ## What it can help with
 

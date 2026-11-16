@@ -37,7 +37,7 @@ whatToExpect:
   - "In-depth skin assessment to determine optimal needle depth and serum selection"
   - "Thorough double-cleansing and application of a medical topical numbing cream"
   - "Treatment using a single-use, sterile motorized microneedling cartridge"
-  - "Simultaneous infusion of customized pharmaceutical-grade meso-solutions"
+  - "Simultaneous infusion of customised pharmaceutical-grade meso-solutions"
   - "Application of a soothing, cooling post-procedure mask to calm redness"
 aftercare:
   - "Avoid touching your face or applying makeup for at least 24 hours"

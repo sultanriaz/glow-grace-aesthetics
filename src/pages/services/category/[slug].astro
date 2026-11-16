@@ -7,7 +7,6 @@ import ServiceCard from '../../../components/ServiceCard.astro';
 import SectionHeading from '../../../components/SectionHeading.astro';
 import CtaBand from '../../../components/CtaBand.astro';
 import { categories } from '../../../data/categories';
-import { clinic } from '../../../data/clinic';
 import { getClinicBookingWhatsAppLink } from '../../../utils/whatsapp';
 import { getCollection } from 'astro:content';
 
@@ -112,7 +111,7 @@ const waBookingLink = getClinicBookingWhatsAppLink();
     </div>
   </section>
 
-  <!-- Specialized 5-Step Hair Journey (Only for Hair Category) -->
+  <!-- Specialised 5-Step Hair Journey (Only for Hair Category) -->
   {isHairCategory && category.journey && (
     <section class="section hair-journey-section" aria-label="Hair Restoration Journey">
       <div class="container">

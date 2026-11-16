@@ -26,7 +26,7 @@ faqs:
   - question: "How does electrolysis differ from optical laser hair removal?"
     answer: "Optical lasers treat clusters of pigmented hairs at once by targeting melanin colour. Electrolysis treats individual hair follicles one by one using a microscopic electrical filament. Because electrolysis does not depend on pigment, it is effective on grey, white, blonde, red, and fine peach-fuzz hairs that lasers cannot detect."
   - question: "Is electrolysis painful?"
-    answer: "Most patients experience a brief sensation of localized warmth or a tiny prickle as the electrical impulse reaches the follicle base. We apply a medical topical numbing cream beforehand to ensure maximum comfort during the session."
+    answer: "Most patients experience a brief sensation of localised warmth or a tiny prickle as the electrical impulse reaches the follicle base. We apply a medical topical numbing cream beforehand to ensure maximum comfort during the session."
   - question: "How many sessions are typically required?"
     answer: "Because hairs grow in staggered cycles, multiple sessions are necessary to treat every follicle during its active growth phase. The total number of sessions depends on the surface area, hair density, and whether the hair has previously been plucked or waxed."
   - question: "Can electrolysis be performed on the face?"
@@ -36,7 +36,7 @@ faqs:
 whatToExpect:
   - "Close dermoscopic evaluation of hair texture, colour, and follicle growth direction"
   - "Cleansing of the skin with an antiseptic medical prep solution"
-  - "Application of a localized topical anaesthetic cream to enhance procedural comfort"
+  - "Application of a localised topical anaesthetic cream to enhance procedural comfort"
   - "Insertion of a sterile, single-use microscopic filament into each target follicle"
   - "Delivery of micro-current followed by gentle, frictionless removal of the hair shaft"
 aftercare:

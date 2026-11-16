@@ -21,18 +21,18 @@ order: 22
 featured: false
 source: "clinic-list"
 seoTitle: "Weight & Fat Reduction in DG Khan | Glow & Grace"
-seoDescription: "Non-surgical body contouring and localized fat reduction in Dera Ghazi Khan. Medical body shaping at Glow & Grace Aesthetics."
+seoDescription: "Non-surgical body contouring and localised fat reduction in Dera Ghazi Khan. Medical body shaping at Glow & Grace Aesthetics."
 faqs:
   - question: "Are non-surgical fat reduction treatments a substitute for weight loss?"
-    answer: "No. Non-surgical body contouring is specifically engineered for localized spot reduction and silhouette sculpting in individuals who are near their healthy target weight. It targets diet-resistant fat pockets (such as a double chin or lower belly pouch) rather than managing overall obesity."
+    answer: "No. Non-surgical body contouring is specifically engineered for localised spot reduction and silhouette sculpting in individuals who are near their healthy target weight. It targets diet-resistant fat pockets (such as a double chin or lower belly pouch) rather than managing overall obesity."
   - question: "What technologies or methods are used?"
-    answer: "Our doctor designs personalized plans combining non-invasive radiofrequency lipolysis, ultrasound cavitation, and targeted lipolytic mesotherapy (deoxycholic acid micro-infusions) to disrupt localized fat cells safely."
+    answer: "Our doctor designs personalised plans combining non-invasive radiofrequency lipolysis, ultrasound cavitation, and targeted lipolytic mesotherapy (deoxycholic acid micro-infusions) to disrupt localised fat cells safely."
   - question: "How does the body eliminate the treated fat?"
     answer: "When targeted fat cell membranes are disrupted, released triglycerides are metabolized by the body's natural physiological pathways. Over a period of several weeks, the lymphatic system and liver process and clear the cellular debris naturally."
   - question: "How many sessions are typically required?"
     answer: "Depending on the thickness of the fat deposit and the chosen modality, most patients benefit from a course of 3 to 6 sessions spaced 2 to 4 weeks apart to achieve noticeable, harmonious contouring."
   - question: "Is there any recovery downtime after the procedure?"
-    answer: "Most procedures have minimal downtime. With localized lipolytic micro-injections, localized swelling, tenderness, and mild numbness in the treated pocket can occur for 3 to 5 days as the solution breaks down fat."
+    answer: "Most procedures have minimal downtime. With localised lipolytic micro-injections, localised swelling, tenderness, and mild numbness in the treated pocket can occur for 3 to 5 days as the solution breaks down fat."
 whatToExpect:
   - "Body composition evaluation, caliper measurements, and medical history consultation"
   - "Clear discussion of realistic contouring expectations and targeted zone mapping"
@@ -46,7 +46,7 @@ aftercare:
   - "Gently massage the treated area daily if advised by the doctor to support smooth drainage"
   - "Wear loose, comfortable clothing over treated body zones during the first 48 hours"
 considerations:
-  - "Best suited for individuals with firm, localized fat pockets rather than loose, redundant skin"
+  - "Best suited for individuals with firm, localised fat pockets rather than loose, redundant skin"
   - "Sustained results require maintaining stable lifestyle habits and body weight"
   - "Not suitable during pregnancy, breastfeeding, or in patients with liver dysfunction"
 relatedServices:
@@ -68,7 +68,7 @@ We believe in responsible, evidence-guided aesthetics. We never promise magical 
 
 ## How it works
 
-The treatment disrupts subcutaneous adipocyte membranes using focused thermal or acoustic energy, or localized lipolytic enzymes. In radiofrequency and cavitation protocols, controlled therapeutic temperatures induce apoptosis (programmed cell death) within localized fat cells while tightening surrounding dermal collagen fibres. In lipolytic mesotherapy, purified bile salts break down the adipocyte wall. The released lipid contents are slowly transported through the lymphatic channels to the liver, where they are naturally metabolized.
+The treatment disrupts subcutaneous adipocyte membranes using focused thermal or acoustic energy, or localised lipolytic enzymes. In radiofrequency and cavitation protocols, controlled therapeutic temperatures induce apoptosis (programmed cell death) within localised fat cells while tightening surrounding dermal collagen fibres. In lipolytic mesotherapy, purified bile salts break down the adipocyte wall. The released lipid contents are slowly transported through the lymphatic channels to the liver, where they are naturally metabolized.
 
 ## What it can help with
 

@@ -68,7 +68,7 @@ Safety on melanin-rich Pakistani skin is our highest operational priority. Using
 
 ## How it works
 
-The treatment works via selective photothermolysis. Concentrated light pulses at calibrated wavelengths are absorbed by the melanin pigment in the hair shaft and bulb. This optical energy converts into localized thermal heat, raising the temperature of the follicular matrix and dermal papilla to coagulation threshold without heating surrounding dermal tissues. This disables the follicle's ability to regenerate new hair strands during its active anagen growth phase.
+The treatment works via selective photothermolysis. Concentrated light pulses at calibrated wavelengths are absorbed by the melanin pigment in the hair shaft and bulb. This optical energy converts into localised thermal heat, raising the temperature of the follicular matrix and dermal papilla to coagulation threshold without heating surrounding dermal tissues. This disables the follicle's ability to regenerate new hair strands during its active anagen growth phase.
 
 ## What it can help with
 

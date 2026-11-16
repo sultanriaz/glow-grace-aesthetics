@@ -20,10 +20,13 @@ export const mainNavItems: NavItem[] = [
     hasDropdown: true,
     children: categories.map((cat) => ({
       label: cat.name,
-      href: `/services/#${cat.slug}`,
+      href: `/services/category/${cat.slug}/`,
       description: cat.shortDescription
     }))
   },
+  { label: 'Bridal', href: '/services/bridal-glow-packages/' },
+  { label: 'FAQ', href: '/faq/' },
+  { label: 'Blog', href: '/blog/' },
   { label: 'Contact', href: '/contact/' }
 ];
 
@@ -31,5 +34,9 @@ export const footerQuickLinks: Array<{ label: string; href: string }> = [
   { label: 'Home', href: '/' },
   { label: 'About the Clinic', href: '/about/' },
   { label: 'All Services', href: '/services/' },
+  { label: 'Bridal Glow Packages', href: '/services/bridal-glow-packages/' },
+  { label: 'Frequently Asked Questions', href: '/faq/' },
+  { label: 'Educational Blog', href: '/blog/' },
+  { label: 'Book Appointment', href: '/book-appointment/' },
   { label: 'Contact & Map', href: '/contact/' }
 ];

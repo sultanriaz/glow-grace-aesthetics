@@ -32,9 +32,9 @@ faqs:
   - question: "How many sessions are typically needed to see visible improvement?"
     answer: "Melasma pigment is distributed at both superficial (epidermal) and deeper (dermal) levels. Most patients observe progressive lightening across a series of 4 to 6 sessions scheduled 3 to 4 weeks apart."
   - question: "What kind of sunscreen should I use during melasma treatment?"
-    answer: "We advise broad-spectrum sunscreens with high UVA/UVB protection and visible light defense (such as tinted mineral formulations containing zinc oxide and iron oxides) reapplied every 2 to 3 hours during daylight hours."
+    answer: "We advise broad-spectrum sunscreens with high UVA/UVB protection and visible light defence (such as tinted mineral formulations containing zinc oxide and iron oxides) reapplied every 2 to 3 hours during daylight hours."
 whatToExpect:
-  - "Clinical skin examination using specialized lighting to evaluate pigment depth"
+  - "Clinical skin examination using specialised lighting to evaluate pigment depth"
   - "Review of personal triggers including hormonal medications, heat exposure, and past skincare"
   - "Application of gentle, doctor-formulated pigment-regulating solutions"
   - "Soothing antioxidant treatment to protect the skin barrier against inflammation"

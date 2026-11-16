@@ -3,7 +3,6 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import Breadcrumbs from '../components/Breadcrumbs.astro';
 import Button from '../components/Button.astro';
 import Icon from '../components/Icon.astro';
-import SectionHeading from '../components/SectionHeading.astro';
 import CtaBand from '../components/CtaBand.astro';
 import { clinic } from '../data/clinic';
 import { renderTokens } from '../utils/tokens';
@@ -89,7 +88,7 @@ const rawFaqGroups: FaqGroup[] = [
       {
         id: "safety-pakistani-skin",
         question: "Are your laser and peel treatments safe for South Asian skin?",
-        answer: "Yes. Melanin-rich South Asian complexions require specialized care to avoid post-inflammatory hyperpigmentation. We use dedicated laser wavelengths (such as Nd:YAG) with active contact cooling and gentle, non-aggressive peels suited for olive and brown skin tones."
+        answer: "Yes. Melanin-rich South Asian complexions require specialised care to avoid post-inflammatory hyperpigmentation. We use dedicated laser wavelengths (such as Nd:YAG) with active contact cooling and gentle, non-aggressive peels suited for olive and brown skin tones."
       },
       {
         id: "safety-hygiene",
@@ -347,7 +346,6 @@ const waBookingLink = getClinicBookingWhatsAppLink();
     const searchInput = document.getElementById('faq-search-input') as HTMLInputElement | null;
     const chipButtons = document.querySelectorAll<HTMLButtonElement>('.faq-chip-btn');
     const groupBlocks = document.querySelectorAll<HTMLElement>('.faq-group-block');
-    const faqItems = document.querySelectorAll<HTMLDetailsElement>('.faq-accordion-item');
     const emptyState = document.getElementById('faq-empty-state');
     const clearBtn = document.getElementById('clear-faq-search-btn');
 

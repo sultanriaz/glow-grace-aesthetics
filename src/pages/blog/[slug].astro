@@ -207,7 +207,13 @@ const waBookingLink = getClinicBookingWhatsAppLink();
 
           <div class="services-grid">
             {relatedServices.map((service) => (
-              <ServiceCard service={service} />
+              <ServiceCard
+                slug={service.id.replace(/\.md$/, '')}
+                title={service.data.title}
+                tagline={service.data.tagline || service.data.summary}
+                category={service.data.category}
+                icon={service.data.icon}
+              />
             ))}
           </div>
         </section>

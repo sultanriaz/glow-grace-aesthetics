@@ -64,11 +64,11 @@ startingFrom: null
 
 Daily exposure to dust, dry winds, and sun in southern Punjab can leave skin congested, dehydrated, and lacklustre. Dead cellular build-up traps sebum inside follicles, while environmental free radicals weaken the dermal barrier. At Glow & Grace Aesthetics in Dera Ghazi Khan, our HydraFacial treatment delivers an exceptional clinical deep-cleanse that simultaneously purifies, exfoliates, and rehydrates your complexion in a single soothing appointment.
 
-Unlike conventional salon treatments that rely on abrasive manual squeezing—which can damage delicate capillaries and leave lingering red marks—HydraFacial uses a specialized spiral suction tip that creates a fluid vortex over the skin. It gently lifts away stubborn blackheads, environmental pollutants, and dead skin flakes while bathing newly exposed tissue in multi-weight hyaluronic acid, brightening peptides, and antioxidant plant extracts. The result is a smooth, luminous, and supple glow that feels comfortably clean and looks radiant both in person and on camera.
+Unlike conventional salon treatments that rely on abrasive manual squeezing—which can damage delicate capillaries and leave lingering red marks—HydraFacial uses a specialised spiral suction tip that creates a fluid vortex over the skin. It gently lifts away stubborn blackheads, environmental pollutants, and dead skin flakes while bathing newly exposed tissue in multi-weight hyaluronic acid, brightening peptides, and antioxidant plant extracts. The result is a smooth, luminous, and supple glow that feels comfortably clean and looks radiant both in person and on camera.
 
 ## How it works
 
-The treatment operates through a sequential four-in-one vortex protocol. First, a conditioning lactic acid and glucosamine solution dissolves dead surface cells. Second, a mild glycolic-salicylic acid peel loosens deep-seated sebum within the pores without causing significant stinging. Third, gentle automated vortex suction vacuums away impurities directly into a waste container. Finally, targeted antioxidant cocktails and moisture-binding peptides are infused deeply into clean tissue, sealing in hydration and strengthening barrier defense.
+The treatment operates through a sequential four-in-one vortex protocol. First, a conditioning lactic acid and glucosamine solution dissolves dead surface cells. Second, a mild glycolic-salicylic acid peel loosens deep-seated sebum within the pores without causing significant stinging. Third, gentle automated vortex suction vacuums away impurities directly into a waste container. Finally, targeted antioxidant cocktails and moisture-binding peptides are infused deeply into clean tissue, sealing in hydration and strengthening barrier defence.
 
 ## What it can help with
 

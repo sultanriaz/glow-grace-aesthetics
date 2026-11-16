@@ -3,7 +3,6 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import Breadcrumbs from '../components/Breadcrumbs.astro';
 import Button from '../components/Button.astro';
 import Icon from '../components/Icon.astro';
-import SectionHeading from '../components/SectionHeading.astro';
 import CtaBand from '../components/CtaBand.astro';
 import { clinic } from '../data/clinic';
 import { hasGallery } from '../utils/visibility';
@@ -61,13 +60,12 @@ const waBookingLink = getClinicBookingWhatsAppLink();
   <!-- Gallery Body -->
   <section class="section gallery-body-section" aria-label="Gallery Showcase">
     <div class="container">
-      {!isGalleryActive ? (
-        <!-- Professional Empty State -->
+      {!isGalleryActive && (
         <div class="gallery-empty-state card-base">
           <div class="empty-state-icon" aria-hidden="true">
             <Icon name="shield-check" size={40} />
           </div>
-          <h2 class="empty-state-title">Patient Privacy & Ethical Standards</h2>
+          <h2 class="empty-state-title">Patient Privacy &amp; Ethical Standards</h2>
           <p class="empty-state-desc">
             We hold medical confidentiality to the highest clinical bar. Patient before-and-after photographs are published only when verified, signed consent is on record.
           </p>
@@ -93,8 +91,9 @@ const waBookingLink = getClinicBookingWhatsAppLink();
             </Button>
           </div>
         </div>
-      ) : (
-        <!-- Active Consented Gallery Grid & Lightbox -->
+      )}
+
+      {isGalleryActive && (
         <div class="active-gallery-wrap">
           <div class="gallery-filter-chips" role="tablist" aria-label="Gallery Filters">
             <button type="button" class="gallery-chip-btn is-active" data-kind="all">All Items</button>

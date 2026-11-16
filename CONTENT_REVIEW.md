@@ -75,3 +75,27 @@ Please provide live URLs for:
 - [ ] **Staging Fallback URL**: `https://glow-grace-aesthetics.vercel.app`
 - [ ] **Target Custom Domain**: e.g., `glowandgrace.pk` or `glowgraceclinic.com`
 - [ ] Once purchased, configure DNS CNAME / A records in Vercel and update the `SITE_URL` environment variable.
+
+---
+
+## 9. Part 2 Content Depth & Conversion Features (Client Review)
+- [ ] **23 Upgraded Service Pages**: Each service includes structured tabs/sections for Overview, What to Expect (in-clinic steps), Aftercare Guidance, Important Considerations, and 3–5 Patient FAQs.
+- [ ] **6 Category Landing Pages**: Dedicated hubs for Hair, Skin, Facial, Laser, Regenerative, and Body aesthetics, including the 5-step "Your Hair Journey" path on `/services/category/hair/`.
+- [ ] **Bridal Experience & WhatsApp Planner**: Reverse-timeline roadmap (6 months to 1 week), treatment options, and interactive WhatsApp custom bridal plan builder on `/services/bridal-glow-packages/` (with 301 redirect from `/bridal/`).
+- [ ] **Accessible FAQ Hub (`/faq/`)**: 20 categorised FAQs with client-side progressive search, tokenized clinic facts (hours, address, phone), and zero-JS accessibility.
+- [ ] **Online Appointment Request (`/book-appointment/`)**: Static, accessible form supporting `?service=<slug>`, date validation (no Sundays, no past dates in Asia/Karachi timezone), time slots, and WhatsApp dispatch.
+- [ ] **Ethical Gallery & Testimonials System**: Both systems are gated by strict consent checks. Currently hidden and excluded from sitemap (`noindex, nofollow` on `/gallery/`) until verified, signed consent files are provided.
+- [ ] **6 Evergreen Educational Articles (`/blog/`) & RSS Feed (`/rss.xml`)**:
+  1. *Your First Aesthetic Consultation: What to Expect and How to Prepare*
+  2. *Sun Protection for Glowing Skin: A Practical Guide for Pakistan's Climate*
+  3. *Understanding Melasma: Real Causes, Common Triggers, and Daily Care*
+  4. *Hair Fall in Men and Women: Underlying Causes and When to Seek Medical Advice*
+  5. *Considering a Hair Transplant? Essential Questions to Ask Before You Decide*
+  6. *Preparing Your Skin for Your Wedding: A Month-by-Month Bridal Guide*
+
+---
+
+## 10. British English Normalisation Audit
+In accordance with mission standards, all copy has been audited and normalised to British English:
+- **Total spelling changes made across codebase**: 43 instances across 21 files.
+- **Normalised terms**: `colour`, `personalised`, `specialised`, `customised`, `programme`, `utilises`, `localised`, `minimised`, `analysing`, `defence`.

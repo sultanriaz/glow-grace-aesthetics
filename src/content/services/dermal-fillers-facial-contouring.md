@@ -68,7 +68,7 @@ We reject the generic 'over-plumped' look that has given cosmetic fillers an unf
 
 ## How it works
 
-The treatment utilizes high-viscosity, biocompatible hyaluronic acid gels with high lifting capacity (G-prime). Administered through fine needles or flexible, blunt-tip safety micro-cannulas, the gel is deposited along deep supra-periosteal planes or within deflated deep fat pads. The cohesive gel acts as an internal scaffold, physically supporting overlying tissue layers, lifting sunken contours, and drawing microscopic moisture into the extracellular matrix to improve dermal hydration.
+The treatment utilises high-viscosity, biocompatible hyaluronic acid gels with high lifting capacity (G-prime). Administered through fine needles or flexible, blunt-tip safety micro-cannulas, the gel is deposited along deep supra-periosteal planes or within deflated deep fat pads. The cohesive gel acts as an internal scaffold, physically supporting overlying tissue layers, lifting sunken contours, and drawing microscopic moisture into the extracellular matrix to improve dermal hydration.
 
 ## What it can help with
 

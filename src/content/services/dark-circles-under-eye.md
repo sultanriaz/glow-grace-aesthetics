@@ -36,7 +36,7 @@ faqs:
 whatToExpect:
   - "Careful periorbital assessment to differentiate pigment, vascular pooling, and anatomical hollows"
   - "Gentle cleansing and application of a mild periorbital topical numbing balm"
-  - "Administration of specialized meso-peptides, autologous plasma, or micro-cannula filler"
+  - "Administration of specialised meso-peptides, autologous plasma, or micro-cannula filler"
   - "Application of a soothing, cooling eye compress to minimise post-treatment swelling"
   - "Personalised advice on daily eye care, blue light reduction, and sun protection"
 aftercare:

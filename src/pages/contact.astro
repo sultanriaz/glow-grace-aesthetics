@@ -132,6 +132,24 @@ const breadcrumbs = [
           </div>
         </div>
       </div>
+
+      <!-- Online Appointment Request Banner -->
+      <div class="appointment-request-banner card-base fade-up-item">
+        <div class="appointment-banner-icon" aria-hidden="true">
+          <Icon name="calendar" size={32} />
+        </div>
+        <div class="appointment-banner-content">
+          <h3 class="appointment-banner-title">Prefer Structured Online Booking?</h3>
+          <p class="appointment-banner-desc">
+            Select your preferred aesthetic treatment, choose a suitable date and time slot, and our clinical front desk will confirm your consultation via WhatsApp.
+          </p>
+        </div>
+        <div class="appointment-banner-action">
+          <Button href="/book-appointment/" variant="primary" size="md" icon="arrow-right" iconPosition="right">
+            Request Appointment
+          </Button>
+        </div>
+      </div>
     </div>
   </section>
 
@@ -390,5 +408,67 @@ const breadcrumbs = [
 
   .w-full {
     width: 100%;
+  }
+
+  .appointment-request-banner {
+    display: flex;
+    align-items: center;
+    gap: var(--space-6);
+    background: linear-gradient(135deg, var(--color-surface-sunken) 0%, var(--color-surface) 100%);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    padding: var(--space-6);
+    margin-top: var(--space-8);
+  }
+
+  .appointment-banner-icon {
+    width: 60px;
+    height: 60px;
+    border-radius: var(--radius-full);
+    background-color: var(--color-surface);
+    border: 1px solid var(--color-border);
+    color: var(--color-primary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .appointment-banner-content {
+    flex-grow: 1;
+  }
+
+  .appointment-banner-title {
+    font-family: var(--font-heading);
+    font-size: var(--font-size-lg);
+    font-weight: 600;
+    color: var(--color-text);
+    margin: 0 0 var(--space-1) 0;
+  }
+
+  .appointment-banner-desc {
+    font-size: var(--font-size-sm);
+    color: var(--color-text-muted);
+    margin: 0;
+    line-height: 1.5;
+  }
+
+  .appointment-banner-action {
+    flex-shrink: 0;
+  }
+
+  @media (max-width: 768px) {
+    .appointment-request-banner {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+
+    .appointment-banner-action {
+      width: 100%;
+    }
+
+    .appointment-banner-action :global(.btn) {
+      width: 100%;
+    }
   }
 </style>

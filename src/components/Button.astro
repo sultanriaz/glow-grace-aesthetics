@@ -13,6 +13,7 @@ interface Props {
   type?: 'button' | 'submit' | 'reset';
   ariaLabel?: string;
   id?: string;
+  fullWidth?: boolean;
 }
 
 const {
@@ -26,7 +27,8 @@ const {
   class: className = '',
   type = 'button',
   ariaLabel,
-  id
+  id,
+  fullWidth = false
 } = Astro.props;
 
 // Auto-add rel="noopener noreferrer" for external targets
@@ -39,7 +41,7 @@ const Tag = href ? 'a' : 'button';
   type={!href ? type : undefined}
   target={target}
   rel={computedRel}
-  class={`btn btn-${variant} btn-${size} ${className}`.trim()}
+  class={`btn btn-${variant} btn-${size} ${fullWidth ? 'btn-full-width w-full' : ''} ${className}`.trim()}
   aria-label={ariaLabel}
   id={id}
 >

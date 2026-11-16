@@ -26,6 +26,7 @@
   --color-surface-tint: var(--green-100);
   --color-text: var(--ink-700);
   --color-text-muted: var(--ink-500);
+  --color-text-inverse: var(--white);
   --color-heading: var(--green-900);
   --color-primary: var(--green-900);
   --color-primary-hover: #022F22;

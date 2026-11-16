@@ -31,6 +31,18 @@ const featuredServices = featuredSlugs
   .map((slug) => allServices.find((s) => s.id === slug || s.id === `${slug}.md`))
   .filter((s): s is NonNullable<typeof s> => Boolean(s));
 
+// Query latest 3 blog articles
+let latestBlogPosts: any[] = [];
+try {
+  const allBlogPosts = await getCollection('blog');
+  latestBlogPosts = allBlogPosts
+    .filter((post) => !post.data.draft)
+    .sort((a, b) => new Date(b.data.publishedAt).getTime() - new Date(a.data.publishedAt).getTime())
+    .slice(0, 3);
+} catch {
+  latestBlogPosts = [];
+}
+
 // Category lookup map
 const catMap = Object.fromEntries(categories.map((c) => [c.slug, c.name]));
 
@@ -67,8 +79,17 @@ const pageDescription = "Safe, certified, and doctor-led hair, skin, and laser a
           </Button>
 
           <Button
-            href="/services/"
+            href="/book-appointment/"
             variant="secondary"
+            size="lg"
+            icon="calendar"
+          >
+            Request Appointment
+          </Button>
+
+          <Button
+            href="/services/"
+            variant="outline"
             size="lg"
             icon="arrow-right"
             iconPosition="right"
@@ -127,7 +148,7 @@ const pageDescription = "Safe, certified, and doctor-led hair, skin, and laser a
       <SectionHeading
         eyebrow="TREATMENT SPECIALTIES"
         title="Comprehensive Medical Aesthetic Solutions"
-        description="Explore our specialized clinical divisions tailored to address your specific skin, hair, facial, and wellness aspirations."
+        description="Explore our specialised clinical divisions tailored to address your specific skin, hair, facial, and wellness aspirations."
       />
 
       <div class="category-grid">
@@ -197,7 +218,7 @@ const pageDescription = "Safe, certified, and doctor-led hair, skin, and laser a
       <SectionHeading
         eyebrow="THE CLINICAL DIFFERENCE"
         title="Why Glow & Grace Aesthetics"
-        description="Grounded in medical integrity, patient safety, and personalized care in Dera Ghazi Khan."
+        description="Grounded in medical integrity, patient safety, and personalised care in Dera Ghazi Khan."
       />
 
       <div class="pillars-grid">
@@ -225,7 +246,7 @@ const pageDescription = "Safe, certified, and doctor-led hair, skin, and laser a
           <div class="pillar-icon-wrap" aria-hidden="true">
             <Icon name="user" size={26} />
           </div>
-          <h3 class="pillar-title">Personalized Consultation</h3>
+          <h3 class="pillar-title">Personalised Consultation</h3>
           <p class="pillar-text">
             No cookie-cutter packages. Your treatment plan is tailored to your unique anatomical profile, skin tolerance, and personal goals.
           </p>
@@ -298,7 +319,55 @@ const pageDescription = "Safe, certified, and doctor-led hair, skin, and laser a
     </div>
   </section>
 
-  <!-- 8. Visit Us & Map -->
+  <!-- 8. Educational Skincare Guides & Blog -->
+  {latestBlogPosts.length > 0 && (
+    <section class="section home-blog-section" aria-label="Educational Guides">
+      <div class="container">
+        <div class="section-header-split">
+          <div>
+            <span class="eyebrow">PATIENT EDUCATION</span>
+            <h2 class="section-title">Educational Skincare &amp; Treatment Guides</h2>
+            <p class="section-subtitle">
+              Clear, evidence-based articles explaining skin biology, treatment expectations, and sun protection for Pakistan.
+            </p>
+          </div>
+          <div class="section-header-action">
+            <Button href="/blog/" variant="outline" size="sm" icon="arrow-right" iconPosition="right">
+              View All Guides
+            </Button>
+          </div>
+        </div>
+
+        <div class="home-blog-grid">
+          {latestBlogPosts.map((post) => {
+            const slug = post.id.replace(/\.md$/, '');
+            const postHref = `/blog/${slug}/`;
+            const wordCount = (post.body || '').split(/\s+/).filter(Boolean).length;
+            const readingTime = Math.max(3, Math.ceil(wordCount / 200));
+
+            return (
+              <article class="home-blog-card card-base">
+                <div class="home-blog-meta">
+                  <span class="home-blog-tag">{(post.data.tags || [])[0] || 'Skin Care'}</span>
+                  <span class="home-blog-read">{readingTime} min read</span>
+                </div>
+                <h3 class="home-blog-title">
+                  <a href={postHref}>{post.data.title}</a>
+                </h3>
+                <p class="home-blog-summary">{post.data.description}</p>
+                <a href={postHref} class="home-blog-link">
+                  <span>Read Guide</span>
+                  <Icon name="arrow-right" size={14} />
+                </a>
+              </article>
+            );
+          })}
+        </div>
+      </div>
+    </section>
+  )}
+
+  <!-- 9. Visit Us & Map -->
   <section class="section visit-section" id="visit" aria-label="Visit Our Clinic">
     <div class="container">
       <SectionHeading
@@ -790,5 +859,107 @@ const pageDescription = "Safe, certified, and doctor-led hair, skin, and laser a
 
   .w-full {
     width: 100%;
+  }
+
+  /* Educational Guides / Blog Teaser */
+  .home-blog-section {
+    background-color: var(--color-surface-sunken);
+    padding-top: var(--space-12);
+    padding-bottom: var(--space-12);
+    border-top: 1px solid var(--color-border);
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .section-header-split {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: var(--space-4);
+    margin-bottom: var(--space-8);
+  }
+
+  .home-blog-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: var(--space-6);
+  }
+
+  .home-blog-card {
+    display: flex;
+    flex-direction: column;
+    padding: var(--space-6);
+    background-color: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    transition: transform var(--transition-fast), box-shadow var(--transition-fast), border-color var(--transition-fast);
+  }
+
+  .home-blog-card:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-md);
+    border-color: var(--color-primary-light);
+  }
+
+  .home-blog-meta {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: var(--font-size-xs);
+    margin-bottom: var(--space-3);
+  }
+
+  .home-blog-tag {
+    font-weight: 600;
+    color: var(--color-primary);
+    background-color: var(--color-surface-sunken);
+    padding: 2px var(--space-2);
+    border-radius: var(--radius-sm);
+  }
+
+  .home-blog-read {
+    color: var(--color-text-muted);
+  }
+
+  .home-blog-title {
+    font-family: var(--font-heading);
+    font-size: var(--font-size-lg);
+    font-weight: 600;
+    line-height: 1.35;
+    margin: 0 0 var(--space-3) 0;
+  }
+
+  .home-blog-title a {
+    color: var(--color-text);
+    text-decoration: none;
+    transition: color var(--transition-fast);
+  }
+
+  .home-blog-title a:hover {
+    color: var(--color-primary);
+  }
+
+  .home-blog-summary {
+    font-size: var(--font-size-sm);
+    line-height: 1.6;
+    color: var(--color-text-muted);
+    margin: 0 0 var(--space-5) 0;
+    flex-grow: 1;
+  }
+
+  .home-blog-link {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-1);
+    font-size: var(--font-size-xs);
+    font-weight: 600;
+    color: var(--color-primary);
+    text-decoration: none;
+    transition: gap var(--transition-fast);
+  }
+
+  .home-blog-link:hover {
+    gap: var(--space-2);
+    text-decoration: underline;
   }
 </style>

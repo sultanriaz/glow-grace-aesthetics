@@ -63,9 +63,16 @@
   - [x] Create `src/pages/blog/[slug].astro` (auto TOC, Article schema, related services)
   - [x] Create `src/pages/rss.xml.ts` via `@astrojs/rss` & RSS `<link>` in `BaseLayout.astro`
 
-- [ ] **Phase H: Integration, SEO, Performance & Quality Gates**
-  - [ ] Update `Header.astro` & `Footer.astro`
-  - [ ] Update `index.astro` & `contact.astro`
-  - [ ] Normalise American spellings across Part 1 files to British English
-  - [ ] Full quality gate verification (`check`, `build`, `test`, `check:claims`, `check:content`, `check:links`, `verify-site`, `run-lighthouse`)
-  - [ ] Update `CONTENT_REVIEW.md` and commit locally / push branch `part-2-content`
+- [x] **Phase H: Integration, SEO, Performance & Quality Gates**
+  - [x] Update `Header.astro`, `MobileNav.astro`, & `Footer.astro`
+  - [x] Update `index.astro` (Blog teaser, appointment booking CTA) & `contact.astro`
+  - [x] Normalise American spellings across Part 1 files to British English (43 replacements)
+  - [x] Full quality gate verification:
+    - `npm run check`: 0 errors, 0 warnings, 0 hints across 61 files
+    - `npm test`: 14/14 Vitest unit tests passed
+    - `npm run check:claims`: 0 banned medical claims
+    - `node scripts/check-content.mjs`: Content audit clean
+    - `node scripts/check-links.mjs`: 3,973 links audited, 0 broken links
+    - `node scripts/verify-site.mjs`: 11 pages audited across 5 viewports (55 screenshots), 0 console errors, 0 third-party requests, 0 Axe a11y violations
+    - `node scripts/run-lighthouse.mjs`: Performance 99-100, Accessibility 100, Best Practices 100, SEO 100
+  - [x] Update `CONTENT_REVIEW.md` and commit locally on branch `part-2-content`

@@ -71,7 +71,13 @@ const CHROME_PATH = 'C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe'
 const TEST_PAGES = [
   { name: 'home', path: '/' },
   { name: 'services-hub', path: '/services/' },
+  { name: 'service-category-hair', path: '/services/category/hair/' },
   { name: 'service-detail', path: '/services/hydrafacial/' },
+  { name: 'bridal', path: '/services/bridal-glow-packages/' },
+  { name: 'faq', path: '/faq/' },
+  { name: 'book-appointment', path: '/book-appointment/' },
+  { name: 'blog', path: '/blog/' },
+  { name: 'blog-article', path: '/blog/sun-protection-for-glowing-skin-in-pakistan/' },
   { name: 'contact', path: '/contact/' },
   { name: 'developer', path: '/developer/' }
 ];

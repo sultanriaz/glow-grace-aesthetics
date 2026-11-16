@@ -24,7 +24,7 @@ seoTitle: "PRP for Hair in DG Khan | Glow & Grace Aesthetics"
 seoDescription: "Platelet-rich plasma therapy for hair restoration in Dera Ghazi Khan. Autologous follicle support at Glow & Grace Aesthetics."
 faqs:
   - question: "How is Platelet-Rich Plasma (PRP) prepared?"
-    answer: "During your visit to our DG Khan clinic, a standard sample of your blood is drawn into a sterile, specialized tube. It is placed into a calibrated centrifuge that separates red blood cells from the plasma, producing a concentrated golden layer rich in platelets and bio-active proteins."
+    answer: "During your visit to our DG Khan clinic, a standard sample of your blood is drawn into a sterile, specialised tube. It is placed into a calibrated centrifuge that separates red blood cells from the plasma, producing a concentrated golden layer rich in platelets and bio-active proteins."
   - question: "Is PRP for hair painful?"
     answer: "Most patients find the procedure easily tolerable. We apply a topical anaesthetic cream or local chilling to the scalp prior to administering the micro-injections, minimising discomfort to brief, mild pinprick sensations."
   - question: "How many PRP sessions will I need?"
@@ -66,7 +66,7 @@ startingFrom: null
 
 Platelet-Rich Plasma (PRP) therapy for hair restoration is one of the most widely requested biological treatments for men and women facing diffuse thinning and early-stage pattern baldness. As hair follicles undergo miniaturisation due to genetic sensitivity, stress, or poor microcirculation, individual hair strands become progressively finer until they stop growing. PRP provides a direct biological stimulus, re-energising dormant follicles with concentrated growth factors sourced naturally from your own circulation.
 
-At Glow & Grace Aesthetics in Dera Ghazi Khan, our PRP protocols adhere to rigorous clinical laboratory standards. We use specialized centrifugation tubes designed to achieve optimal platelet concentrations while eliminating unwanted red blood cells. Because the treatment uses your own biological material, it offers an exceptionally high safety profile with minimal downtime. Patients can easily schedule their sessions during the week and return to daily routines shortly afterward, making it an accessible, non-surgical foundation for long-term hair preservation.
+At Glow & Grace Aesthetics in Dera Ghazi Khan, our PRP protocols adhere to rigorous clinical laboratory standards. We use specialised centrifugation tubes designed to achieve optimal platelet concentrations while eliminating unwanted red blood cells. Because the treatment uses your own biological material, it offers an exceptionally high safety profile with minimal downtime. Patients can easily schedule their sessions during the week and return to daily routines shortly afterward, making it an accessible, non-surgical foundation for long-term hair preservation.
 
 ## How it works
 

@@ -172,10 +172,14 @@ if (type === 'home') {
   // Reference provider clinic
   if (type === 'contact' && contactPageSchema) {
     schemas.push(clinicSchema, contactPageSchema);
+  } else if (type === 'about') {
+    schemas.push(clinicSchema);
   } else if (type === 'service') {
     if (serviceSchema) schemas.push(serviceSchema);
   } else if (type === 'article') {
     if (articleSchema) schemas.push(articleSchema);
+  } else {
+    schemas.push(clinicSchema);
   }
 }
 

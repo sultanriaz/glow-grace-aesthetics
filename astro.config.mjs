@@ -16,7 +16,11 @@ export default defineConfig({
       filter: (page) =>
         !page.includes('/developer') &&
         !page.includes('/404') &&
-        (page.includes('/gallery') ? hasGallery() : true)
+        (page.includes('/gallery') ? hasGallery() : true),
+      serialize: (item) => {
+        item.lastmod = new Date();
+        return item;
+      }
     })
   ]
 });

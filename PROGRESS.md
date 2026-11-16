@@ -114,13 +114,13 @@
   - [x] Create `docs/ANALYTICS.md`
   - [x] Verify both analytics modes ("none" and "vercel") pass budgets, set zero cookies, and make zero 3rd-party requests
 
-- [ ] **Phase D: Social Cards & SEO Polish**
-  - [ ] Install `satori`, `@resvg/resvg-js`, `@fontsource/cormorant-garamond`, `@fontsource/jost`
-  - [ ] Create `scripts/make-og.mjs` (1200x630 JPEG, <= 200 KB) generating OG cards for services, categories, posts, key pages
-  - [ ] Update `Seo.astro` (per-page og:image, twitter:card, article timestamps, verification meta tags)
-  - [ ] Add `lastmod` to sitemap in `astro.config.mjs`
-  - [ ] Create `scripts/check-seo.mjs` (`npm run check:seo`)
-  - [ ] Create `scripts/check-schema.mjs` (`npm run check:schema`)
+- [x] **Phase D: Social Cards & SEO Polish**
+  - [x] Install `satori`, `@resvg/resvg-js`, `@fontsource/cormorant-garamond`, `@fontsource/jost`
+  - [x] Create `scripts/make-og.mjs` (1200x630 JPEG, <= 200 KB) generating OG cards for services, categories, posts, key pages
+  - [x] Update `Seo.astro` (per-page og:image, twitter:card, article timestamps, verification meta tags)
+  - [x] Add `lastmod` to sitemap in `astro.config.mjs`
+  - [x] Create `scripts/check-seo.mjs` (`npm run check:seo`)
+  - [x] Create `scripts/check-schema.mjs` (`npm run check:schema`)
 
 - [ ] **Phase E: Security & Privacy Verification**
   - [ ] Add Content-Security-Policy (CSP) headers in `vercel.json`

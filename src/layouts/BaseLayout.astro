@@ -38,6 +38,9 @@ interface Props {
   breadcrumbsJsonLd?: BreadcrumbItem[];
   faqsJsonLd?: Array<{ question: string; answer: string }>;
   articleJsonLd?: any;
+  articlePublishedTime?: string;
+  articleModifiedTime?: string;
+  articleSection?: string;
   hideActions?: boolean;
 }
 
@@ -54,11 +57,18 @@ const {
   breadcrumbsJsonLd,
   faqsJsonLd,
   articleJsonLd,
+  articlePublishedTime,
+  articleModifiedTime,
+  articleSection,
   hideActions = false
 } = Astro.props;
 
 const currentPath = Astro.url.pathname;
 const analyticsProvider = import.meta.env.PUBLIC_ANALYTICS_PROVIDER || 'none';
+
+const resolvedPublishedTime = articlePublishedTime || articleJsonLd?.publishedAt;
+const resolvedModifiedTime = articleModifiedTime || articleJsonLd?.updatedAt || articleJsonLd?.publishedAt;
+const resolvedSection = articleSection || (articleJsonLd?.tags && articleJsonLd.tags[0]) || 'Health & Aesthetics';
 ---
 
 <!doctype html>
@@ -77,6 +87,9 @@ const analyticsProvider = import.meta.env.PUBLIC_ANALYTICS_PROVIDER || 'none';
       ogImage={ogImage}
       ogImageAlt={ogImageAlt}
       noindex={noindex}
+      articlePublishedTime={resolvedPublishedTime}
+      articleModifiedTime={resolvedModifiedTime}
+      articleSection={resolvedSection}
     />
 
     <JsonLd

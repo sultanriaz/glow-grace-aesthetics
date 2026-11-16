@@ -1,0 +1,140 @@
+---
+import '../styles/tokens.css';
+import '../styles/base.css';
+import '../styles/utilities.css';
+
+import Seo from '../components/Seo.astro';
+import JsonLd from '../components/JsonLd.astro';
+import AnnouncementBar from '../components/AnnouncementBar.astro';
+import Header from '../components/Header.astro';
+import StickyActionBar from '../components/StickyActionBar.astro';
+import FloatingWhatsApp from '../components/FloatingWhatsApp.astro';
+import Footer from '../components/Footer.astro';
+
+interface BreadcrumbItem {
+  name: string;
+  item: string;
+}
+
+interface ServiceJsonLdData {
+  title: string;
+  description: string;
+  category: string;
+  url: string;
+}
+
+interface Props {
+  title?: string;
+  description?: string;
+  canonical?: string;
+  ogType?: 'website' | 'article';
+  ogImage?: string;
+  ogImageAlt?: string;
+  noindex?: boolean;
+  jsonLdType?: 'home' | 'service' | 'contact' | 'about' | 'default';
+  serviceJsonLd?: ServiceJsonLdData;
+  breadcrumbsJsonLd?: BreadcrumbItem[];
+  hideActions?: boolean;
+}
+
+const {
+  title,
+  description,
+  canonical,
+  ogType,
+  ogImage,
+  ogImageAlt,
+  noindex = false,
+  jsonLdType = 'default',
+  serviceJsonLd,
+  breadcrumbsJsonLd,
+  hideActions = false
+} = Astro.props;
+
+const currentPath = Astro.url.pathname;
+---
+
+<!doctype html>
+<html lang="en" dir="ltr" class="no-js">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+
+    <Seo
+      title={title}
+      description={description}
+      canonical={canonical}
+      ogType={ogType}
+      ogImage={ogImage}
+      ogImageAlt={ogImageAlt}
+      noindex={noindex}
+    />
+
+    <JsonLd
+      type={jsonLdType}
+      service={serviceJsonLd}
+      breadcrumbs={breadcrumbsJsonLd}
+    />
+
+    <!-- Remove no-js class immediately if JS is enabled -->
+    <script is:inline>
+      document.documentElement.classList.remove('no-js');
+    </script>
+  </head>
+  <body>
+    <!-- Accessibility Skip Link -->
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+
+    <!-- Desktop Announcement Bar -->
+    <AnnouncementBar />
+
+    <!-- Sticky Main Header -->
+    <Header currentPath={currentPath} />
+
+    <!-- Main Content Landmark -->
+    <main id="main-content" tabindex="-1">
+      <slot />
+    </main>
+
+    <!-- Mobile Sticky Action Bar (< 1024px) -->
+    {!hideActions && <StickyActionBar />}
+
+    <!-- Desktop Floating WhatsApp (>= 1024px) -->
+    {!hideActions && <FloatingWhatsApp />}
+
+    <!-- Site Footer -->
+    <Footer />
+
+    <!-- Progressive enhancement: subtle scroll animation controller -->
+    <script>
+      function initFadeUp() {
+        if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+          return;
+        }
+
+        const items = document.querySelectorAll('.fade-up-item');
+        if (!items.length) return;
+
+        const observer = new IntersectionObserver(
+          (entries) => {
+            entries.forEach((entry) => {
+              if (entry.isIntersecting) {
+                entry.target.classList.add('is-visible');
+                observer.unobserve(entry.target);
+              }
+            });
+          },
+          { rootMargin: '0px 0px -40px 0px', threshold: 0.1 }
+        );
+
+        items.forEach((item) => observer.observe(item));
+      }
+
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', initFadeUp);
+      } else {
+        initFadeUp();
+      }
+    </script>
+  </body>
+</html>

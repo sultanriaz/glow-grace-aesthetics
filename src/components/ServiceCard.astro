@@ -1,0 +1,176 @@
+---
+import Icon from './Icon.astro';
+import Button from './Button.astro';
+import { getServiceBookingWhatsAppLink } from '../utils/whatsapp';
+
+interface Props {
+  slug: string;
+  title: string;
+  tagline: string;
+  category: string;
+  icon?: string;
+  class?: string;
+  featured?: boolean;
+}
+
+const {
+  slug,
+  title,
+  tagline,
+  category,
+  icon = 'sparkles',
+  class: className = '',
+  featured = false
+} = Astro.props;
+
+const serviceUrl = `/services/${slug}/`;
+const waUrl = getServiceBookingWhatsAppLink(title);
+---
+
+<article class={`service-card card-base ${featured ? 'is-featured' : ''} ${className}`.trim()}>
+  <div class="card-top">
+    <div class="card-icon-wrap" aria-hidden="true">
+      <Icon name={icon} size={24} />
+    </div>
+    <span class="card-category">{category}</span>
+  </div>
+
+  <div class="card-body">
+    <h3 class="card-title">
+      <a href={serviceUrl} class="card-title-link">
+        {title}
+      </a>
+    </h3>
+    <p class="card-tagline">{tagline}</p>
+  </div>
+
+  <div class="card-footer">
+    <a href={serviceUrl} class="learn-more-link">
+      <span>Learn more<span class="sr-only"> about {title}</span></span>
+      <Icon name="arrow-right" size={15} />
+    </a>
+
+    <Button
+      href={waUrl}
+      target="_blank"
+      variant="ghost"
+      size="sm"
+      icon="whatsapp"
+      class="quick-wa-btn"
+      ariaLabel={`Inquire about ${title} on WhatsApp`}
+    >
+      <span>Book<span class="sr-only"> {title} on WhatsApp</span></span>
+    </Button>
+  </div>
+</article>
+
+<style>
+  .service-card {
+    display: flex;
+    flex-direction: column;
+    padding: 1.75rem;
+    height: 100%;
+    position: relative;
+    border-radius: var(--radius-md);
+  }
+
+  .card-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 1.25rem;
+  }
+
+  .card-icon-wrap {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 48px;
+    height: 48px;
+    border-radius: var(--radius-sm);
+    background-color: var(--green-50);
+    color: var(--green-700);
+    border: 1px solid var(--green-100);
+    transition: background-color var(--transition-fast), color var(--transition-fast);
+  }
+
+  .service-card:hover .card-icon-wrap {
+    background-color: var(--green-900);
+    color: var(--cream-50);
+  }
+
+  .card-category {
+    font-size: 0.75rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--green-700);
+    background-color: var(--cream-50);
+    padding: 0.25rem 0.65rem;
+    border-radius: var(--radius-full);
+    border: 1px solid var(--sand-100);
+  }
+
+  .card-body {
+    flex: 1;
+    margin-bottom: 1.5rem;
+  }
+
+  .card-title {
+    font-size: 1.35rem;
+    color: var(--green-900);
+    margin-bottom: 0.6rem;
+    line-height: 1.25;
+  }
+
+  .card-title-link {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  .card-title-link:hover {
+    color: var(--green-700);
+  }
+
+  .card-tagline {
+    font-size: 0.9375rem;
+    color: var(--ink-500);
+    line-height: 1.55;
+    margin: 0;
+  }
+
+  .card-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-top: 1rem;
+    border-top: 1px solid var(--sand-100);
+    margin-top: auto;
+  }
+
+  .learn-more-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--green-700);
+    text-decoration: none;
+    transition: gap var(--transition-fast), color var(--transition-fast);
+  }
+
+  .learn-more-link:hover {
+    color: var(--green-900);
+    gap: 0.55rem;
+  }
+
+  .quick-wa-btn {
+    border: 1px solid var(--green-100);
+    border-radius: var(--radius-full);
+  }
+
+  .quick-wa-btn:hover {
+    background-color: var(--green-50);
+    border-color: var(--green-700);
+  }
+</style>

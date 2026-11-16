@@ -1,0 +1,133 @@
+---
+import { clinic } from '../data/clinic';
+import { getSiteUrl, getCanonicalUrl } from '../utils/seo';
+
+interface BreadcrumbItem {
+  name: string;
+  item: string;
+}
+
+interface ServiceData {
+  title: string;
+  description: string;
+  category: string;
+  url: string;
+}
+
+interface Props {
+  type: 'home' | 'service' | 'contact' | 'about' | 'default';
+  service?: ServiceData;
+  breadcrumbs?: BreadcrumbItem[];
+}
+
+const { type, service, breadcrumbs } = Astro.props;
+const siteUrl = getSiteUrl();
+
+// Base Clinic Schema (MedicalClinic + HealthAndBeautyBusiness)
+const clinicSchema = {
+  "@context": "https://schema.org",
+  "@type": ["MedicalClinic", "HealthAndBeautyBusiness"],
+  "@id": `${siteUrl}/#clinic`,
+  "name": clinic.name,
+  "alternateName": clinic.shortName,
+  "description": clinic.tagline,
+  "url": siteUrl,
+  "logo": `${siteUrl}/icon-512.png`,
+  "image": `${siteUrl}/og-default.jpg`,
+  "telephone": clinic.phone.e164,
+  "address": {
+    "@type": "PostalAddress",
+    "streetAddress": `${clinic.address.line1}, ${clinic.address.line2}`,
+    "addressLocality": "Dera Ghazi Khan",
+    "addressRegion": "Punjab",
+    "addressCountry": "PK"
+  },
+  "geo": {
+    "@type": "GeoCoordinates",
+    "latitude": "30.0561",
+    "longitude": "70.6348"
+  },
+  "openingHoursSpecification": [
+    {
+      "@type": "OpeningHoursSpecification",
+      "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
+      "opens": "10:00",
+      "closes": "22:00"
+    }
+  ]
+};
+
+// WebSite Schema
+const websiteSchema = {
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  "@id": `${siteUrl}/#website`,
+  "url": siteUrl,
+  "name": clinic.name,
+  "publisher": {
+    "@id": `${siteUrl}/#clinic`
+  }
+};
+
+// Service Schema
+const serviceSchema = service ? {
+  "@context": "https://schema.org",
+  "@type": "Service",
+  "name": service.title,
+  "description": service.description,
+  "serviceType": service.category,
+  "url": service.url,
+  "provider": {
+    "@id": `${siteUrl}/#clinic`
+  },
+  "areaServed": {
+    "@type": "AdministrativeArea",
+    "name": "Dera Ghazi Khan"
+  }
+} : null;
+
+// BreadcrumbList Schema
+const breadcrumbSchema = breadcrumbs && breadcrumbs.length > 0 ? {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": breadcrumbs.map((crumb, idx) => ({
+    "@type": "ListItem",
+    "position": idx + 1,
+    "name": crumb.name,
+    "item": crumb.item.startsWith('http') ? crumb.item : getCanonicalUrl(crumb.item)
+  }))
+} : null;
+
+// ContactPage Schema
+const contactPageSchema = type === 'contact' ? {
+  "@context": "https://schema.org",
+  "@type": "ContactPage",
+  "@id": `${siteUrl}/contact/#webpage`,
+  "url": `${siteUrl}/contact/`,
+  "name": `Contact ${clinic.name}`,
+  "mainEntity": {
+    "@id": `${siteUrl}/#clinic`
+  }
+} : null;
+
+const schemas: object[] = [];
+
+if (type === 'home') {
+  schemas.push(clinicSchema, websiteSchema);
+} else {
+  // Reference provider clinic
+  if (type === 'contact' && contactPageSchema) {
+    schemas.push(clinicSchema, contactPageSchema);
+  } else if (type === 'service') {
+    if (serviceSchema) schemas.push(serviceSchema);
+  }
+}
+
+if (breadcrumbSchema) {
+  schemas.push(breadcrumbSchema);
+}
+---
+
+{schemas.map((s) => (
+  <script type="application/ld+json" set:html={JSON.stringify(s)} />
+))}

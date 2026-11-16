@@ -1,0 +1,123 @@
+---
+import Icon from './Icon.astro';
+
+interface Step {
+  number: string;
+  title: string;
+  description: string;
+  icon: string;
+}
+
+const steps: Step[] = [
+  {
+    number: "01",
+    title: "In-Depth Consultation",
+    description: "Every journey begins with a thorough medical evaluation of your skin type, medical history, and aesthetic goals.",
+    icon: "user"
+  },
+  {
+    number: "02",
+    title: "Personalized Plan",
+    description: "Your doctor formulates a customized, evidence-guided treatment protocol designed specifically for your tissue needs.",
+    icon: "shield-check"
+  },
+  {
+    number: "03",
+    title: "Precision Treatment",
+    description: "Procedures are administered under sterile clinical standards using advanced medical aesthetic technologies.",
+    icon: "sparkles"
+  },
+  {
+    number: "04",
+    title: "Dedicated Aftercare",
+    description: "Clear post-treatment protocols, photoprotection guidance, and follow-up support to nurture safe, lasting results.",
+    icon: "heart"
+  }
+];
+---
+
+<div class="process-steps-grid">
+  {steps.map((step) => (
+    <div class="step-card card-base">
+      <div class="step-header">
+        <span class="step-number" aria-hidden="true">{step.number}</span>
+        <div class="step-icon-wrap" aria-hidden="true">
+          <Icon name={step.icon} size={22} />
+        </div>
+      </div>
+      <h3 class="step-title">{step.title}</h3>
+      <p class="step-description">{step.description}</p>
+    </div>
+  ))}
+</div>
+
+<style>
+  .process-steps-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+
+  @media (min-width: 640px) {
+    .process-steps-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .process-steps-grid {
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1.5rem;
+    }
+  }
+
+  .step-card {
+    padding: clamp(1.5rem, 3vw, 2rem);
+    border-radius: var(--radius-md);
+    background-color: var(--white);
+    border: 1px solid var(--sand-100);
+    position: relative;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .step-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 1.25rem;
+  }
+
+  .step-number {
+    font-family: var(--font-serif);
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--sand-400);
+    line-height: 1;
+  }
+
+  .step-icon-wrap {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    border-radius: var(--radius-sm);
+    background-color: var(--green-50);
+    color: var(--green-700);
+  }
+
+  .step-title {
+    font-size: 1.25rem;
+    color: var(--green-900);
+    margin-bottom: 0.6rem;
+    line-height: 1.25;
+  }
+
+  .step-description {
+    font-size: 0.9375rem;
+    color: var(--ink-500);
+    line-height: 1.55;
+    margin: 0;
+  }
+</style>

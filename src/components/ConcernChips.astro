@@ -1,0 +1,76 @@
+---
+import Icon from './Icon.astro';
+import { concerns } from '../data/concerns';
+
+interface Props {
+  class?: string;
+}
+
+const { class: className = '' } = Astro.props;
+---
+
+<div class={`concern-chips-wrapper ${className}`.trim()}>
+  <div class="concern-chips-grid">
+    {concerns.map((item) => (
+      <a href={`/services/${item.serviceSlug}/`} class="concern-chip touch-target">
+        <Icon name={item.icon} size={16} class="chip-icon" />
+        <span class="chip-label">{item.label}</span>
+      </a>
+    ))}
+  </div>
+</div>
+
+<style>
+  .concern-chips-wrapper {
+    width: 100%;
+  }
+
+  .concern-chips-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    justify-content: center;
+  }
+
+  .concern-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.6rem 1.25rem;
+    background-color: var(--white);
+    color: var(--green-900);
+    border: 1px solid var(--sand-400);
+    border-radius: var(--radius-full);
+    text-decoration: none;
+    font-size: 0.9375rem;
+    font-weight: 500;
+    box-shadow: var(--shadow-subtle);
+    transition: transform var(--transition-fast), background-color var(--transition-fast), border-color var(--transition-fast), color var(--transition-fast);
+  }
+
+  .concern-chip:hover {
+    background-color: var(--green-900);
+    color: var(--white);
+    border-color: var(--green-900);
+    transform: translateY(-2px);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .concern-chip:hover {
+      transform: none;
+    }
+  }
+
+  .chip-icon {
+    color: var(--green-700);
+    transition: color var(--transition-fast);
+  }
+
+  .concern-chip:hover .chip-icon {
+    color: var(--sand-400);
+  }
+
+  .chip-label {
+    white-space: nowrap;
+  }
+</style>

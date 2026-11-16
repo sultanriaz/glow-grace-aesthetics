@@ -1,0 +1,314 @@
+---
+import Logo from './Logo.astro';
+import Icon from './Icon.astro';
+import Button from './Button.astro';
+import { clinic } from '../data/clinic';
+import { developer } from '../data/developer';
+import { categories } from '../data/categories';
+import { footerQuickLinks } from '../data/navigation';
+import { getClinicBookingWhatsAppLink, getClinicTelLink } from '../utils/whatsapp';
+import { getMapDirectionsUrl } from '../utils/maps';
+
+const currentYear = new Date().getFullYear();
+---
+
+<footer class="site-footer" role="contentinfo">
+  <div class="container footer-container">
+    <!-- Top Grid -->
+    <div class="footer-grid">
+      <!-- Col 1: Brand & Blurb -->
+      <div class="footer-col brand-col">
+        <Logo size="md" inverted={true} />
+        <p class="footer-blurb">
+          Safe, certified, and advanced aesthetic treatments to help you look and feel your best. Your skin deserves expert care, not guesswork.
+        </p>
+        <div class="footer-cta-wrap">
+          <Button
+            href={getClinicBookingWhatsAppLink()}
+            target="_blank"
+            variant="secondary"
+            size="sm"
+            icon="whatsapp"
+            class="footer-book-btn"
+          >
+            Book Your Appointment
+          </Button>
+        </div>
+      </div>
+
+      <!-- Col 2: Services by Category -->
+      <div class="footer-col">
+        <h2 class="footer-heading">Aesthetic Services</h2>
+        <ul class="footer-links" role="list">
+          {categories.map((cat) => (
+            <li>
+              <a href={`/services/#${cat.slug}`} class="footer-link">
+                {cat.name}
+              </a>
+            </li>
+          ))}
+        </ul>
+      </div>
+
+      <!-- Col 3: Quick Links & Information -->
+      <div class="footer-col">
+        <h2 class="footer-heading">Quick Links</h2>
+        <ul class="footer-links" role="list">
+          {footerQuickLinks.map((link) => (
+            <li>
+              <a href={link.href} class="footer-link">
+                {link.label}
+              </a>
+            </li>
+          ))}
+        </ul>
+      </div>
+
+      <!-- Col 4: Contact & Location Block -->
+      <div class="footer-col contact-col">
+        <h2 class="footer-heading">Visit Our Clinic</h2>
+        <div class="footer-contact-info">
+          <div class="contact-entry">
+            <Icon name="map-pin" size={18} class="entry-icon" />
+            <div>
+              <p class="entry-title">{clinic.address.line1}</p>
+              <p class="entry-sub">{clinic.address.line2}, {clinic.address.cityFull}</p>
+              <a
+                href={getMapDirectionsUrl()}
+                target="_blank"
+                rel="noopener noreferrer"
+                class="directions-link"
+              >
+                Get Directions <Icon name="external-link" size={12} />
+              </a>
+            </div>
+          </div>
+
+          <div class="contact-entry">
+            <Icon name="phone" size={18} class="entry-icon" />
+            <div>
+              <p class="entry-title">Appointments & Inquiries</p>
+              <a href={getClinicTelLink()} class="footer-phone-link">
+                {clinic.phone.display}
+              </a>
+            </div>
+          </div>
+
+          <div class="contact-entry">
+            <Icon name="clock" size={18} class="entry-icon" />
+            <div>
+              <p class="entry-title">Opening Hours</p>
+              <p class="entry-sub">{clinic.hours.displaySummary}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Medical Disclaimer Note -->
+    <div class="footer-disclaimer">
+      <p>
+        Treatment suitability is decided by the doctor after a consultation. Individual results vary.
+      </p>
+    </div>
+
+    <!-- Bottom Bar -->
+    <div class="footer-bottom">
+      <p class="copyright-text">
+        &copy; {currentYear} {clinic.name}. All rights reserved.
+      </p>
+      <div class="footer-attribution">
+        <a href="/developer/" class="developer-credit-link">
+          {developer.attributionText}
+        </a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<style>
+  .site-footer {
+    background-color: var(--green-900);
+    color: var(--cream-50);
+    padding-top: clamp(48px, 6vw, 80px);
+    padding-bottom: 2rem;
+    border-top: 2px solid var(--sand-400);
+    position: relative;
+    z-index: 10;
+  }
+
+  .footer-container {
+    display: flex;
+    flex-direction: column;
+    gap: 2.5rem;
+  }
+
+  .footer-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 2.5rem;
+  }
+
+  @media (min-width: 640px) {
+    .footer-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .footer-grid {
+      grid-template-columns: 1.4fr 1fr 0.8fr 1.3fr;
+      gap: 3rem;
+    }
+  }
+
+  .footer-col {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .footer-heading {
+    font-family: var(--font-sans);
+    font-size: 0.9375rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--sand-400);
+    margin-bottom: 1.25rem;
+  }
+
+  .footer-blurb {
+    font-size: 0.9375rem;
+    line-height: 1.6;
+    color: var(--sand-100);
+    margin-top: 1rem;
+    margin-bottom: 1.5rem;
+    max-width: 380px;
+  }
+
+  .footer-cta-wrap {
+    margin-top: auto;
+  }
+
+  .footer-links {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.65rem;
+  }
+
+  .footer-link {
+    font-size: 0.9375rem;
+    color: var(--cream-50);
+    text-decoration: none;
+    transition: color var(--transition-fast), padding-left var(--transition-fast);
+  }
+
+  .footer-link:hover {
+    color: var(--sand-400);
+    padding-left: 4px;
+  }
+
+  /* Contact info block */
+  .footer-contact-info {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+  }
+
+  .contact-entry {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.75rem;
+  }
+
+  .entry-icon {
+    color: var(--sand-400);
+    margin-top: 0.15rem;
+    flex-shrink: 0;
+  }
+
+  .entry-title {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--cream-50);
+    margin-bottom: 0.15rem;
+  }
+
+  .entry-sub {
+    font-size: 0.8125rem;
+    color: var(--sand-100);
+    line-height: 1.4;
+  }
+
+  .directions-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    font-size: 0.8125rem;
+    color: var(--sand-400);
+    text-decoration: underline;
+    margin-top: 0.35rem;
+  }
+
+  .directions-link:hover {
+    color: var(--white);
+  }
+
+  .footer-phone-link {
+    font-size: 0.9375rem;
+    color: var(--sand-400);
+    text-decoration: none;
+    font-weight: 500;
+  }
+
+  .footer-phone-link:hover {
+    color: var(--white);
+    text-decoration: underline;
+  }
+
+  /* Disclaimer */
+  .footer-disclaimer {
+    padding-top: 1.5rem;
+    padding-bottom: 1.5rem;
+    border-top: 1px solid rgba(225, 188, 138, 0.2);
+    border-bottom: 1px solid rgba(225, 188, 138, 0.2);
+    font-size: 0.8125rem;
+    color: var(--sand-100);
+    font-style: italic;
+    line-height: 1.5;
+    text-align: center;
+  }
+
+  /* Bottom line */
+  .footer-bottom {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    font-size: 0.8125rem;
+    color: var(--sand-100);
+  }
+
+  @media (min-width: 640px) {
+    .footer-bottom {
+      flex-direction: row;
+    }
+  }
+
+  .copyright-text {
+    margin: 0;
+  }
+
+  .developer-credit-link {
+    color: var(--sand-400);
+    text-decoration: none;
+    transition: color var(--transition-fast);
+  }
+
+  .developer-credit-link:hover {
+    color: var(--white);
+    text-decoration: underline;
+  }
+</style>

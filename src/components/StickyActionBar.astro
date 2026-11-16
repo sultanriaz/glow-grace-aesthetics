@@ -1,0 +1,119 @@
+---
+import Icon from './Icon.astro';
+import { getClinicBookingWhatsAppLink, getClinicTelLink } from '../utils/whatsapp';
+import { getMapDirectionsUrl } from '../utils/maps';
+---
+
+<nav class="sticky-action-bar" aria-label="Quick Actions">
+  <div class="sticky-action-container">
+    <!-- Call Action -->
+    <a href={getClinicTelLink()} class="sticky-action-btn" aria-label="Call clinic directly">
+      <div class="sticky-btn-icon">
+        <Icon name="phone" size={20} />
+      </div>
+      <span class="sticky-btn-label">Call</span>
+    </a>
+
+    <!-- WhatsApp Action (Primary) -->
+    <a
+      href={getClinicBookingWhatsAppLink()}
+      target="_blank"
+      rel="noopener noreferrer"
+      class="sticky-action-btn is-primary"
+      aria-label="Book appointment on WhatsApp"
+    >
+      <div class="sticky-btn-icon">
+        <Icon name="whatsapp" size={22} />
+      </div>
+      <span class="sticky-btn-label">WhatsApp</span>
+    </a>
+
+    <!-- Directions Action -->
+    <a
+      href={getMapDirectionsUrl()}
+      target="_blank"
+      rel="noopener noreferrer"
+      class="sticky-action-btn"
+      aria-label="Get Google Maps directions to the clinic"
+    >
+      <div class="sticky-btn-icon">
+        <Icon name="navigation" size={20} />
+      </div>
+      <span class="sticky-btn-label">Directions</span>
+    </a>
+  </div>
+</nav>
+
+<style>
+  .sticky-action-bar {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 900;
+    background-color: var(--white);
+    border-top: 1px solid var(--sand-400);
+    box-shadow: 0 -4px 16px rgba(3, 66, 47, 0.08);
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+    display: block;
+  }
+
+  @media (min-width: 1024px) {
+    .sticky-action-bar {
+      display: none;
+    }
+  }
+
+  .sticky-action-container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    height: var(--sticky-bar-height);
+  }
+
+  .sticky-action-btn {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.25rem;
+    text-decoration: none;
+    color: var(--green-900);
+    font-family: var(--font-sans);
+    transition: background-color var(--transition-fast);
+    padding: 0.25rem 0.5rem;
+    min-height: 48px;
+  }
+
+  .sticky-action-btn:hover {
+    background-color: var(--green-50);
+  }
+
+  .sticky-btn-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 28px;
+  }
+
+  .sticky-btn-label {
+    font-size: 0.75rem;
+    font-weight: 500;
+    line-height: 1;
+    letter-spacing: 0.02em;
+  }
+
+  /* Primary WhatsApp Action in Middle */
+  .sticky-action-btn.is-primary {
+    background-color: var(--green-900);
+    color: var(--white);
+  }
+
+  .sticky-action-btn.is-primary:hover {
+    background-color: var(--color-primary-hover);
+  }
+
+  .sticky-action-btn.is-primary .sticky-btn-icon {
+    color: var(--sand-400);
+  }
+</style>

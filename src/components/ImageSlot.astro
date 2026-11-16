@@ -1,0 +1,84 @@
+---
+import Mark from './Mark.astro';
+
+interface Props {
+  aspectRatio?: '1/1' | '4/3' | '16/9' | '3/4';
+  label?: string;
+  class?: string;
+}
+
+const {
+  aspectRatio = '4/3',
+  label = 'Future Photo Slot',
+  class: className = ''
+} = Astro.props;
+
+// Render only in development, strictly hide in production builds
+const isDev = import.meta.env.DEV;
+---
+
+{isDev && (
+  <div
+    class={`image-slot-dev-only aspect-${aspectRatio.replace('/', '-')} ${className}`.trim()}
+    role="img"
+    aria-label={`Developer preview: ${label}`}
+  >
+    <div class="slot-inner">
+      <div class="faint-mark" aria-hidden="true">
+        <Mark size={64} />
+      </div>
+      <span class="slot-label">[DEV ONLY: {label}]</span>
+    </div>
+  </div>
+)}
+
+<style>
+  .image-slot-dev-only {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: radial-gradient(circle at center, #FAF7F2 0%, #EAF4EF 100%);
+    border: 1px dashed var(--sand-400);
+    border-radius: var(--radius-md);
+    position: relative;
+    overflow: hidden;
+    width: 100%;
+  }
+
+  .aspect-1-1 {
+    aspect-ratio: 1 / 1;
+  }
+
+  .aspect-4-3 {
+    aspect-ratio: 4 / 3;
+  }
+
+  .aspect-16-9 {
+    aspect-ratio: 16 / 9;
+  }
+
+  .aspect-3-4 {
+    aspect-ratio: 3 / 4;
+  }
+
+  .slot-inner {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    opacity: 0.6;
+    padding: 1rem;
+    text-align: center;
+  }
+
+  .faint-mark {
+    opacity: 0.35;
+  }
+
+  .slot-label {
+    font-size: 0.75rem;
+    font-weight: 500;
+    color: var(--green-900);
+    letter-spacing: 0.05em;
+  }
+</style>

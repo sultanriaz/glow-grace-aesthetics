@@ -1,0 +1,103 @@
+---
+import Icon from './Icon.astro';
+
+interface Props {
+  slug: string;
+  name: string;
+  description: string;
+  icon: string;
+  class?: string;
+}
+
+const { slug, name, description, icon, class: className = '' } = Astro.props;
+---
+
+<a href={`/services/#${slug}`} class={`category-tile card-base ${className}`.trim()}>
+  <div class="tile-icon-wrap" aria-hidden="true">
+    <Icon name={icon} size={28} />
+  </div>
+  <div class="tile-content">
+    <h3 class="tile-title">{name}</h3>
+    <p class="tile-description">{description}</p>
+  </div>
+  <div class="tile-arrow" aria-hidden="true">
+    <Icon name="arrow-right" size={16} />
+  </div>
+</a>
+
+<style>
+  .category-tile {
+    display: flex;
+    flex-direction: column;
+    padding: clamp(1.5rem, 3vw, 2rem);
+    border-radius: var(--radius-md);
+    text-decoration: none;
+    position: relative;
+    overflow: hidden;
+    height: 100%;
+    background-color: var(--white);
+    border: 1px solid var(--sand-100);
+  }
+
+  .tile-icon-wrap {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 52px;
+    height: 52px;
+    border-radius: var(--radius-sm);
+    background-color: var(--green-50);
+    color: var(--green-900);
+    margin-bottom: 1.25rem;
+    transition: background-color var(--transition-fast), color var(--transition-fast);
+  }
+
+  .category-tile:hover .tile-icon-wrap {
+    background-color: var(--green-900);
+    color: var(--sand-400);
+  }
+
+  .tile-content {
+    flex: 1;
+  }
+
+  .tile-title {
+    font-size: 1.35rem;
+    color: var(--green-900);
+    margin-bottom: 0.5rem;
+    line-height: 1.25;
+  }
+
+  .tile-description {
+    font-size: 0.9375rem;
+    color: var(--ink-500);
+    line-height: 1.5;
+    margin: 0;
+  }
+
+  .tile-arrow {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    border-radius: var(--radius-full);
+    background-color: var(--green-50);
+    color: var(--green-700);
+    margin-top: 1.25rem;
+    margin-left: auto;
+    transition: transform var(--transition-fast), background-color var(--transition-fast), color var(--transition-fast);
+  }
+
+  .category-tile:hover .tile-arrow {
+    transform: translateX(4px);
+    background-color: var(--green-900);
+    color: var(--white);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .category-tile:hover .tile-arrow {
+      transform: none;
+    }
+  }
+</style>

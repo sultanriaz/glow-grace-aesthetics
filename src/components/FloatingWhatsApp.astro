@@ -1,0 +1,117 @@
+---
+import Icon from './Icon.astro';
+import { getClinicBookingWhatsAppLink } from '../utils/whatsapp';
+---
+
+<aside class="floating-whatsapp-container" aria-label="Quick WhatsApp Contact">
+  <a
+    href={getClinicBookingWhatsAppLink()}
+    target="_blank"
+    rel="noopener noreferrer"
+    class="floating-whatsapp-btn"
+    aria-label="Book on WhatsApp"
+    id="floating-wa-btn"
+  >
+    <div class="wa-icon-bubble">
+      <Icon name="whatsapp" size={26} />
+    </div>
+    <span class="wa-label">Book on WhatsApp</span>
+  </a>
+</aside>
+
+<script>
+  // Ensure floating WhatsApp does not overlap footer on desktop
+  function initFloatingWhatsApp() {
+    const waBtn = document.getElementById('floating-wa-btn');
+    const footer = document.querySelector('footer');
+
+    if (!waBtn || !footer) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            waBtn.classList.add('is-docked');
+          } else {
+            waBtn.classList.remove('is-docked');
+          }
+        });
+      },
+      { root: null, threshold: 0.1 }
+    );
+
+    observer.observe(footer);
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initFloatingWhatsApp);
+  } else {
+    initFloatingWhatsApp();
+  }
+</script>
+
+<style>
+  .floating-whatsapp-container {
+    display: none;
+  }
+
+  @media (min-width: 1024px) {
+    .floating-whatsapp-container {
+      display: block;
+      position: fixed;
+      bottom: 2rem;
+      right: 2rem;
+      z-index: 800;
+    }
+  }
+
+  .floating-whatsapp-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.65rem;
+    background-color: var(--green-900);
+    color: var(--white);
+    padding: 0.6rem 1.25rem 0.6rem 0.6rem;
+    border-radius: var(--radius-full);
+    text-decoration: none;
+    box-shadow: 0 8px 24px rgba(3, 66, 47, 0.25);
+    border: 1px solid var(--sand-400);
+    transition: transform var(--transition-fast), background-color var(--transition-fast), box-shadow var(--transition-fast);
+  }
+
+  .floating-whatsapp-btn:hover {
+    transform: translateY(-3px) scale(1.02);
+    background-color: #022F22;
+    box-shadow: 0 12px 28px rgba(3, 66, 47, 0.35);
+  }
+
+  .floating-whatsapp-btn.is-docked {
+    transform: translateY(-1rem);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .floating-whatsapp-btn:hover {
+      transform: none;
+    }
+  }
+
+  .wa-icon-bubble {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border-radius: var(--radius-full);
+    background-color: var(--whatsapp-green);
+    color: var(--white);
+    flex-shrink: 0;
+  }
+
+  .wa-label {
+    font-family: var(--font-sans);
+    font-size: 0.9375rem;
+    font-weight: 500;
+    white-space: nowrap;
+    letter-spacing: 0.01em;
+  }
+</style>

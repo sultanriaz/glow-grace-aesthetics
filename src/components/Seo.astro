@@ -1,0 +1,65 @@
+---
+import { getCanonicalUrl, getOgImageUrl, defaultSeo } from '../utils/seo';
+import { clinic } from '../data/clinic';
+
+interface Props {
+  title?: string;
+  description?: string;
+  canonical?: string;
+  ogType?: 'website' | 'article';
+  ogImage?: string;
+  ogImageAlt?: string;
+  noindex?: boolean;
+}
+
+const {
+  title = defaultSeo.title,
+  description = defaultSeo.description,
+  canonical,
+  ogType = 'website',
+  ogImage = defaultSeo.ogImage,
+  ogImageAlt = defaultSeo.ogImageAlt,
+  noindex = false
+} = Astro.props;
+
+const currentPath = Astro.url.pathname;
+const resolvedCanonical = canonical || getCanonicalUrl(currentPath);
+const resolvedOgImage = ogImage.startsWith('http') ? ogImage : getOgImageUrl(ogImage);
+---
+
+<!-- Primary Meta Tags -->
+<title>{title}</title>
+<meta name="title" content={title} />
+<meta name="description" content={description} />
+<link rel="canonical" href={resolvedCanonical} />
+
+{noindex && <meta name="robots" content="noindex, nofollow" />}
+{!noindex && <meta name="robots" content="index, follow" />}
+
+<meta name="author" content={clinic.name} />
+<meta name="theme-color" content="#03422F" />
+<meta name="format-detection" content="telephone=no" />
+
+<!-- Open Graph / Facebook -->
+<meta property="og:type" content={ogType} />
+<meta property="og:url" content={resolvedCanonical} />
+<meta property="og:title" content={title} />
+<meta property="og:description" content={description} />
+<meta property="og:image" content={resolvedOgImage} />
+<meta property="og:image:alt" content={ogImageAlt} />
+<meta property="og:locale" content="en_PK" />
+<meta property="og:site_name" content={clinic.name} />
+
+<!-- Twitter -->
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:url" content={resolvedCanonical} />
+<meta name="twitter:title" content={title} />
+<meta name="twitter:description" content={description} />
+<meta name="twitter:image" content={resolvedOgImage} />
+<meta name="twitter:image:alt" content={ogImageAlt} />
+
+<!-- Favicon & App Icons -->
+<link rel="icon" type="image/x-icon" href="/favicon.ico" />
+<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+<link rel="manifest" href="/site.webmanifest" />

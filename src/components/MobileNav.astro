@@ -1,0 +1,307 @@
+---
+import Logo from './Logo.astro';
+import Icon from './Icon.astro';
+import Button from './Button.astro';
+import { mainNavItems } from '../data/navigation';
+import { categories } from '../data/categories';
+import { getClinicBookingWhatsAppLink, getClinicTelLink } from '../utils/whatsapp';
+import { clinic } from '../data/clinic';
+
+interface Props {
+  currentPath: string;
+}
+
+const { currentPath } = Astro.props;
+---
+
+<!-- Mobile Drawer Overlay & Container -->
+<div id="mobile-nav-backdrop" class="mobile-nav-backdrop" aria-hidden="true"></div>
+
+<aside
+  id="mobile-nav-drawer"
+  class="mobile-nav-drawer"
+  role="dialog"
+  aria-modal="true"
+  aria-label="Mobile Navigation Menu"
+  tabindex="-1"
+>
+  <div class="mobile-nav-header">
+    <Logo size="sm" />
+    <button
+      id="mobile-nav-close"
+      type="button"
+      class="mobile-nav-close-btn touch-target"
+      aria-label="Close navigation menu"
+    >
+      <Icon name="x" size={24} />
+    </button>
+  </div>
+
+  <nav class="mobile-nav-body" aria-label="Mobile Main Navigation">
+    <ul class="mobile-nav-list" role="list">
+      {mainNavItems.map((item) => {
+        const isActive = currentPath === item.href || (item.href !== '/' && currentPath.startsWith(item.href));
+        if (item.hasDropdown) {
+          return (
+            <li class="mobile-nav-item">
+              <details class="mobile-accordion">
+                <summary class="mobile-accordion-trigger">
+                  <span class={`mobile-nav-link ${isActive ? 'is-active' : ''}`}>{item.label}</span>
+                  <Icon name="chevron-down" size={18} class="accordion-chevron" />
+                </summary>
+                <ul class="mobile-submenu" role="list">
+                  <li>
+                    <a href="/services/" class="mobile-sublink view-all-services">
+                      <span>All Services Overview</span>
+                      <Icon name="arrow-right" size={14} />
+                    </a>
+                  </li>
+                  {categories.map((cat) => (
+                    <li>
+                      <a href={`/services/#${cat.slug}`} class="mobile-sublink">
+                        <Icon name={cat.icon} size={16} class="sublink-icon" />
+                        <span>{cat.name}</span>
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+              </details>
+            </li>
+          );
+        }
+        return (
+          <li class="mobile-nav-item">
+            <a
+              href={item.href}
+              class={`mobile-nav-link ${isActive ? 'is-active' : ''}`}
+              aria-current={isActive ? 'page' : undefined}
+            >
+              {item.label}
+            </a>
+          </li>
+        );
+      })}
+    </ul>
+
+    <!-- Quick action links inside mobile drawer -->
+    <div class="mobile-nav-actions">
+      <Button
+        href={getClinicBookingWhatsAppLink()}
+        target="_blank"
+        variant="primary"
+        size="md"
+        icon="whatsapp"
+        class="mobile-booking-btn"
+      >
+        Book on WhatsApp
+      </Button>
+
+      <a href={getClinicTelLink()} class="mobile-phone-link">
+        <Icon name="phone" size={18} />
+        <span>{clinic.phone.display}</span>
+      </a>
+    </div>
+
+    <!-- Quick info block -->
+    <div class="mobile-nav-info">
+      <p class="info-label">Clinic Hours</p>
+      <p class="info-val">{clinic.hours.displaySummary}</p>
+      <p class="info-label">Location</p>
+      <p class="info-val">{clinic.address.line1}, {clinic.address.cityFull}</p>
+    </div>
+  </nav>
+</aside>
+
+<style>
+  .mobile-nav-backdrop {
+    position: fixed;
+    inset: 0;
+    background-color: rgba(3, 66, 47, 0.4);
+    backdrop-filter: blur(4px);
+    z-index: 1000;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity var(--transition-base), visibility var(--transition-base);
+  }
+
+  .mobile-nav-drawer {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    width: 86vw;
+    max-width: 380px;
+    background-color: var(--cream-50);
+    z-index: 1001;
+    transform: translateX(100%);
+    transition: transform var(--transition-smooth);
+    display: flex;
+    flex-direction: column;
+    box-shadow: -8px 0 32px rgba(3, 66, 47, 0.15);
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  /* Open states */
+  body.menu-open .mobile-nav-backdrop {
+    opacity: 1;
+    visibility: visible;
+  }
+
+  body.menu-open .mobile-nav-drawer {
+    transform: translateX(0);
+  }
+
+  .mobile-nav-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1.25rem 1.5rem;
+    border-bottom: 1px solid var(--sand-100);
+  }
+
+  .mobile-nav-close-btn {
+    color: var(--green-900);
+    border-radius: var(--radius-sm);
+  }
+
+  .mobile-nav-body {
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+  }
+
+  .mobile-nav-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+  }
+
+  .mobile-nav-link {
+    display: block;
+    font-family: var(--font-sans);
+    font-size: 1.25rem;
+    font-weight: 500;
+    color: var(--green-900);
+    text-decoration: none;
+    padding: 0.75rem 0.5rem;
+    border-radius: var(--radius-sm);
+    transition: background-color var(--transition-fast), color var(--transition-fast);
+  }
+
+  .mobile-nav-link:hover,
+  .mobile-nav-link.is-active {
+    color: var(--green-700);
+  }
+
+  /* Accordion for services */
+  .mobile-accordion {
+    width: 100%;
+  }
+
+  .mobile-accordion-trigger {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    cursor: pointer;
+    list-style: none;
+  }
+
+  .mobile-accordion-trigger::-webkit-details-marker {
+    display: none;
+  }
+
+  .accordion-chevron {
+    color: var(--green-700);
+    transition: transform var(--transition-fast);
+  }
+
+  .mobile-accordion[open] .accordion-chevron {
+    transform: rotate(180deg);
+  }
+
+  .mobile-submenu {
+    list-style: none;
+    padding: 0.5rem 0 0.5rem 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+    border-left: 2px solid var(--sand-100);
+    margin: 0.25rem 0 0.5rem 0.5rem;
+  }
+
+  .mobile-sublink {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.95rem;
+    color: var(--ink-700);
+    text-decoration: none;
+    padding: 0.4rem 0.5rem;
+    border-radius: var(--radius-sm);
+  }
+
+  .mobile-sublink:hover {
+    color: var(--green-900);
+    background-color: var(--green-50);
+  }
+
+  .view-all-services {
+    font-weight: 600;
+    color: var(--green-700);
+    border-bottom: 1px dashed var(--sand-400);
+    padding-bottom: 0.5rem;
+    margin-bottom: 0.25rem;
+  }
+
+  .sublink-icon {
+    color: var(--green-500);
+  }
+
+  .mobile-nav-actions {
+    margin-top: 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .mobile-booking-btn {
+    width: 100%;
+  }
+
+  .mobile-phone-link {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    font-size: 1rem;
+    font-weight: 500;
+    color: var(--green-900);
+    text-decoration: none;
+    padding: 0.75rem;
+    border: 1px solid var(--sand-400);
+    border-radius: var(--radius-full);
+  }
+
+  .mobile-nav-info {
+    margin-top: 2.5rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--sand-100);
+    font-size: var(--text-xs);
+    color: var(--ink-500);
+  }
+
+  .info-label {
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--green-700);
+    margin-bottom: 0.2rem;
+  }
+
+  .info-val {
+    margin-bottom: 0.75rem;
+  }
+</style>

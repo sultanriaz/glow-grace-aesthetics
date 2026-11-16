@@ -1,0 +1,254 @@
+---
+import Icon from './Icon.astro';
+import { clinic } from '../data/clinic';
+import { getClinicStatus } from '../utils/hours';
+
+interface Props {
+  class?: string;
+}
+
+const { class: className = '' } = Astro.props;
+const initialStatus = getClinicStatus();
+---
+
+<div class={`hours-card card-base ${className}`.trim()}>
+  <div class="hours-header">
+    <div class="hours-title-wrap">
+      <Icon name="clock" size={22} class="hours-title-icon" />
+      <h3 class="hours-title">Clinic Operating Hours</h3>
+    </div>
+
+    <!-- Live Asia/Karachi Open/Closed Status Badge -->
+    <div
+      id="live-status-badge"
+      class={`status-badge ${initialStatus.isOpen ? 'is-open' : 'is-closed'}`}
+      data-timezone={clinic.hours.timezone}
+    >
+      <span class="status-indicator-dot" aria-hidden="true"></span>
+      <span class="status-badge-text" id="status-badge-text">
+        {initialStatus.statusText}
+      </span>
+    </div>
+  </div>
+
+  <p class="hours-next-change" id="hours-next-change">
+    {initialStatus.nextChangeText}
+  </p>
+
+  <!-- Weekly Schedule Table -->
+  <table class="schedule-table">
+    <caption class="sr-only">Weekly Operating Schedule for Glow & Grace Aesthetics</caption>
+    <thead>
+      <tr>
+        <th scope="col" class="th-day">Day</th>
+        <th scope="col" class="th-time">Working Hours</th>
+      </tr>
+    </thead>
+    <tbody>
+      {clinic.hours.schedule.map((slot) => (
+        <tr class={`schedule-row ${slot.isClosed ? 'is-closed-row' : ''}`}>
+          <th scope="row" class="td-day">{slot.day}</th>
+          <td class="td-time">
+            {slot.isClosed ? (
+              <span class="closed-label">Closed</span>
+            ) : (
+              <span class="open-label">10:00 AM – 10:00 PM</span>
+            )}
+          </td>
+        </tr>
+      ))}
+    </tbody>
+  </table>
+
+  <div class="hours-footer-note">
+    <Icon name="calendar" size={16} />
+    <span>All timings in Pakistan Standard Time (PKT / UTC+5).</span>
+  </div>
+</div>
+
+<script>
+  // Dynamic browser recalculation in Asia/Karachi time zone
+  function updateClinicHoursBadge() {
+    const badge = document.getElementById('live-status-badge');
+    const badgeText = document.getElementById('status-badge-text');
+    const nextChangeEl = document.getElementById('hours-next-change');
+    const timeZone = badge?.getAttribute('data-timezone') || 'Asia/Karachi';
+
+    if (!badge || !badgeText) return;
+
+    try {
+      const now = new Date();
+      const formatter = new Intl.DateTimeFormat('en-US', {
+        timeZone,
+        weekday: 'long',
+        hour: 'numeric',
+        minute: 'numeric',
+        hour12: false
+      });
+
+      const parts = formatter.formatToParts(now);
+      const weekday = parts.find((p) => p.type === 'weekday')?.value || '';
+      const hour = parseInt(parts.find((p) => p.type === 'hour')?.value || '0', 10);
+      const minute = parseInt(parts.find((p) => p.type === 'minute')?.value || '0', 10);
+
+      const currentMinutes = hour * 60 + minute;
+      const isSunday = weekday.toLowerCase() === 'sunday';
+      const openMinutes = 10 * 60; // 10:00
+      const closeMinutes = 22 * 60; // 22:00
+
+      if (!isSunday && currentMinutes >= openMinutes && currentMinutes < closeMinutes) {
+        badge.classList.remove('is-closed');
+        badge.classList.add('is-open');
+        badgeText.textContent = 'Open Now';
+        if (nextChangeEl) nextChangeEl.textContent = 'Closes at 10:00 PM';
+      } else {
+        badge.classList.remove('is-open');
+        badge.classList.add('is-closed');
+        badgeText.textContent = 'Closed Now';
+        if (nextChangeEl) {
+          if (!isSunday && currentMinutes < openMinutes) {
+            nextChangeEl.textContent = 'Opens today at 10:00 AM';
+          } else if (weekday.toLowerCase() === 'saturday' || isSunday) {
+            nextChangeEl.textContent = 'Opens Monday at 10:00 AM';
+          } else {
+            nextChangeEl.textContent = 'Opens tomorrow at 10:00 AM';
+          }
+        }
+      }
+    } catch (e) {
+      console.warn('Timezone calculation fallback:', e);
+    }
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', updateClinicHoursBadge);
+  } else {
+    updateClinicHoursBadge();
+  }
+</script>
+
+<style>
+  .hours-card {
+    padding: clamp(1.5rem, 3vw, 2rem);
+    border-radius: var(--radius-md);
+    background-color: var(--white);
+    border: 1px solid var(--sand-100);
+  }
+
+  .hours-header {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .hours-title-wrap {
+    display: flex;
+    align-items: center;
+    gap: 0.65rem;
+  }
+
+  .hours-title-icon {
+    color: var(--green-700);
+  }
+
+  .hours-title {
+    font-size: 1.35rem;
+    color: var(--green-900);
+    margin: 0;
+  }
+
+  /* Status badge */
+  .status-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    padding: 0.35rem 0.85rem;
+    border-radius: var(--radius-full);
+    font-size: 0.8125rem;
+    font-weight: 600;
+    line-height: 1;
+    border: 1px solid transparent;
+  }
+
+  .status-badge.is-open {
+    background-color: var(--green-100);
+    color: var(--green-900);
+    border-color: var(--green-500);
+  }
+
+  .status-badge.is-closed {
+    background-color: #FEE2E2;
+    color: #991B1B;
+    border-color: #FCA5A5;
+  }
+
+  .status-indicator-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: var(--radius-full);
+  }
+
+  .is-open .status-indicator-dot {
+    background-color: var(--green-700);
+  }
+
+  .is-closed .status-indicator-dot {
+    background-color: #DC2626;
+  }
+
+  .hours-next-change {
+    font-size: 0.875rem;
+    color: var(--ink-500);
+    margin-bottom: 1.25rem;
+  }
+
+  /* Table styling */
+  .schedule-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.9375rem;
+    margin-bottom: 1.25rem;
+  }
+
+  .schedule-table th,
+  .schedule-table td {
+    padding: 0.65rem 0.25rem;
+    border-bottom: 1px solid var(--sand-100);
+    text-align: left;
+  }
+
+  .th-day, .td-day {
+    font-weight: 500;
+    color: var(--ink-700);
+  }
+
+  .td-time {
+    text-align: right;
+  }
+
+  .schedule-row.is-closed-row .td-day {
+    color: var(--ink-500);
+  }
+
+  .open-label {
+    color: var(--green-900);
+    font-weight: 500;
+  }
+
+  .closed-label {
+    color: #991B1B;
+    font-weight: 500;
+  }
+
+  .hours-footer-note {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.8125rem;
+    color: var(--ink-500);
+    padding-top: 0.5rem;
+  }
+</style>

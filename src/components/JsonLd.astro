@@ -14,13 +14,29 @@ interface ServiceData {
   url: string;
 }
 
-interface Props {
-  type: 'home' | 'service' | 'contact' | 'about' | 'default';
-  service?: ServiceData;
-  breadcrumbs?: BreadcrumbItem[];
+interface FaqItem {
+  question: string;
+  answer: string;
 }
 
-const { type, service, breadcrumbs } = Astro.props;
+interface ArticleData {
+  title: string;
+  description: string;
+  publishedAt: string;
+  updatedAt?: string;
+  url: string;
+  tags: string[];
+}
+
+interface Props {
+  type: 'home' | 'service' | 'contact' | 'about' | 'faq' | 'article' | 'default';
+  service?: ServiceData;
+  breadcrumbs?: BreadcrumbItem[];
+  faqs?: FaqItem[];
+  article?: ArticleData;
+}
+
+const { type, service, breadcrumbs, faqs, article } = Astro.props;
 const siteUrl = getSiteUrl();
 
 // Base Clinic Schema (MedicalClinic + HealthAndBeautyBusiness)
@@ -110,6 +126,44 @@ const contactPageSchema = type === 'contact' ? {
   }
 } : null;
 
+// FAQPage Schema
+const faqSchema = faqs && faqs.length > 0 ? {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": faqs.map((f) => ({
+    "@type": "Question",
+    "name": f.question,
+    "acceptedAnswer": {
+      "@type": "Answer",
+      "text": f.answer
+    }
+  }))
+} : null;
+
+// Article Schema
+const articleSchema = article ? {
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": article.title,
+  "description": article.description,
+  "datePublished": article.publishedAt,
+  "dateModified": article.updatedAt || article.publishedAt,
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": article.url
+  },
+  "author": {
+    "@type": "MedicalOrganization",
+    "name": clinic.name,
+    "url": siteUrl
+  },
+  "publisher": {
+    "@id": `${siteUrl}/#clinic`
+  },
+  "image": `${siteUrl}/og-default.jpg`,
+  "keywords": article.tags.join(', ')
+} : null;
+
 const schemas: object[] = [];
 
 if (type === 'home') {
@@ -120,7 +174,13 @@ if (type === 'home') {
     schemas.push(clinicSchema, contactPageSchema);
   } else if (type === 'service') {
     if (serviceSchema) schemas.push(serviceSchema);
+  } else if (type === 'article') {
+    if (articleSchema) schemas.push(articleSchema);
   }
+}
+
+if (faqSchema) {
+  schemas.push(faqSchema);
 }
 
 if (breadcrumbSchema) {

@@ -31,9 +31,11 @@ interface Props {
   ogImage?: string;
   ogImageAlt?: string;
   noindex?: boolean;
-  jsonLdType?: 'home' | 'service' | 'contact' | 'about' | 'default';
+  jsonLdType?: 'home' | 'service' | 'contact' | 'about' | 'faq' | 'article' | 'default';
   serviceJsonLd?: ServiceJsonLdData;
   breadcrumbsJsonLd?: BreadcrumbItem[];
+  faqsJsonLd?: Array<{ question: string; answer: string }>;
+  articleJsonLd?: any;
   hideActions?: boolean;
 }
 
@@ -48,6 +50,8 @@ const {
   jsonLdType = 'default',
   serviceJsonLd,
   breadcrumbsJsonLd,
+  faqsJsonLd,
+  articleJsonLd,
   hideActions = false
 } = Astro.props;
 
@@ -74,6 +78,8 @@ const currentPath = Astro.url.pathname;
       type={jsonLdType}
       service={serviceJsonLd}
       breadcrumbs={breadcrumbsJsonLd}
+      faqs={faqsJsonLd}
+      article={articleJsonLd}
     />
 
     <!-- Remove no-js class immediately if JS is enabled -->

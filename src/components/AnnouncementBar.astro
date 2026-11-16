@@ -16,7 +16,7 @@ import { getClinicTelLink } from '../utils/whatsapp';
       <span>YCDO Ghazi National Hospital, Multan Road, DG Khan</span>
     </div>
     <div class="announcement-spacer"></div>
-    <a href={getClinicTelLink()} class="announcement-phone">
+    <a href={getClinicTelLink()} class="announcement-phone" data-track-event="call_click" data-track-placement="header">
       <Icon name="phone" size={14} class="announcement-icon" />
       <span>Call: {clinic.phone.display}</span>
     </a>

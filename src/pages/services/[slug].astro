@@ -547,6 +547,9 @@ const isMoleRemoval = currentSlug === 'mole-wart-removal';
               size="md"
               icon="whatsapp"
               class="w-full mb-3"
+              data-track-event="whatsapp_click"
+              data-track-placement="service_detail"
+              data-track-service={service.data.title}
             >
               Chat on WhatsApp
             </Button>
@@ -557,6 +560,8 @@ const isMoleRemoval = currentSlug === 'mole-wart-removal';
               size="md"
               icon="phone"
               class="w-full"
+              data-track-event="call_click"
+              data-track-placement="hero"
             >
               Call {clinic.phone.display}
             </Button>
@@ -1567,6 +1572,7 @@ const isMoleRemoval = currentSlug === 'mole-wart-removal';
 {isBridal && (
   <script>
     import { buildBridalPlannerWhatsAppUrl } from '../../utils/booking';
+    import { track } from '../../utils/analytics';
 
     function initBridalPlanner() {
       const form = document.getElementById('bridal-planner-form') as HTMLFormElement | null;
@@ -1608,6 +1614,11 @@ const isMoleRemoval = currentSlug === 'mole-wart-removal';
           weddingDate,
           selectedTreatments,
           notes
+        });
+
+        track('bridal_submit', {
+          timeline: timeframe || 'Not specified',
+          treatments_count: selectedTreatments.length
         });
 
         window.location.href = waUrl;

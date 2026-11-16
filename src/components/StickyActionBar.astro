@@ -7,7 +7,13 @@ import { getMapDirectionsUrl } from '../utils/maps';
 <nav class="sticky-action-bar" aria-label="Quick Actions">
   <div class="sticky-action-container">
     <!-- Call Action -->
-    <a href={getClinicTelLink()} class="sticky-action-btn" aria-label="Call clinic directly">
+    <a
+      href={getClinicTelLink()}
+      class="sticky-action-btn"
+      aria-label="Call clinic directly"
+      data-track-event="call_click"
+      data-track-placement="hero"
+    >
       <div class="sticky-btn-icon">
         <Icon name="phone" size={20} />
       </div>
@@ -21,6 +27,8 @@ import { getMapDirectionsUrl } from '../utils/maps';
       rel="noopener noreferrer"
       class="sticky-action-btn is-primary"
       aria-label="Book appointment on WhatsApp"
+      data-track-event="whatsapp_click"
+      data-track-placement="floating"
     >
       <div class="sticky-btn-icon">
         <Icon name="whatsapp" size={22} />
@@ -35,6 +43,8 @@ import { getMapDirectionsUrl } from '../utils/maps';
       rel="noopener noreferrer"
       class="sticky-action-btn"
       aria-label="Get Google Maps directions to the clinic"
+      data-track-event="directions_click"
+      data-track-placement="footer"
     >
       <div class="sticky-btn-icon">
         <Icon name="navigation" size={20} />

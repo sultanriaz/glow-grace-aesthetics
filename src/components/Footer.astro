@@ -30,6 +30,8 @@ const currentYear = new Date().getFullYear();
             size="sm"
             icon="whatsapp"
             class="footer-book-btn"
+            data-track-event="whatsapp_click"
+            data-track-placement="footer"
           >
             Book Your Appointment
           </Button>
@@ -78,6 +80,8 @@ const currentYear = new Date().getFullYear();
                 target="_blank"
                 rel="noopener noreferrer"
                 class="directions-link"
+                data-track-event="directions_click"
+                data-track-placement="footer"
               >
                 Get Directions <Icon name="external-link" size={12} />
               </a>
@@ -88,7 +92,12 @@ const currentYear = new Date().getFullYear();
             <Icon name="phone" size={18} class="entry-icon" />
             <div>
               <p class="entry-title">Appointments & Inquiries</p>
-              <a href={getClinicTelLink()} class="footer-phone-link">
+              <a
+                href={getClinicTelLink()}
+                class="footer-phone-link"
+                data-track-event="call_click"
+                data-track-placement="footer"
+              >
                 {clinic.phone.display}
               </a>
             </div>

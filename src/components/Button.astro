@@ -14,6 +14,7 @@ interface Props {
   ariaLabel?: string;
   id?: string;
   fullWidth?: boolean;
+  [key: string]: any;
 }
 
 const {
@@ -28,7 +29,8 @@ const {
   type = 'button',
   ariaLabel,
   id,
-  fullWidth = false
+  fullWidth = false,
+  ...rest
 } = Astro.props;
 
 // Auto-add rel="noopener noreferrer" for external targets
@@ -44,6 +46,7 @@ const Tag = href ? 'a' : 'button';
   class={`btn btn-${variant} btn-${size} ${fullWidth ? 'btn-full-width w-full' : ''} ${className}`.trim()}
   aria-label={ariaLabel}
   id={id}
+  {...rest}
 >
   {icon && iconPosition === 'left' && (
     <Icon name={icon} size={size === 'sm' ? 16 : size === 'lg' ? 22 : 18} />

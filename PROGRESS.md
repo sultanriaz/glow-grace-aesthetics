@@ -107,12 +107,12 @@
   - [x] Link legal pages in footer and relevant form disclaimers; add to sitemap
   - [x] Update claims allowlist for negated guarantee phrases on legal pages
 
-- [ ] **Phase C: Privacy-Friendly Analytics (Off by Default)**
-  - [ ] Install `@vercel/analytics`
-  - [ ] Create `src/utils/analytics.ts` with `track(name, props)` (no-op unless `PUBLIC_ANALYTICS_PROVIDER="vercel"`)
-  - [ ] Add tiny delegated click listener (<= 1 KB) and `data-track-*` attributes
-  - [ ] Create `docs/ANALYTICS.md`
-  - [ ] Verify both analytics modes ("none" and "vercel") pass budgets, set zero cookies, and make zero 3rd-party requests
+- [x] **Phase C: Privacy-Friendly Analytics (Off by Default)**
+  - [x] Install `@vercel/analytics`
+  - [x] Create `src/utils/analytics.ts` with `track(name, props)` (no-op unless `PUBLIC_ANALYTICS_PROVIDER="vercel"`)
+  - [x] Add tiny delegated click listener (<= 1 KB) and `data-track-*` attributes
+  - [x] Create `docs/ANALYTICS.md`
+  - [x] Verify both analytics modes ("none" and "vercel") pass budgets, set zero cookies, and make zero 3rd-party requests
 
 - [ ] **Phase D: Social Cards & SEO Polish**
   - [ ] Install `satori`, `@resvg/resvg-js`, `@fontsource/cormorant-garamond`, `@fontsource/jost`

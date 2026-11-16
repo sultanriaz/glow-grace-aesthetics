@@ -235,6 +235,7 @@ const waDirectLink = getClinicBookingWhatsAppLink();
 
 <script>
   import { isValidBookingDate, buildAppointmentWhatsAppUrl } from '../utils/booking';
+  import { track } from '../utils/analytics';
 
   function initAppointmentForm() {
     const form = document.getElementById('appointment-form') as HTMLFormElement | null;
@@ -386,6 +387,13 @@ const waDirectLink = getClinicBookingWhatsAppLink();
         date: dateVal,
         time: timeVal,
         note: noteVal
+      });
+
+      // Track submission without private info
+      track('booking_submit', {
+        service,
+        has_date: Boolean(dateVal),
+        has_note: Boolean(noteVal)
       });
 
       // Redirect to WhatsApp

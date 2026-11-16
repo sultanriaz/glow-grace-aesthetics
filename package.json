@@ -24,6 +24,7 @@
     "@astrojs/sitemap": "^3.2.1",
     "@fontsource/cormorant-garamond": "^5.1.1",
     "@fontsource/jost": "^5.1.1",
+    "@vercel/analytics": "^2.0.1",
     "astro": "^5.4.2",
     "png-to-ico": "^2.1.8",
     "sharp": "^0.33.5",

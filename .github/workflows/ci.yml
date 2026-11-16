@@ -1,0 +1,64 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - main
+      - 'part-*'
+      - '**'
+  pull_request:
+    branches:
+      - main
+      - 'part-*'
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    name: Quality Gate & Launch Verification
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    steps:
+      - name: Checkout Source Code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js LTS (20.x)
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20.x'
+          cache: 'npm'
+
+      - name: Install Dependencies
+        run: npm ci
+
+      - name: Astro Type Check
+        run: npm run check
+
+      - name: Vitest Unit Tests
+        run: npm test
+
+      - name: Medical Claims Verification
+        run: npm run check:claims
+
+      - name: Build Static Site
+        run: npm run build
+
+      - name: Link Integrity & Developer Isolation Check
+        run: npm run check:links
+
+      - name: SEO Metadata Validation
+        run: npm run check:seo
+
+      - name: Structured Data (JSON-LD) Validation
+        run: npm run check:schema
+
+      - name: Zero-Tracker Privacy Audit
+        run: npm run check:privacy
+
+      - name: Security Headers & CSP Audit
+        run: npm run check:headers
+
+      - name: Performance Budgets Enforcement
+        run: npm run check:budgets

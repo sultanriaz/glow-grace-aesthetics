@@ -99,3 +99,19 @@ Please provide live URLs for:
 In accordance with mission standards, all copy has been audited and normalised to British English:
 - **Total spelling changes made across codebase**: 43 instances across 21 files.
 - **Normalised terms**: `colour`, `personalised`, `specialised`, `customised`, `programme`, `utilises`, `localised`, `minimised`, `analysing`, `defence`.
+
+---
+
+## 11. Part 3 Launch Readiness & Handover Review
+- [ ] **Developer Page Isolation (`/developer/`)**: Full developer portfolio page rendered with `noindex` and excluded from sitemap. Developer phone number (`923229781129`) confirmed isolated to `/developer/`.
+- [ ] **Legal Compliance Policies**:
+  - [ ] Privacy Policy (`/privacy/`)
+  - [ ] Terms of Service (`/terms/`)
+  - [ ] Medical Disclaimer (`/medical-disclaimer/`)
+- [ ] **Privacy-Friendly Analytics Configuration**: Default is `PUBLIC_ANALYTICS_PROVIDER="none"` (zero cookies, zero network beacons). Enable Vercel Analytics by setting `PUBLIC_ANALYTICS_PROVIDER="vercel"` in Vercel project environment variables.
+- [ ] **Automated Social Share Cards**: 46 branded 1200x630 OG cards generated automatically via Satori and Resvg.
+- [ ] **Security Hardening (CSP)**: Strict Content Security Policy, HSTS, X-Frame-Options configured in `vercel.json`.
+- [ ] **Automated Test Suite**: 93 Playwright E2E and Axe accessibility tests passing; 100% WCAG 2.1 AA compliance; Mobile Lighthouse scores 99–100 across 10 key routes.
+- [ ] **Marketing QR Codes & Local SEO**: Vector SVGs and 1024x1024 PNGs ready for print in `marketing/`; local SEO guide in `docs/LOCAL-SEO.md`.
+- [ ] **Handover Documentation**: Master handover guide in `docs/HANDOVER.md` and printable `docs/Client-Handover.pdf`.
+

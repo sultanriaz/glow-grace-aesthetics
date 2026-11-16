@@ -21,6 +21,9 @@
     "check:headers": "node scripts/check-headers.mjs",
     "check:budgets": "node scripts/check-budgets.mjs",
     "make-qr": "node scripts/make-qr.mjs",
+    "make-handover-pdf": "node scripts/generate-handover-pdf.mjs",
+    "review:status": "node scripts/review-status.mjs",
+    "launch:check": "node scripts/launch-check.mjs",
     "test:e2e": "playwright test"
   },
   "engines": {

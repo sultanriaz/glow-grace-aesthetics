@@ -143,10 +143,10 @@
   - [x] Install `qrcode` and create `scripts/make-qr.mjs` (`npm run make-qr`)
   - [x] Create `marketing/README.md` and generate QR codes for website and WhatsApp
 
-- [ ] **Phase H: Handover Docs, CI & Launch Gate**
-  - [ ] Create `docs/HANDOVER.md`, `docs/EDITING-GUIDE.md`, `docs/MAINTENANCE.md`, `docs/LAUNCH-CHECKLIST.md`, `CHANGELOG.md`
-  - [ ] Generate `docs/Client-Handover.pdf` via Playwright
-  - [ ] Create `.github/workflows/ci.yml`
-  - [ ] Add `npm run review:status` and `npm run launch:check`
-  - [ ] Update `CONTENT_REVIEW.md`
-  - [ ] Full quality gate verification and final commit & push on `part-3-launch`
+- [x] **Phase H: Handover Docs, CI & Launch Gate**
+  - [x] Create `docs/HANDOVER.md`, `docs/EDITING-GUIDE.md`, `docs/MAINTENANCE.md`, `docs/LAUNCH-CHECKLIST.md`, `CHANGELOG.md`
+  - [x] Generate `docs/Client-Handover.pdf` via Playwright
+  - [x] Create `.github/workflows/ci.yml`
+  - [x] Add `npm run review:status` and `npm run launch:check`
+  - [x] Update `CONTENT_REVIEW.md`
+  - [x] Full quality gate verification and final commit & push on `part-3-launch`

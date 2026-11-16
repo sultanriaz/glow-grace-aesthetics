@@ -85,7 +85,7 @@
 
 ## Part 3 Phase Checklist
 
-- [ ] **Step 0: Reconnaissance & Environment Setup**
+- [x] **Step 0: Reconnaissance & Environment Setup**
   - [x] Branch `part-3-launch` created and pushed to origin
   - [x] Baseline health verification passed (`check`, `test`, `build`, `check:claims`, `check:content`, `check:links`)
   - [x] Confirm no sample gallery/testimonial fixtures exist (`hasGallery()` and `hasTestimonials()` are false)
@@ -137,11 +137,11 @@
   - [x] Create `scripts/check-budgets.mjs` (`npm run check:budgets`)
   - [x] Run Lighthouse mobile on 10 routes (Performance >= 95, Accessibility 100, Best Practices >= 95, SEO 100)
 
-- [ ] **Phase G: Domain, Search Console & Local SEO Kit**
-  - [ ] Create `docs/CUSTOM-DOMAIN.md`
-  - [ ] Create `docs/LOCAL-SEO.md`
-  - [ ] Install `qrcode` and create `scripts/make-qr.mjs` (`npm run make-qr`)
-  - [ ] Create `marketing/README.md` and generate QR codes for website and WhatsApp
+- [x] **Phase G: Domain, Search Console & Local SEO Kit**
+  - [x] Create `docs/CUSTOM-DOMAIN.md`
+  - [x] Create `docs/LOCAL-SEO.md`
+  - [x] Install `qrcode` and create `scripts/make-qr.mjs` (`npm run make-qr`)
+  - [x] Create `marketing/README.md` and generate QR codes for website and WhatsApp
 
 - [ ] **Phase H: Handover Docs, CI & Launch Gate**
   - [ ] Create `docs/HANDOVER.md`, `docs/EDITING-GUIDE.md`, `docs/MAINTENANCE.md`, `docs/LAUNCH-CHECKLIST.md`, `CHANGELOG.md`

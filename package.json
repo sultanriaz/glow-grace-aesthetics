@@ -20,6 +20,7 @@
     "check:privacy": "node scripts/check-privacy.mjs",
     "check:headers": "node scripts/check-headers.mjs",
     "check:budgets": "node scripts/check-budgets.mjs",
+    "make-qr": "node scripts/make-qr.mjs",
     "test:e2e": "playwright test"
   },
   "engines": {
@@ -41,8 +42,10 @@
     "@axe-core/playwright": "^4.14.0",
     "@playwright/test": "^1.65.1",
     "@resvg/resvg-js": "^2.6.2",
+    "@types/qrcode": "^1.5.6",
     "axe-core": "^4.14.0",
     "puppeteer-core": "^25.17.0",
+    "qrcode": "^1.5.4",
     "satori": "^0.63.2",
     "vitest": "^5.1.0"
   }

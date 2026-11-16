@@ -82,7 +82,7 @@ for (const file of allFiles) {
   if (/\.(jpg|jpeg|png|webp|avif)$/i.test(file)) {
     const sizeKb = stat.size / 1024;
     // Allow up to 250 KB for icons/hero, 200 KB for all generated OG and asset cards
-    const limit = relPath.includes('favicon') ? 300 : 200;
+    const limit = relPath.includes('favicon') ? 300 : MAX_IMAGE_KB;
     if (sizeKb > limit) {
       console.error(`[BUDGET BREACH] Image ${relPath}: ${sizeKb.toFixed(2)} KB (Limit: ${limit} KB)`);
       violations++;

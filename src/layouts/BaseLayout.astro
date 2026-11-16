@@ -10,6 +10,7 @@ import Header from '../components/Header.astro';
 import StickyActionBar from '../components/StickyActionBar.astro';
 import FloatingWhatsApp from '../components/FloatingWhatsApp.astro';
 import Footer from '../components/Footer.astro';
+import { clinic } from '../data/clinic';
 
 interface BreadcrumbItem {
   name: string;
@@ -80,6 +81,13 @@ const currentPath = Astro.url.pathname;
       breadcrumbs={breadcrumbsJsonLd}
       faqs={faqsJsonLd}
       article={articleJsonLd}
+    />
+
+    <link
+      rel="alternate"
+      type="application/rss+xml"
+      title={`${clinic.name} Educational Blog RSS Feed`}
+      href="/rss.xml"
     />
 
     <!-- Remove no-js class immediately if JS is enabled -->

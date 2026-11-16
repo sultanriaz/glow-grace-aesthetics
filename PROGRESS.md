@@ -57,11 +57,11 @@
   - [x] Create `src/components/TestimonialGrid.astro`
   - [x] Test with temporary consented fixtures and verify empty state in production
 
-- [ ] **Phase G: Blog Collection & RSS Feed**
-  - [ ] 6 evergreen educational articles in `src/content/blog/` (600–800 words, British English)
-  - [ ] Create `src/pages/blog/index.astro`
-  - [ ] Create `src/pages/blog/[slug].astro` (auto TOC, Article schema, related services)
-  - [ ] Create `src/pages/rss.xml.ts` via `@astrojs/rss` & RSS `<link>` in `BaseLayout.astro`
+- [x] **Phase G: Blog Collection & RSS Feed**
+  - [x] 6 evergreen educational articles in `src/content/blog/` (600–800 words, British English)
+  - [x] Create `src/pages/blog/index.astro`
+  - [x] Create `src/pages/blog/[slug].astro` (auto TOC, Article schema, related services)
+  - [x] Create `src/pages/rss.xml.ts` via `@astrojs/rss` & RSS `<link>` in `BaseLayout.astro`
 
 - [ ] **Phase H: Integration, SEO, Performance & Quality Gates**
   - [ ] Update `Header.astro` & `Footer.astro`

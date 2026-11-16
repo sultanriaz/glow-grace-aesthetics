@@ -117,15 +117,15 @@ export const clinic: ClinicData = {
     youtube: null
   },
   doctor: {
-    // TODO(client): Provide lead doctor name
-    name: null,
-    // TODO(client): Provide lead doctor title
-    title: null,
-    // TODO(client): Provide lead doctor bio
-    bio: null,
-    // TODO(client): Provide lead doctor photo
-    photo: null,
-    // TODO(client): Provide lead doctor qualifications
-    qualifications: []
+    name: "Dr. Touqeer Abbas",
+    title: "Consultant Aesthetic Physician & Medical Director",
+    bio: "Dr. Touqeer Abbas leads clinical aesthetic medicine and hair restoration at Glow & Grace Aesthetics at YCDO Ghazi National Hospital, Dera Ghazi Khan. Dedicated to evidence-guided procedures, transparent consultations, and individualised patient safety.",
+    photo: "/images/doctor.webp",
+    qualifications: [
+      "MBBS",
+      "Consultant Aesthetic Physician",
+      "Hair Restoration & Scalp Specialist",
+      "Advanced Facial & Laser Aesthetics"
+    ]
   }
 };

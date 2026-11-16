@@ -5,9 +5,11 @@ import Icon from '../components/Icon.astro';
 import Button from '../components/Button.astro';
 import CtaBand from '../components/CtaBand.astro';
 import Breadcrumbs from '../components/Breadcrumbs.astro';
+import { Image } from 'astro:assets';
 import { clinic } from '../data/clinic';
-import { getClinicBookingWhatsAppLink } from '../utils/whatsapp';
+import { getClinicBookingWhatsAppLink, buildWhatsAppLink } from '../utils/whatsapp';
 import { getMapDirectionsUrl } from '../utils/maps';
+import doctorPhoto from '../assets/clinic/doctor.webp';
 
 const pageTitle = `About ${clinic.shortName} | Aesthetic Clinic DG Khan`;
 const pageDescription = `Learn about Glow & Grace Aesthetics in Dera Ghazi Khan. Our medical aesthetics philosophy, doctor-led patient care, and certified clinical standards.`;
@@ -115,10 +117,23 @@ const hasDoctorData = Boolean(clinic.doctor.name && clinic.doctor.title);
         <SectionHeading
           eyebrow="CLINICAL LEADERSHIP"
           title="Meet Our Medical Director"
-          description="Experienced clinical care dedicated to safe, personalised aesthetic medicine."
+          description="Experienced clinical care dedicated to safe, personalised aesthetic medicine in Dera Ghazi Khan."
         />
         <div class="doctor-card card-base fade-up-item">
+          <div class="doctor-photo-wrapper">
+            <Image
+              src={doctorPhoto}
+              alt={`${clinic.doctor.name} - ${clinic.doctor.title}`}
+              width={340}
+              height={440}
+              format="webp"
+              loading="lazy"
+              decoding="async"
+              class="doctor-photo"
+            />
+          </div>
           <div class="doctor-info">
+            <span class="doctor-eyebrow">MEDICAL DIRECTOR</span>
             <h3 class="doctor-name">{clinic.doctor.name}</h3>
             <p class="doctor-title">{clinic.doctor.title}</p>
             {clinic.doctor.bio && <p class="doctor-bio">{clinic.doctor.bio}</p>}
@@ -129,6 +144,19 @@ const hasDoctorData = Boolean(clinic.doctor.name && clinic.doctor.title);
                 ))}
               </ul>
             )}
+            <div class="doctor-action">
+              <Button
+                href={buildWhatsAppLink({ message: `Assalam o Alaikum! I would like to book a consultation with ${clinic.doctor.name} at ${clinic.name}.` })}
+                variant="primary"
+                size="md"
+                icon="whatsapp"
+                target="_blank"
+                data-track-event="whatsapp_click"
+                data-track-source="about_doctor_profile"
+              >
+                Book with Dr. Touqeer
+              </Button>
+            </div>
           </div>
         </div>
       </div>
@@ -287,16 +315,58 @@ const hasDoctorData = Boolean(clinic.doctor.name && clinic.doctor.title);
 
   /* Doctor card */
   .doctor-card {
-    max-width: 700px;
+    max-width: 860px;
     margin: 0 auto;
     padding: 2.5rem;
     background-color: var(--white);
-    border: 1px solid var(--sand-400);
+    border: 1px solid var(--sand-300);
+    border-radius: var(--radius-xl);
+    display: grid;
+    grid-template-columns: 280px 1fr;
+    gap: 2.5rem;
+    align-items: center;
+    box-shadow: 0 10px 30px rgba(3, 66, 47, 0.05);
+  }
+
+  @media (max-width: 768px) {
+    .doctor-card {
+      grid-template-columns: 1fr;
+      padding: 1.75rem;
+      gap: 1.75rem;
+      text-align: center;
+    }
+  }
+
+  .doctor-photo-wrapper {
+    position: relative;
     border-radius: var(--radius-lg);
+    overflow: hidden;
+    aspect-ratio: 3 / 4;
+    background-color: var(--green-50);
+    border: 2px solid var(--sand-200);
+    box-shadow: 0 8px 24px rgba(3, 66, 47, 0.08);
+  }
+
+  .doctor-photo {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center 20%;
+    display: block;
+  }
+
+  .doctor-eyebrow {
+    display: inline-block;
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    color: var(--sand-700);
+    text-transform: uppercase;
+    margin-bottom: 0.5rem;
   }
 
   .doctor-name {
-    font-size: 1.75rem;
+    font-size: 1.875rem;
     color: var(--green-900);
     margin-bottom: 0.25rem;
   }
@@ -305,13 +375,13 @@ const hasDoctorData = Boolean(clinic.doctor.name && clinic.doctor.title);
     font-size: 1rem;
     color: var(--green-700);
     font-weight: 500;
-    margin-bottom: 1rem;
+    margin-bottom: 1.25rem;
   }
 
   .doctor-bio {
-    font-size: 1rem;
+    font-size: 0.9375rem;
     color: var(--ink-700);
-    line-height: 1.6;
+    line-height: 1.65;
     margin-bottom: 1.5rem;
   }
 
@@ -320,6 +390,18 @@ const hasDoctorData = Boolean(clinic.doctor.name && clinic.doctor.title);
     flex-wrap: wrap;
     gap: 0.5rem;
     list-style: none;
+    padding: 0;
+    margin-bottom: 1.75rem;
+  }
+
+  @media (max-width: 768px) {
+    .doctor-quals {
+      justify-content: center;
+    }
+    .doctor-action {
+      display: flex;
+      justify-content: center;
+    }
   }
 
   .qual-badge {
@@ -328,7 +410,8 @@ const hasDoctorData = Boolean(clinic.doctor.name && clinic.doctor.title);
     color: var(--green-900);
     padding: 0.35rem 0.75rem;
     border-radius: var(--radius-full);
-    border: 1px solid var(--sand-100);
+    border: 1px solid var(--sand-200);
+    font-weight: 500;
   }
 
   /* Location Overview */

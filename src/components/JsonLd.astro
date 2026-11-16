@@ -70,7 +70,16 @@ const clinicSchema = {
       "opens": "10:00",
       "closes": "22:00"
     }
-  ]
+  ],
+  ...(clinic.doctor.name ? {
+    "medicalSpecialty": "Dermatology",
+    "employee": {
+      "@type": "Physician",
+      "name": clinic.doctor.name,
+      "jobTitle": clinic.doctor.title,
+      "image": `${siteUrl}${clinic.doctor.photo}`
+    }
+  } : {})
 };
 
 // WebSite Schema

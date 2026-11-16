@@ -1,0 +1,6 @@
+User-agent: *
+Allow: /
+Disallow: /developer/
+Disallow: /404/
+
+Sitemap: https://glow-grace-aesthetics.vercel.app/sitemap-index.xml

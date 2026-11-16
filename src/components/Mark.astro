@@ -1,0 +1,80 @@
+---
+interface Props {
+  size?: number | string;
+  class?: string;
+  id?: string;
+}
+
+const { size = 48, class: className = '', id } = Astro.props;
+---
+
+<svg
+  xmlns="http://www.w3.org/2000/svg"
+  viewBox="0 0 100 100"
+  width={size}
+  height={size}
+  class={`brand-mark ${className}`.trim()}
+  aria-hidden="true"
+  focusable="false"
+  id={id}
+>
+  <!-- Open Tapering Circular Arc (~300 degrees, thicker on left, tapering to upper right) -->
+  <path
+    d="M 68 20 C 40 10, 10 32, 12 60 C 14 84, 42 94, 68 88 C 76 86, 82 80, 84 72 C 84 70, 80 69, 79 72 C 73 80, 48 88, 24 76 C 14 70, 15 36, 44 22 C 58 16, 74 22, 78 28 C 79 30, 82 28, 80 25 C 77 22, 73 20, 68 20 Z"
+    fill="currentColor"
+    class="arc-path"
+  />
+
+  <!-- Sand Crescent near base -->
+  <path
+    d="M 46 74 C 54 74, 62 70, 66 63 C 62 67, 54 69, 46 68 C 42 67, 39 69, 41 71 C 42 73, 44 74, 46 74 Z"
+    fill="#E1BC8A"
+  />
+
+  <!-- Flowing Leaf Swoop 1 -->
+  <path
+    d="M 32 64 C 36 50, 48 42, 62 38 C 52 46, 46 56, 42 66 C 39 68, 32 68, 32 64 Z"
+    fill="#309E79"
+  />
+
+  <!-- Flowing Leaf Swoop 2 -->
+  <path
+    d="M 44 58 C 48 46, 58 40, 70 36 C 60 44, 56 52, 52 62 C 48 64, 44 62, 44 58 Z"
+    fill="#1F7A5A"
+    opacity="0.9"
+  />
+
+  <!-- Three-leaf sprig crown / crest -->
+  <!-- Center Leaf -->
+  <path
+    d="M 52 38 C 50 30, 54 22, 57 18 C 60 23, 62 30, 56 38 Z"
+    fill="#309E79"
+  />
+  <!-- Left Leaf -->
+  <path
+    d="M 50 35 C 44 31, 38 27, 40 22 C 45 23, 50 28, 52 34 Z"
+    fill="#1F7A5A"
+  />
+  <!-- Right Leaf -->
+  <path
+    d="M 56 35 C 62 31, 68 28, 68 23 C 64 24, 58 29, 54 34 Z"
+    fill="#309E79"
+  />
+
+  <!-- Tiny Accent Butterfly Silhouette / Outline -->
+  <path
+    d="M 78 40 C 76 38, 76 35, 79 34 C 82 33, 83 36, 81 38 C 84 39, 83 42, 80 42 C 78 42, 77 41, 78 40 Z"
+    fill="#DB9657"
+  />
+</svg>
+
+<style>
+  .brand-mark {
+    display: inline-block;
+    color: var(--green-900);
+    flex-shrink: 0;
+  }
+  .arc-path {
+    color: var(--green-900);
+  }
+</style>

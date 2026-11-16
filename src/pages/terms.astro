@@ -1,0 +1,126 @@
+---
+import LegalLayout, { type LegalSection } from '../layouts/LegalLayout.astro';
+import { clinic } from '../data/clinic';
+import { getClinicBookingWhatsAppLink, getClinicTelLink } from '../utils/whatsapp';
+
+const sections: LegalSection[] = [
+  { id: 'acceptance', title: '1. Acceptance of Terms' },
+  { id: 'informational-purpose', title: '2. Informational & Educational Scope' },
+  { id: 'booking-requests', title: '3. Appointment Requests & Confirmation Policy' },
+  { id: 'cancellation-payments', title: '4. Rescheduling, Cancellations & Payments' },
+  { id: 'intellectual-property', title: '5. Intellectual Property & Permitted Use' },
+  { id: 'external-links', title: '6. Third-Party Platforms & Links' },
+  { id: 'liability', title: '7. Disclaimer of Warranties & Limitation of Liability' },
+  { id: 'governing-law', title: '8. Governing Law & Jurisdiction' },
+  { id: 'contact', title: '9. Contact for Legal Notices' }
+];
+
+const lastUpdated = "16 November 2026";
+---
+
+<LegalLayout
+  title="Terms of Use"
+  description="Terms of Use governing the use of the Glow & Grace Aesthetics website, appointment enquiries, and medical educational content in DG Khan, Pakistan."
+  lastUpdated={lastUpdated}
+  sections={sections}
+  breadcrumbs={[{ label: 'Terms of Use' }]}
+>
+  <div class="legal-callout">
+    <div class="legal-callout-title">Important Notice</div>
+    <p>
+      By accessing this website, you acknowledge that all materials provided are for general educational purposes. Submitting a booking enquiry via WhatsApp does not create an immediate clinical appointment until confirmed directly by our clinic team.
+    </p>
+  </div>
+
+  <h2 id="acceptance">1. Acceptance of Terms</h2>
+  <p>
+    Welcome to the official website of <strong>{clinic.name}</strong> ("the Clinic", "we", "us", or "our"). These Terms of Use ("Terms") govern your access to and use of this website, including all content, pages, features, and digital enquiry forms hosted on this domain.
+  </p>
+  <p>
+    By browsing, accessing, or utilizing any portion of this website, you agree to be legally bound by these Terms and our companion <a href="/privacy/">Privacy Policy</a> and <a href="/medical-disclaimer/">Medical Disclaimer</a>. If you do not agree to these Terms, please discontinue use of the site.
+  </p>
+
+  <h2 id="informational-purpose">2. Informational & Educational Scope</h2>
+  <p>
+    The information published across this website—including treatment overviews, procedure descriptions, recovery timelines, FAQ answers, and educational blog posts—is prepared exclusively for general patient education and awareness.
+  </p>
+  <ul>
+    <li><strong>No Doctor-Patient Relationship:</strong> Browsing this website or communicating via preliminary website enquiry buttons does not establish a formal doctor-patient relationship.</li>
+    <li><strong>No Medical Diagnosis:</strong> Website content must never be construed as personalised medical advice, diagnostic evaluations, or prescribed courses of clinical treatment.</li>
+    <li><strong>Individual Clinical Evaluation:</strong> Suitability for any aesthetic or dermatological procedure can only be determined through an in-person clinical assessment by a qualified doctor at our facility.</li>
+  </ul>
+
+  <h2 id="booking-requests">3. Appointment Requests & Confirmation Policy</h2>
+  <p>
+    Our website provides convenient booking helpers that pre-fill appointment details for dispatch via WhatsApp.
+  </p>
+  <div class="legal-callout legal-callout-warning">
+    <div class="legal-callout-title">Enquiries Are Not Immediate Confirmations</div>
+    <p>
+      Dispatching an appointment request via WhatsApp or an online form <strong>does not</strong> automatically guarantee or confirm an appointment slot.
+    </p>
+  </div>
+  <p>
+    An appointment is formally confirmed only when:
+  </p>
+  <ol>
+    <li>Our reception staff reviews the request and confirms availability with our consulting doctor.</li>
+    <li>We send you an explicit confirmation message via WhatsApp or call you with your agreed date, time slot, and pre-consultation instructions.</li>
+  </ol>
+
+  <h2 id="cancellation-payments">4. Rescheduling, Cancellations & Payments</h2>
+  <p>
+    To ensure fair access to medical consultations for all patients in Southern Punjab, we maintain courteous scheduling protocols:
+  </p>
+  <ul>
+    <li><strong>Rescheduling & Cancellation Notice:</strong> If you are unable to attend your scheduled consultation or treatment session, please notify us at least 24 hours in advance via WhatsApp or phone so the slot may be offered to another patient.</li>
+    <li><strong>Zero Online Payments:</strong> This website does not process, request, or store credit card details, debit card numbers, or online payments. All consultation fees and procedural payments are settled directly in-person at the clinic reception.</li>
+    <li><strong>Fee Estimates:</strong> Any procedural fee ranges discussed in preliminary WhatsApp chats are preliminary estimates. Exact treatment pricing is determined solely after clinical examination based on individual requirements and treatment scope.</li>
+  </ul>
+
+  <h2 id="intellectual-property">5. Intellectual Property & Permitted Use</h2>
+  <p>
+    All content featured on this website—including text, layout designs, custom graphics, logos, icons, photographic illustrations, code, and compilations—is the intellectual property of {clinic.name} or used under valid licencing and attribution agreements.
+  </p>
+  <ul>
+    <li>You may view, download, and print pages for personal, non-commercial reference only.</li>
+    <li>No content from this website may be copied, scraped, reproduced, distributed, republished, or modified for commercial purposes without prior written consent from {clinic.name}.</li>
+  </ul>
+
+  <h2 id="external-links">6. Third-Party Platforms & Links</h2>
+  <p>
+    This website provides links to external services, including WhatsApp (Meta Platforms), Google Maps (Alphabet Inc.), and telecommunications diallers. These external services are operated independently:
+  </p>
+  <ul>
+    <li>We exercise no control over the privacy practices, uptime, or content of third-party platforms.</li>
+    <li>Following any link to an external provider is done at your own discretion and subject to that provider's respective terms and conditions.</li>
+  </ul>
+
+  <h2 id="liability">7. Disclaimer of Warranties & Limitation of Liability</h2>
+  <p>
+    This website and all information contained herein are provided on an "as is" and "as available" basis without warranties of any kind, whether express or implied.
+  </p>
+  <ul>
+    <li>We make reasonable efforts to maintain accurate, up-to-date educational information, but do not warrant that all content is free from typographical errors or reflects the most recent medical literature.</li>
+    <li>To the fullest extent permitted under Pakistani law, {clinic.name}, its medical practitioners, and technical developers shall not be liable for any direct, indirect, incidental, or consequential damages arising from website downtime, network transmission interruptions, or decisions made in reliance on website articles without an in-person medical consultation.</li>
+  </ul>
+
+  <h2 id="governing-law">8. Governing Law & Jurisdiction</h2>
+  <p>
+    These Terms of Use shall be governed by, construed, and enforced in accordance with the substantive laws of the <strong>Islamic Republic of Pakistan</strong>, including the Punjab Healthcare Commission Act 2010 and the Prevention of Electronic Crimes Act 2016.
+  </p>
+  <p>
+    Any legal disputes, controversies, or claims arising out of or related to the use of this website shall fall under the exclusive jurisdiction of the competent civil courts in <strong>Dera Ghazi Khan</strong> and the <strong>Lahore High Court</strong> (Multan Bench / Principal Seat).
+  </p>
+
+  <h2 id="contact">9. Contact for Legal Notices</h2>
+  <p>
+    For formal legal inquiries, copyright permissions, or terms clarification, please write to:
+  </p>
+  <ul>
+    <li><strong>Legal Entity:</strong> {clinic.name}</li>
+    <li><strong>Physical Address:</strong> {clinic.address.line1}, {clinic.address.line2}, {clinic.address.cityFull}, Punjab, Pakistan</li>
+    <li><strong>Telephone:</strong> <a href={getClinicTelLink()}>{clinic.phone.display}</a></li>
+    <li><strong>WhatsApp Desk:</strong> <a href={getClinicBookingWhatsAppLink()} target="_blank" rel="noopener noreferrer">Message Administration</a></li>
+  </ul>
+</LegalLayout>

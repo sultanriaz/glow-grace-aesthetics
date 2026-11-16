@@ -1,0 +1,575 @@
+---
+import BaseLayout from './BaseLayout.astro';
+import Breadcrumbs from '../components/Breadcrumbs.astro';
+import Icon from '../components/Icon.astro';
+import { clinic } from '../data/clinic';
+
+export interface LegalSection {
+  id: string;
+  title: string;
+}
+
+interface Props {
+  title: string;
+  description: string;
+  lastUpdated: string;
+  sections: LegalSection[];
+  breadcrumbs?: Array<{ label: string; href?: string }>;
+}
+
+const {
+  title,
+  description,
+  lastUpdated,
+  sections,
+  breadcrumbs = [{ label: title }]
+} = Astro.props;
+
+const canonicalUrl = Astro.url.href;
+---
+
+<BaseLayout
+  title={`${title} | ${clinic.name}`}
+  description={description}
+  canonical={canonicalUrl}
+>
+  <div class="legal-page-wrapper">
+    <!-- Breadcrumbs & Header -->
+    <header class="legal-header">
+      <div class="container">
+        <Breadcrumbs items={breadcrumbs} class="legal-breadcrumbs" />
+        <div class="legal-header-content">
+          <span class="legal-eyebrow">Legal & Clinical Transparency</span>
+          <h1 class="legal-title">{title}</h1>
+          <div class="legal-meta">
+            <span class="meta-item">
+              <Icon name="clock" size={14} class="meta-icon" />
+              <span>Last updated: <time datetime={lastUpdated}>{lastUpdated}</time></span>
+            </span>
+            <span class="meta-separator" aria-hidden="true">&bull;</span>
+            <span class="meta-item">
+              <Icon name="check-circle" size={14} class="meta-icon" />
+              <span>Jurisdiction: Punjab, Pakistan</span>
+            </span>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- Main Container -->
+    <div class="container legal-body-container">
+      <!-- Mobile Table of Contents Accordion -->
+      <nav class="mobile-toc-bar" aria-label="Table of contents">
+        <details class="mobile-toc-details">
+          <summary class="mobile-toc-summary">
+            <span class="toc-summary-text">
+              <Icon name="sparkles" size={15} />
+              <span>Table of Contents ({sections.length} sections)</span>
+            </span>
+            <Icon name="chevron-down" size={16} class="toc-chevron" />
+          </summary>
+          <ol class="mobile-toc-list" role="list">
+            {sections.map((sec, idx) => (
+              <li>
+                <a href={`#${sec.id}`} class="mobile-toc-link">
+                  <span class="toc-num">{String(idx + 1).padStart(2, '0')}.</span>
+                  <span>{sec.title}</span>
+                </a>
+              </li>
+            ))}
+          </ol>
+        </details>
+      </nav>
+
+      <div class="legal-grid">
+        <!-- Desktop Sticky Sidebar TOC -->
+        <aside class="desktop-toc-aside" aria-label="Table of contents">
+          <div class="desktop-toc-sticky card-base">
+            <h2 class="desktop-toc-heading">On This Page</h2>
+            <nav>
+              <ol class="desktop-toc-list" role="list">
+                {sections.map((sec, idx) => (
+                  <li class="desktop-toc-item">
+                    <a href={`#${sec.id}`} class="desktop-toc-link">
+                      <span class="toc-num">{String(idx + 1).padStart(2, '0')}</span>
+                      <span class="toc-text">{sec.title}</span>
+                    </a>
+                  </li>
+                ))}
+              </ol>
+            </nav>
+            <div class="toc-aside-footer">
+              <p class="toc-note">
+                Need immediate assistance? Call <a href={`tel:${clinic.phone.e164}`}>{clinic.phone.display}</a>
+              </p>
+            </div>
+          </div>
+        </aside>
+
+        <!-- Main Legal Content Prose -->
+        <article class="legal-article card-base">
+          <slot />
+        </article>
+      </div>
+    </div>
+  </div>
+</BaseLayout>
+
+<style>
+  .legal-page-wrapper {
+    background-color: var(--cream-100);
+    padding-bottom: clamp(60px, 8vw, 100px);
+  }
+
+  .legal-header {
+    background: linear-gradient(180deg, var(--green-900) 0%, var(--green-800) 100%);
+    color: var(--cream-50);
+    padding-top: clamp(28px, 4vw, 44px);
+    padding-bottom: clamp(40px, 6vw, 64px);
+    border-bottom: 2px solid var(--sand-400);
+  }
+
+  .legal-breadcrumbs {
+    margin-bottom: 1.5rem;
+  }
+
+  :global(.legal-breadcrumbs .breadcrumb-link),
+  :global(.legal-breadcrumbs .breadcrumb-current),
+  :global(.legal-breadcrumbs .breadcrumb-separator) {
+    color: var(--sand-300);
+  }
+
+  :global(.legal-breadcrumbs .breadcrumb-link:hover) {
+    color: var(--sand-100);
+  }
+
+  .legal-header-content {
+    max-width: 800px;
+  }
+
+  .legal-eyebrow {
+    display: inline-block;
+    font-size: var(--text-xs);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--sand-400);
+    margin-bottom: 0.75rem;
+  }
+
+  .legal-title {
+    font-family: var(--font-heading);
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: 600;
+    line-height: 1.15;
+    color: var(--cream-50);
+    margin: 0 0 1rem;
+  }
+
+  .legal-meta {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.75rem;
+    font-size: var(--text-sm);
+    color: var(--sand-300);
+  }
+
+  .meta-item {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+  }
+
+  .meta-icon {
+    color: var(--sand-400);
+  }
+
+  .meta-separator {
+    color: var(--sand-600);
+  }
+
+  /* Body Container & Grid */
+  .legal-body-container {
+    margin-top: -24px;
+    position: relative;
+    z-index: 5;
+  }
+
+  /* Mobile TOC */
+  .mobile-toc-bar {
+    display: block;
+    margin-bottom: 1.5rem;
+  }
+
+  .mobile-toc-details {
+    background: var(--surface-card);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-sm);
+    overflow: hidden;
+  }
+
+  .mobile-toc-summary {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.875rem 1.25rem;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: var(--text-sm);
+    color: var(--green-900);
+    user-select: none;
+    list-style: none;
+  }
+
+  .mobile-toc-summary::-webkit-details-marker {
+    display: none;
+  }
+
+  .toc-summary-text {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: var(--green-900);
+  }
+
+  .toc-chevron {
+    color: var(--sand-600);
+    transition: transform var(--transition-fast);
+  }
+
+  .mobile-toc-details[open] .toc-chevron {
+    transform: rotate(180deg);
+  }
+
+  .mobile-toc-list {
+    padding: 0.75rem 1.25rem 1.25rem;
+    margin: 0;
+    list-style: none;
+    border-top: 1px solid var(--border-subtle);
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .mobile-toc-link {
+    display: flex;
+    align-items: baseline;
+    gap: 0.5rem;
+    font-size: var(--text-sm);
+    color: var(--text-muted);
+    text-decoration: none;
+    padding: 0.25rem 0;
+    transition: color var(--transition-fast);
+  }
+
+  .mobile-toc-link:hover {
+    color: var(--green-900);
+  }
+
+  /* Desktop Grid */
+  .legal-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+
+  @media (min-width: 1024px) {
+    .mobile-toc-bar {
+      display: none;
+    }
+
+    .legal-grid {
+      grid-template-columns: 280px 1fr;
+      align-items: start;
+      gap: 3rem;
+    }
+  }
+
+  /* Desktop TOC Aside */
+  .desktop-toc-aside {
+    display: none;
+  }
+
+  @media (min-width: 1024px) {
+    .desktop-toc-aside {
+      display: block;
+    }
+  }
+
+  .desktop-toc-sticky {
+    position: sticky;
+    top: 96px;
+    padding: 1.5rem;
+    background: var(--surface-card);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-sm);
+  }
+
+  .desktop-toc-heading {
+    font-family: var(--font-heading);
+    font-size: var(--text-lg);
+    font-weight: 600;
+    color: var(--green-900);
+    margin: 0 0 1rem;
+    padding-bottom: 0.75rem;
+    border-bottom: 1px solid var(--border-subtle);
+  }
+
+  .desktop-toc-list {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .desktop-toc-item {
+    margin: 0;
+  }
+
+  .desktop-toc-link {
+    display: flex;
+    align-items: baseline;
+    gap: 0.65rem;
+    font-size: var(--text-sm);
+    color: var(--text-muted);
+    text-decoration: none;
+    line-height: 1.4;
+    padding: 0.35rem 0.5rem;
+    border-radius: var(--radius-sm);
+    transition: all var(--transition-fast);
+  }
+
+  .desktop-toc-link:hover {
+    color: var(--green-900);
+    background: var(--cream-200);
+  }
+
+  .toc-num {
+    font-family: monospace;
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: var(--sand-600);
+  }
+
+  .toc-text {
+    flex: 1;
+  }
+
+  .toc-aside-footer {
+    margin-top: 1.5rem;
+    padding-top: 1rem;
+    border-top: 1px solid var(--border-subtle);
+  }
+
+  .toc-note {
+    font-size: var(--text-xs);
+    color: var(--text-muted);
+    margin: 0;
+    line-height: 1.5;
+  }
+
+  .toc-note a {
+    color: var(--green-800);
+    font-weight: 600;
+    text-decoration: underline;
+  }
+
+  /* Article Prose Styling */
+  .legal-article {
+    background: var(--surface-card);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-xl);
+    padding: clamp(1.5rem, 4vw, 3rem);
+    box-shadow: var(--shadow-sm);
+    max-width: 740px;
+  }
+
+  :global(.legal-article h2) {
+    font-family: var(--font-heading);
+    font-size: clamp(1.4rem, 2.5vw, 1.85rem);
+    font-weight: 600;
+    color: var(--green-900);
+    margin-top: 2.5rem;
+    margin-bottom: 1rem;
+    padding-top: 1rem;
+    border-top: 1px solid var(--border-subtle);
+    scroll-margin-top: 100px;
+  }
+
+  :global(.legal-article h2:first-of-type) {
+    margin-top: 0;
+    padding-top: 0;
+    border-top: none;
+  }
+
+  :global(.legal-article h3) {
+    font-family: var(--font-heading);
+    font-size: var(--text-lg);
+    font-weight: 600;
+    color: var(--green-800);
+    margin-top: 1.75rem;
+    margin-bottom: 0.5rem;
+  }
+
+  :global(.legal-article p) {
+    font-size: var(--text-base);
+    line-height: 1.75;
+    color: var(--text-main);
+    margin-top: 0;
+    margin-bottom: 1.25rem;
+  }
+
+  :global(.legal-article ul),
+  :global(.legal-article ol) {
+    margin-top: 0;
+    margin-bottom: 1.5rem;
+    padding-left: 1.5rem;
+  }
+
+  :global(.legal-article li) {
+    font-size: var(--text-base);
+    line-height: 1.7;
+    color: var(--text-main);
+    margin-bottom: 0.5rem;
+  }
+
+  :global(.legal-article strong) {
+    color: var(--green-950);
+    font-weight: 600;
+  }
+
+  :global(.legal-article a) {
+    color: var(--green-850);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+
+  :global(.legal-article a:hover) {
+    color: var(--green-950);
+  }
+
+  :global(.legal-callout) {
+    background: var(--cream-100);
+    border-left: 4px solid var(--sand-500);
+    padding: 1.25rem 1.5rem;
+    border-radius: 0 var(--radius-md) var(--radius-md) 0;
+    margin: 1.5rem 0;
+  }
+
+  :global(.legal-callout-warning) {
+    background: #fff8f5;
+    border-left-color: #c05621;
+  }
+
+  :global(.legal-callout-title) {
+    font-weight: 700;
+    font-size: var(--text-sm);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--green-900);
+    margin-bottom: 0.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  :global(.legal-callout p:last-child) {
+    margin-bottom: 0;
+  }
+
+  :global(.legal-table-wrapper) {
+    overflow-x: auto;
+    margin: 1.5rem 0;
+  }
+
+  :global(.legal-table) {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: var(--text-sm);
+    text-align: left;
+  }
+
+  :global(.legal-table th),
+  :global(.legal-table td) {
+    padding: 0.75rem 1rem;
+    border: 1px solid var(--border-subtle);
+  }
+
+  :global(.legal-table th) {
+    background: var(--cream-200);
+    color: var(--green-950);
+    font-weight: 600;
+  }
+
+  /* Printable Styling */
+  @media print {
+    :global(header),
+    :global(footer),
+    :global(.site-header),
+    :global(.site-footer),
+    :global(.announcement-bar),
+    :global(.sticky-action-bar),
+    :global(.floating-whatsapp),
+    .desktop-toc-aside,
+    .mobile-toc-bar,
+    .legal-breadcrumbs {
+      display: none !important;
+    }
+
+    .legal-page-wrapper {
+      background: white !important;
+      padding: 0 !important;
+    }
+
+    .legal-header {
+      background: transparent !important;
+      color: black !important;
+      border-bottom: 2px solid black !important;
+      padding: 0 0 1rem 0 !important;
+    }
+
+    .legal-title {
+      color: black !important;
+      font-size: 24pt !important;
+    }
+
+    .legal-meta {
+      color: #333 !important;
+    }
+
+    .legal-body-container {
+      margin-top: 1rem !important;
+      max-width: 100% !important;
+      padding: 0 !important;
+    }
+
+    .legal-grid {
+      display: block !important;
+    }
+
+    .legal-article {
+      box-shadow: none !important;
+      border: none !important;
+      padding: 0 !important;
+      max-width: 100% !important;
+    }
+
+    :global(.legal-article h2) {
+      page-break-after: avoid;
+      color: black !important;
+      border-top: 1px solid #ccc !important;
+    }
+
+    :global(.legal-article p),
+    :global(.legal-article li) {
+      color: black !important;
+      font-size: 11pt !important;
+      line-height: 1.5 !important;
+    }
+  }
+</style>

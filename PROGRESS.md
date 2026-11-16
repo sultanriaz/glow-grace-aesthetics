@@ -100,12 +100,12 @@
   - [x] Build upgraded `/developer/` page (Hero, About, Selected Work, Skills, Portfolio Preview, About This Website, CTA)
   - [x] Verify robots `noindex`, sitemap exclusion, developer phone isolation (923229781129)
 
-- [ ] **Phase B: Legal Pages (/privacy/, /terms/, /medical-disclaimer/)**
-  - [ ] Create `src/data/site.ts` with real configuration flags
-  - [ ] Create `LegalLayout.astro` (readable measure, auto table of contents, "Last updated")
-  - [ ] Write Privacy Policy (`/privacy/`), Terms of Use (`/terms/`), Medical Disclaimer (`/medical-disclaimer/`)
-  - [ ] Link legal pages in footer and relevant form disclaimers; add to sitemap
-  - [ ] Update claims allowlist for negated guarantee phrases on legal pages
+- [x] **Phase B: Legal Pages (/privacy/, /terms/, /medical-disclaimer/)**
+  - [x] Create `src/data/site.ts` with real configuration flags
+  - [x] Create `LegalLayout.astro` (readable measure, auto table of contents, "Last updated")
+  - [x] Write Privacy Policy (`/privacy/`), Terms of Use (`/terms/`), Medical Disclaimer (`/medical-disclaimer/`)
+  - [x] Link legal pages in footer and relevant form disclaimers; add to sitemap
+  - [x] Update claims allowlist for negated guarantee phrases on legal pages
 
 - [ ] **Phase C: Privacy-Friendly Analytics (Off by Default)**
   - [ ] Install `@vercel/analytics`

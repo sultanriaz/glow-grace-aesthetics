@@ -117,6 +117,13 @@ const currentYear = new Date().getFullYear();
       <p class="copyright-text">
         &copy; {currentYear} {clinic.name}. All rights reserved.
       </p>
+      <nav class="footer-legal-links" aria-label="Legal and privacy links">
+        <a href="/privacy/" class="footer-legal-link">Privacy Policy</a>
+        <span class="legal-dot" aria-hidden="true">&bull;</span>
+        <a href="/terms/" class="footer-legal-link">Terms of Use</a>
+        <span class="legal-dot" aria-hidden="true">&bull;</span>
+        <a href="/medical-disclaimer/" class="footer-legal-link">Medical Disclaimer</a>
+      </nav>
       <div class="footer-attribution">
         <a href="/developer/" class="developer-credit-link">
           {developer.attributionText}
@@ -299,6 +306,30 @@ const currentYear = new Date().getFullYear();
 
   .copyright-text {
     margin: 0;
+  }
+
+  .footer-legal-links {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+  }
+
+  .footer-legal-link {
+    color: var(--sand-200);
+    text-decoration: none;
+    transition: color var(--transition-fast);
+  }
+
+  .footer-legal-link:hover {
+    color: var(--white);
+    text-decoration: underline;
+  }
+
+  .legal-dot {
+    color: var(--sand-600);
+    font-size: 0.75rem;
   }
 
   .developer-credit-link {

@@ -1,0 +1,179 @@
+---
+import LegalLayout, { type LegalSection } from '../layouts/LegalLayout.astro';
+import { clinic } from '../data/clinic';
+import { siteConfig } from '../data/site';
+import { getClinicBookingWhatsAppLink, getClinicTelLink } from '../utils/whatsapp';
+
+const sections: LegalSection[] = [
+  { id: 'scope', title: '1. Scope of This Policy' },
+  { id: 'direct-collection', title: '2. What This Website Collects Directly' },
+  { id: 'third-parties', title: '3. Third-Party Infrastructure & External Links' },
+  { id: 'clinical-data', title: '4. Clinical Consultations & Patient Confidentiality' },
+  { id: 'patient-rights', title: '5. Patient & Visitor Rights Under Pakistani Law' },
+  { id: 'security-retention', title: '6. Data Security & Retention' },
+  { id: 'updates', title: '7. Policy Revisions' },
+  { id: 'contact', title: '8. Privacy Enquiries & Contact Details' }
+];
+
+const lastUpdated = "16 November 2026";
+---
+
+<LegalLayout
+  title="Privacy Policy"
+  description="Privacy Policy for Glow & Grace Aesthetics in DG Khan, Pakistan. Explaining how we protect patient privacy, our zero-cookie website, and data handling standards."
+  lastUpdated={lastUpdated}
+  sections={sections}
+  breadcrumbs={[{ label: 'Privacy Policy' }]}
+>
+  <div class="legal-callout">
+    <div class="legal-callout-title">Summary: Privacy First by Design</div>
+    <p>
+      This website does not set cookies, does not use persistent local storage, does not profile visitors, and does not sell or share personal data. When you submit an appointment enquiry, you are transferred directly to WhatsApp where end-to-end encryption protects your conversation.
+    </p>
+  </div>
+
+  <h2 id="scope">1. Scope of This Policy</h2>
+  <p>
+    This Privacy Policy explains how <strong>{clinic.name}</strong> ("we", "us", or "our") manages information collected through this informational website (hosted at this web domain) and when you interact with us via telephone or WhatsApp.
+  </p>
+  <p>
+    Our aesthetic medical practice operates in Dera Ghazi Khan, Punjab, Pakistan, under the regulatory framework of the <strong>Punjab Healthcare Commission (PHC) Act 2010</strong>, the <strong>Pakistan Medical and Dental Council (PMDC) Code of Ethics</strong>, and the <strong>Prevention of Electronic Crimes Act (PECA) 2016</strong>, alongside applicable national personal data protection principles.
+  </p>
+  <p>
+    This policy applies to:
+  </p>
+  <ul>
+    <li>Visitors browsing this website.</li>
+    <li>Individuals initiating appointment enquiries via our static WhatsApp helpers or telephone numbers.</li>
+    <li>Prospective patients seeking educational information about aesthetic medical procedures.</li>
+  </ul>
+
+  <h2 id="direct-collection">2. What This Website Collects Directly</h2>
+  <p>
+    <strong>Direct collection status: Zero ({siteConfig.cookies} cookies).</strong>
+  </p>
+  <p>
+    Unlike conventional commercial websites, this website does not maintain a backend user database, does not offer account logins, does not run behavioural advertising pixels, and does not install tracking cookies on your device.
+  </p>
+  <div class="legal-table-wrapper">
+    <table class="legal-table">
+      <thead>
+        <tr>
+          <th>Website Technology</th>
+          <th>Implementation Status</th>
+          <th>Purpose & Details</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Cookies</strong></td>
+          <td>None ({siteConfig.cookies})</td>
+          <td>Zero first-party or third-party cookies are set on page load.</td>
+        </tr>
+        <tr>
+          <td><strong>Local Storage / Session Storage</strong></td>
+          <td>None</td>
+          <td>No personal identifiers or browser states are retained in client storage.</td>
+        </tr>
+        <tr>
+          <td><strong>Web Forms</strong></td>
+          <td>{siteConfig.forms}</td>
+          <td>Form inputs construct a WhatsApp message URL directly on your device. No data is stored on our web server.</td>
+        </tr>
+        <tr>
+          <td><strong>Analytics</strong></td>
+          <td>Privacy-friendly ({siteConfig.analyticsProvider})</td>
+          <td>No IP tracking, cross-site profiling, or personal identification. Honours Global Privacy Control (GPC) and Do-Not-Track signals.</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h2 id="third-parties">3. Third-Party Infrastructure & External Links</h2>
+  <p>
+    To serve fast, secure static web pages to patients across Pakistan, we work with select infrastructure and communication providers:
+  </p>
+
+  <h3>A. Website Hosting (Vercel Inc.)</h3>
+  <p>
+    Our website is deployed on <strong>{siteConfig.hosting}</strong>'s global edge network. When your browser requests a web page, Vercel automatically processes transient server request logs containing standard technical headers: your IP address, browser user-agent, operating system, and the requested URL. These operational logs are processed solely to deliver page content, mitigate DDoS attacks, and diagnose infrastructure faults in accordance with Vercel's standard security policies.
+  </p>
+
+  <h3>B. WhatsApp & Meta Platforms</h3>
+  <p>
+    Our appointment booking helpers and consultation links direct you to WhatsApp (operated by Meta Platforms, Inc.). When you click a WhatsApp link:
+  </p>
+  <ul>
+    <li>You leave our website and transition to your local WhatsApp application or WhatsApp Web.</li>
+    <li>Communications sent over WhatsApp are protected by WhatsApp's end-to-end encryption.</li>
+    <li>Your phone number and display profile become visible to our clinic team once you choose to send your message.</li>
+    <li>Your interactions inside WhatsApp are subject to WhatsApp's Terms of Service and Privacy Policy.</li>
+  </ul>
+
+  <h3>C. Interactive Location Maps (Google Maps)</h3>
+  <p>
+    To protect your privacy while you read clinic directions, Google Maps does not load automatically. An interactive Google Map iframe is embedded <em>only if</em> you explicitly click the "Load interactive map" button on our Contact or Location section. Until that explicit click occurs, zero assets, scripts, or cookies are loaded from Google servers. Once loaded, Google's Privacy Policy applies.
+  </p>
+
+  <h3>D. Telephone Calls</h3>
+  <p>
+    When you call our direct clinic telephone number (<a href={getClinicTelLink()}>{clinic.phone.display}</a>), standard cellular telecommunications records are maintained by your and our telecom service providers in accordance with Pakistan Telecommunication Authority (PTA) regulations.
+  </p>
+
+  <h2 id="clinical-data">4. Clinical Consultations & Patient Confidentiality</h2>
+  <p>
+    <strong>This website is not an Electronic Medical Record (EMR) or electronic health records repository.</strong>
+  </p>
+  <p>
+    No clinical records, laboratory findings, diagnostic photos, or medical treatment histories are uploaded to, stored on, or processed by this website.
+  </p>
+  <ul>
+    <li>
+      <strong>Doctor-Patient Confidentiality:</strong> All medical consultations, clinical histories, clinical examinations, and treatment plans occur confidentially either in-person at our clinic in Dera Ghazi Khan or through direct direct practitioner communications.
+    </li>
+    <li>
+      <strong>Regulatory Compliance:</strong> In-clinic medical files are kept strictly confidential by our medical personnel pursuant to the PMDC Code of Ethics, the PHC Minimum Service Delivery Standards (MSDS), and Pakistani medical confidentiality standards.
+    </li>
+    <li>
+      <strong>No Automated Prescriptions:</strong> Automated website forms do not generate medical prescriptions, diagnoses, or clinical opinions. All formal treatment decisions require assessment by a qualified doctor.
+    </li>
+  </ul>
+
+  <h2 id="patient-rights">5. Patient & Visitor Rights Under Pakistani Law</h2>
+  <p>
+    In alignment with established consumer protection laws, constitutional privacy protections, and recognized data governance principles in Pakistan, you have the right to:
+  </p>
+  <ul>
+    <li><strong>Right of Access:</strong> Request confirmation of whether we hold personal communications (e.g. WhatsApp conversation history or in-clinic appointment logs).</li>
+    <li><strong>Right of Rectification:</strong> Request correction of inaccurate contact numbers or spelling of your name in our clinic appointment register.</li>
+    <li><strong>Right of Erasure:</strong> Request deletion of your contact number from appointment reminder lists, subject to mandatory medical record retention periods prescribed by the Punjab Healthcare Commission.</li>
+    <li><strong>Right to Withdraw Consent:</strong> Opt out of future clinic announcements or reminders at any time by messaging "STOP" on WhatsApp or informing our clinic reception.</li>
+  </ul>
+
+  <h2 id="security-retention">6. Data Security & Retention</h2>
+  <p>
+    We implement practical, sensible safeguards to protect your personal communication:
+  </p>
+  <ul>
+    <li>The website is served exclusively over authenticated HTTPS with modern Transport Layer Security (TLS) encryption.</li>
+    <li>Clinic communications devices are password-protected and restricted to authorized reception and medical staff.</li>
+    <li>Appointment enquiry messages on WhatsApp that do not culminate in a clinical consultation are purged periodically.</li>
+  </ul>
+
+  <h2 id="updates">7. Policy Revisions</h2>
+  <p>
+    We may periodically update this Privacy Policy to reflect modifications in our operational procedures, technical infrastructure, or applicable laws in Pakistan. Any revisions will be published on this page with an updated "Last updated" date.
+  </p>
+
+  <h2 id="contact">8. Privacy Enquiries & Contact Details</h2>
+  <p>
+    If you have any questions regarding this Privacy Policy or wish to exercise your data rights, please contact our clinic management:
+  </p>
+  <ul>
+    <li><strong>Clinic Name:</strong> {clinic.name}</li>
+    <li><strong>Address:</strong> {clinic.address.line1}, {clinic.address.line2}, {clinic.address.cityFull}, {clinic.address.region}, {clinic.address.country}</li>
+    <li><strong>Telephone:</strong> <a href={getClinicTelLink()}>{clinic.phone.display}</a></li>
+    <li><strong>WhatsApp:</strong> <a href={getClinicBookingWhatsAppLink()} target="_blank" rel="noopener noreferrer">Message our clinic team</a></li>
+    <li><strong>Email Enquiry:</strong> privacy@glowgraceaesthetics.pk (TODO: Client email verification)</li>
+  </ul>
+</LegalLayout>

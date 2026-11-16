@@ -1,8 +1,18 @@
 {
   "allowedSnippets": [
-    "Permanent Hair Reduction"
+    "Permanent Hair Reduction",
+    "No procedure guarantees",
+    "does not guarantee",
+    "cannot guarantee",
+    "neither guarantees nor implies",
+    "guarantees identical",
+    "without any guarantee",
+    "no guarantee"
   ],
   "allowedFiles": [
-    "scripts/check-claims.mjs"
+    "scripts/check-claims.mjs",
+    "src/pages/privacy.astro",
+    "src/pages/terms.astro",
+    "src/pages/medical-disclaimer.astro"
   ]
 }

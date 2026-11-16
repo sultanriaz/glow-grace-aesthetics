@@ -1,0 +1,112 @@
+---
+import LegalLayout, { type LegalSection } from '../layouts/LegalLayout.astro';
+import { clinic } from '../data/clinic';
+import { getClinicTelLink } from '../utils/whatsapp';
+
+const sections: LegalSection[] = [
+  { id: 'not-medical-advice', title: '1. Not Medical Advice (Educational Purpose)' },
+  { id: 'emergency-warning', title: '2. Urgent Medical Situations & Emergency Notice' },
+  { id: 'in-person-consultation', title: '3. Mandatory In-Person Clinical Assessment' },
+  { id: 'individual-outcomes', title: '4. Individual Results, Variations & No Guarantees' },
+  { id: 'procedural-risks', title: '5. Inherent Procedural Risks & Downtime' },
+  { id: 'practitioner-standards', title: '6. Qualified Practitioner Standards & PHC Compliance' },
+  { id: 'off-label-therapies', title: '7. Off-Label Indications & Informed Consent' },
+  { id: 'adherence-aftercare', title: '8. Post-Procedure Care & Patient Responsibility' }
+];
+
+const lastUpdated = "16 November 2026";
+---
+
+<LegalLayout
+  title="Medical Disclaimer"
+  description="Medical Disclaimer for Glow & Grace Aesthetics. Important clinical notice regarding aesthetic procedures, mandatory doctor consultations, and health safety."
+  lastUpdated={lastUpdated}
+  sections={sections}
+  breadcrumbs={[{ label: 'Medical Disclaimer' }]}
+>
+  <div class="legal-callout legal-callout-warning">
+    <div class="legal-callout-title">
+      Emergency Notice: Not an Emergency Medical Centre
+    </div>
+    <p>
+      <strong>Glow & Grace Aesthetics is an outpatient, elective medical aesthetics clinic. We do NOT provide 24-hour trauma or emergency medical services.</strong>
+    </p>
+    <p>
+      If you are experiencing severe acute pain, an immediate allergic reaction (anaphylaxis), sudden facial swelling, breathing difficulties, or any other life-threatening medical emergency, call <strong>{clinic.emergency.label} ({clinic.emergency.number})</strong> immediately or report to the nearest hospital emergency department, such as the <strong>DHQ Teaching Hospital Dera Ghazi Khan</strong>.
+    </p>
+  </div>
+
+  <h2 id="not-medical-advice">1. Not Medical Advice (Educational Purpose)</h2>
+  <p>
+    The information published on this website—including all service descriptions, clinical explanations, pre- and post-procedure guidelines, FAQs, and educational blog articles—is prepared exclusively for general patient educational awareness.
+  </p>
+  <ul>
+    <li>The content provided herein does not constitute medical diagnosis, personalized medical advice, or a treatment plan.</li>
+    <li>Reading this website or using our WhatsApp appointment enquiry form does not establish a doctor-patient relationship.</li>
+    <li>Never disregard professional medical advice from your physician or delay seeking medical attention because of something you have read on this website.</li>
+  </ul>
+
+  <h2 id="emergency-warning">2. Urgent Medical Situations & Emergency Notice</h2>
+  <p>
+    Aesthetic and dermatological interventions are planned elective procedures. If you have undergone a procedure and experience unexpected post-treatment complications (such as persistent blanching, dusky discoloration of the skin, severe unexpected pain, or spreading infection), contact our clinic immediately via telephone at <a href={getClinicTelLink()}>{clinic.phone.display}</a> during clinic hours, or proceed directly to an emergency medical facility after hours.
+  </p>
+
+  <h2 id="in-person-consultation">3. Mandatory In-Person Clinical Assessment</h2>
+  <p>
+    Aesthetic medicine is a specialized clinical discipline that demands direct physical examination. No medical procedure at {clinic.name} is scheduled or administered without a preceding in-person medical evaluation.
+  </p>
+  <p>
+    During your consultation at our clinic:
+  </p>
+  <ul>
+    <li>A qualified medical practitioner evaluates your specific skin type (Fitzpatrick scale), facial anatomy, medical history, allergies, and current medications.</li>
+    <li>Underlying dermatological or systemic conditions (such as hormonal imbalances, active skin infections, or autoimmune disorders) are identified to confirm procedure suitability.</li>
+    <li>Alternative therapeutic approaches, realistic clinical expectations, procedural risks, and recovery timelines are discussed in detail.</li>
+  </ul>
+
+  <h2 id="individual-outcomes">4. Individual Results, Variations & No Guarantees</h2>
+  <p>
+    Human biology exhibits natural variability in healing, collagen synthesis, melanin reactivity, and anatomical response.
+  </p>
+  <ul>
+    <li><strong>Individual Outcomes:</strong> Results vary substantially from patient to patient depending on age, genetics, hormonal health, lifestyle factors, baseline skin condition, and adherence to aftercare protocols.</li>
+    <li><strong>No Identical Outcomes:</strong> No procedure guarantees identical results to reference photographs, illustrative diagrams, or results experienced by other individuals.</li>
+    <li><strong>Progressive Improvement:</strong> Most non-surgical aesthetic treatments (such as microneedling, chemical peels, PRP therapy, and laser sessions) require a series of planned sessions over several weeks or months to achieve optimal physiological benefits.</li>
+  </ul>
+
+  <h2 id="procedural-risks">5. Inherent Procedural Risks & Downtime</h2>
+  <p>
+    Every clinical intervention carries potential risks, transient side effects, and periods of recovery ("downtime").
+  </p>
+  <ul>
+    <li>Common temporary effects include mild erythema (redness), localized oedema (swelling), temporary bruising, dryness, minor peeling, or transient pinpoint crusting.</li>
+    <li>Rare complications may include post-inflammatory hyperpigmentation (PIH), infection, superficial scarring, or allergic reactions.</li>
+    <li>Prior to any procedure, your doctor will discuss these specific considerations and obtain your formal written informed consent.</li>
+  </ul>
+
+  <h2 id="practitioner-standards">6. Qualified Practitioner Standards & PHC Compliance</h2>
+  <p>
+    At {clinic.name}, all aesthetic and dermatological interventions are performed or directly supervised by qualified medical practitioners who comply with the standards established by the <strong>Punjab Healthcare Commission (PHC)</strong> and the <strong>Pakistan Medical and Dental Council (PMDC)</strong>.
+  </p>
+  <p>
+    We utilize sterilized, clinical-grade instrumentation, professional aesthetic devices, and authenticated consumables stored under controlled conditions to prioritize patient safety above all else.
+  </p>
+
+  <h2 id="off-label-therapies">7. Off-Label Indications & Informed Consent</h2>
+  <p>
+    In contemporary dermatology and aesthetic medicine worldwide, certain recognized medications and modalities may be administered for evidence-based off-label clinical indications where proven scientific literature supports efficacy and safety.
+  </p>
+  <p>
+    Where an off-label therapeutic modality is recommended for your specific skin or hair concern, the consulting practitioner will explicitly explain the rationale, expected benefits, and alternatives so you can make a fully informed decision.
+  </p>
+
+  <h2 id="adherence-aftercare">8. Post-Procedure Care & Patient Responsibility</h2>
+  <p>
+    Clinical outcomes depend significantly on conscientious adherence to post-procedure instructions:
+  </p>
+  <ul>
+    <li>Strict sun protection (applying broad-spectrum SPF 50+ sunscreen, wearing wide-brimmed hats, avoiding peak ultraviolet exposure) is mandatory following peels, lasers, and microneedling to minimize the risk of pigmentation changes.</li>
+    <li>Avoid picking, scratching, applying unprescribed home remedies, or using harsh chemical exfoliants during the recommended healing window.</li>
+    <li>Attend scheduled follow-up appointments so your doctor can assess tissue healing and tailor subsequent stages of your personalized care plan.</li>
+  </ul>
+</LegalLayout>

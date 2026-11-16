@@ -25,10 +25,23 @@ export interface ClinicSocial {
   youtube: string | null;
 }
 
+export interface ClinicRegistration {
+  pmdc: string | null;
+  phc: string | null;
+}
+
+export interface ClinicEmergency {
+  label: string;
+  number: string;
+}
+
 export interface ClinicData {
   name: string;
   shortName: string;
   tagline: string;
+  legalName: string | null;
+  registration: ClinicRegistration;
+  emergency: ClinicEmergency;
   address: {
     line1: string;
     line2: string;
@@ -53,6 +66,18 @@ export const clinic: ClinicData = {
   name: "Glow & Grace Aesthetics",
   shortName: "Glow & Grace",
   tagline: "Hair, Body, Skin Care & Aesthetics",
+  // TODO(client): Provide official legal registered company name, e.g. "Glow & Grace Aesthetics (Pvt) Ltd"
+  legalName: null,
+  registration: {
+    // TODO(client): Provide PMDC registration number of supervising medical practitioner
+    pmdc: null,
+    // TODO(client): Provide Punjab Healthcare Commission (PHC) clinic registration/license number
+    phc: null
+  },
+  emergency: {
+    label: "Rescue 1122",
+    number: "1122"
+  },
   address: {
     line1: "YCDO Ghazi National Hospital",
     line2: "Near Samina Chowk, Multan Road",
